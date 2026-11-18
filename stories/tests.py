@@ -1,7 +1,7 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class StoriesApiTests(TestCase):
+class StoriesApiTests(JustBaddoTestCase):
     def test_list_stories(self):
         res = self.client.get('/api/v1/stories/')
         self.assertEqual(res.status_code, status.HTTP_200_OK)

@@ -1,7 +1,7 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class AccountsApiTests(TestCase):
+class AccountsApiTests(JustBaddoTestCase):
     def test_register_user_success(self):
         payload = {
             'username': 'newdisciple',
@@ -29,7 +29,7 @@ class AccountsApiTests(TestCase):
     def test_login_demo_user(self):
         payload = {
             'username_or_email': 'baddofan99',
-            'password': 'any-password'
+            'password': 'DemoPassword123!'
         }
         response = self.client.post('/api/v1/accounts/login/', data=payload, content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

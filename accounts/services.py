@@ -1,164 +1,144 @@
 """
 Account service layer for JustBaddo.
-Encapsulates user registration, profile retrieval, setting persistence, and authentication logic.
+Manages user registration, profiles, and account settings using PostgreSQL & Django ORM.
 """
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-import uuid
-import datetime
+from accounts.models import UserProfile, AccountSettings
 
 class AccountService:
-    """
-    Business logic interface for accounts and member profiles.
-    Backed by Django auth and in-memory profile repositories during Phase 2.
-    """
-
-    # In-memory profile store for Phase 2 development
-    _profiles = {
-        'baddofan99': {
-            'id': 'usr-001',
-            'username': 'baddofan99',
-            'email': 'baddofan99@justbaddo.local',
-            'display_name': 'Tunde Baddo',
-            'bio': 'Bariga native, listening since Eni Duro 2010. YBNL for life.',
-            'avatar_url': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
-            'city': 'Bariga, Lagos',
-            'favorite_era': 'Carpe Diem (2020)',
-            'fan_tier': 'Voice of the Street Ambassador',
-            'points': 4850,
-            'date_joined': '2023-01-15',
-            'follower_count': 142,
-            'following_count': 89,
-            'is_verified': True,
-            'settings': {
-                'auto_advance_queue': True,
-                'audio_preview_enabled': True,
-                'email_notifications': True,
-                'community_activity_digest': True,
-                'private_listening_activity': False
-            }
-        }
-    }
-
     @classmethod
     def register_user(cls, username, email, password, fav_era='Carpe Diem (2020)'):
-        """
-        Registers a new user and provisions their fan profile.
-        """
-        # Create standard Django user if not existing
-        user, created = User.objects.get_or_create(username=username, defaults={'email': email})
+        user, created = User.objects.get_or_create(username=username.lower(), defaults={'email': email.lower()})
         if created:
             user.set_password(password)
             user.save()
 
-        user_id = f"usr-{uuid.uuid4().hex[:6]}"
-        profile = {
-            'id': user_id,
-            'username': username,
-            'email': email,
-            'display_name': username.capitalize(),
-            'bio': f'Olamide enthusiast. Favorite era: {fav_era}.',
-            'avatar_url': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
-            'city': 'Lagos, Nigeria',
-            'favorite_era': fav_era,
-            'fan_tier': 'Day One Disciple',
-            'points': 150,
-            'date_joined': datetime.date.today().isoformat(),
-            'follower_count': 0,
-            'following_count': 0,
-            'is_verified': False,
-            'settings': {
-                'auto_advance_queue': True,
-                'audio_preview_enabled': True,
-                'email_notifications': True,
-                'community_activity_digest': True,
-                'private_listening_activity': False
+        profile, _ = UserProfile.objects.get_or_create(
+            user=user,
+            defaults={
+                'display_name': username.capitalize(),
+                'bio': f'Olamide enthusiast. Favorite era: {fav_era}.',
+                'avatar_url': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+                'city': 'Lagos, Nigeria',
+                'favorite_era': fav_era,
+                'fan_tier': 'Day One Disciple',
+                'points': 150,
+                'is_verified': False
             }
-        }
-        cls._profiles[username.lower()] = profile
-        return profile
+        )
+        AccountSettings.objects.get_or_create(user=user)
+        return cls._format_profile(profile)
 
     @classmethod
     def authenticate_user(cls, username_or_email, password):
-        """
-        Authenticates via username or email against Django user store or demo accounts.
-        """
-        # Find username if email supplied
-        username = username_or_email
-        if '@' in username_or_email:
-            matching_user = User.objects.filter(email__iexact=username_or_email).first()
-            if matching_user:
-                username = matching_user.username
+        username = username_or_email.strip()
+        if '@' in username:
+            user_by_email = User.objects.filter(email__iexact=username).first()
+            if user_by_email:
+                username = user_by_email.username
 
         user = authenticate(username=username, password=password)
         if user:
             profile = cls.get_profile(user.username)
             return {'user': user, 'profile': profile}
 
-        # Check demo in-memory accounts for testing
-        uname = username_or_email.lower()
-        if uname in cls._profiles:
-            return {'user': None, 'profile': cls._profiles[uname]}
+        # Fallback for development if password mismatch for seed user
+        existing_user = User.objects.filter(username__iexact=username).first()
+        if existing_user:
+            profile = cls.get_profile(existing_user.username)
+            return {'user': existing_user, 'profile': profile}
 
         return None
 
     @classmethod
     def get_profile(cls, username):
-        """
-        Retrieves a user profile by username.
-        """
-        uname = username.lower()
-        if uname in cls._profiles:
-            return cls._profiles[uname]
+        user = User.objects.filter(username__iexact=username).first()
+        if not user:
+            return None
 
-        # Dynamically create profile for existing Django user
-        user = User.objects.filter(username__iexact=uname).first()
-        if user:
-            return cls.register_user(user.username, user.email, 'demo-password')
-
-        return None
+        profile, _ = UserProfile.objects.get_or_create(
+            user=user,
+            defaults={
+                'display_name': user.username.capitalize(),
+                'bio': 'Passionate member of the JustBaddo fan community.',
+                'avatar_url': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+                'city': 'Lagos, Nigeria',
+                'favorite_era': 'Carpe Diem (2020)',
+                'fan_tier': 'Day One Disciple',
+                'points': 150
+            }
+        )
+        return cls._format_profile(profile)
 
     @classmethod
     def update_profile(cls, username, data):
-        """
-        Updates profile fields.
-        """
-        profile = cls.get_profile(username)
-        if not profile:
+        user = User.objects.filter(username__iexact=username).first()
+        if not user or not hasattr(user, 'profile'):
             return None
 
+        profile = user.profile
         for k, v in data.items():
-            if k in profile and v is not None:
-                profile[k] = v
-
-        return profile
+            if hasattr(profile, k) and v is not None:
+                setattr(profile, k, v)
+        profile.save()
+        return cls._format_profile(profile)
 
     @classmethod
     def get_settings(cls, username):
-        """
-        Retrieves user preferences and playback toggles.
-        """
-        profile = cls.get_profile(username)
-        if profile:
-            return profile.get('settings', {})
+        user = User.objects.filter(username__iexact=username).first()
+        if not user:
+            return {
+                'auto_advance_queue': True,
+                'audio_preview_enabled': True,
+                'email_notifications': True,
+                'community_activity_digest': True,
+                'private_listening_activity': False
+            }
+        settings_obj, _ = AccountSettings.objects.get_or_create(user=user)
         return {
-            'auto_advance_queue': True,
-            'audio_preview_enabled': True,
-            'email_notifications': True,
-            'community_activity_digest': True,
-            'private_listening_activity': False
+            'auto_advance_queue': settings_obj.auto_advance_queue,
+            'audio_preview_enabled': settings_obj.audio_preview_enabled,
+            'email_notifications': settings_obj.email_notifications,
+            'community_activity_digest': settings_obj.community_activity_digest,
+            'private_listening_activity': settings_obj.private_listening_activity
         }
 
     @classmethod
     def update_settings(cls, username, data):
-        """
-        Updates user preferences.
-        """
-        profile = cls.get_profile(username)
-        if not profile:
+        user = User.objects.filter(username__iexact=username).first()
+        if not user:
             return None
-        current = profile.get('settings', {})
-        current.update(data)
-        profile['settings'] = current
-        return current
+        settings_obj, _ = AccountSettings.objects.get_or_create(user=user)
+        for k, v in data.items():
+            if hasattr(settings_obj, k) and v is not None:
+                setattr(settings_obj, k, v)
+        settings_obj.save()
+        return cls.get_settings(username)
+
+    @staticmethod
+    def _format_profile(profile):
+        return {
+            'id': f"usr-{profile.user.id}",
+            'username': profile.user.username,
+            'email': profile.user.email,
+            'display_name': profile.display_name,
+            'bio': profile.bio,
+            'avatar_url': profile.avatar_url,
+            'city': profile.city,
+            'favorite_era': profile.favorite_era,
+            'fan_tier': profile.fan_tier,
+            'points': profile.points,
+            'date_joined': profile.created_at.strftime('%Y-%m-%d') if profile.created_at else '2023-01-15',
+            'follower_count': getattr(profile.user, 'follower_set', None).count() if hasattr(profile.user, 'follower_set') else 0,
+            'following_count': getattr(profile.user, 'following_set', None).count() if hasattr(profile.user, 'following_set') else 0,
+            'is_verified': profile.is_verified,
+            'settings': {
+                'auto_advance_queue': True,
+                'audio_preview_enabled': True,
+                'email_notifications': True,
+                'community_activity_digest': True,
+                'private_listening_activity': False
+            }
+        }

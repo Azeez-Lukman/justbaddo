@@ -10,6 +10,9 @@ ENV/
 # Database
 *.sqlite3
 *.db
+backups/
+*.sql
+*.dump
 
 # Environment variables
 .env

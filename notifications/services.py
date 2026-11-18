@@ -1,93 +1,74 @@
 """
 Notification service layer for JustBaddo.
-Manages user alerts, unread counts, and notification lifecycle.
+Manages user alerts and notification lifecycles in PostgreSQL.
 """
 
+from notifications.models import Notification
+from django.contrib.auth.models import User
 import uuid
-import datetime
 
 class NotificationService:
-    """
-    In-memory notification repository for Phase 2.
-    """
-
-    _notifications = {
-        'baddofan99': [
-            {
-                'id': 'notif-01',
-                'title': 'New Song Battle Live!',
-                'message': '"Wo!!" and "Science Student" are locked in a dead heat battle in Fan Arena.',
-                'category': 'Arena',
-                'timestamp': '10 minutes ago',
-                'is_read': False,
-                'action_url': '/pages/fan-arena.html',
-                'icon': 'flame'
-            },
-            {
-                'id': 'notif-02',
-                'title': 'Reply to your comment',
-                'message': 'Folake Adeleke replied to your comment on "Why Carpe Diem Remains Cohesive".',
-                'category': 'Community',
-                'timestamp': '45 minutes ago',
-                'is_read': False,
-                'action_url': '/pages/community.html',
-                'icon': 'message-square'
-            },
-            {
-                'id': 'notif-03',
-                'title': 'Catalogue Update',
-                'message': 'Verified producer and BPM credits updated for Ikigai, Vol. 1 tracks.',
-                'category': 'Music',
-                'timestamp': '1 day ago',
-                'is_read': True,
-                'action_url': '/pages/album.html?slug=ikigai-vol-1',
-                'icon': 'disc-3'
-            }
-        ]
-    }
-
     @classmethod
     def list_notifications(cls, username, unread_only=False):
-        user_list = cls._notifications.get(username, [])
+        qs = Notification.objects.filter(recipient__username__iexact=username)
         if unread_only:
-            return [n for n in user_list if not n['is_read']]
-        return user_list
+            qs = qs.filter(is_read=False)
+
+        results = []
+        for n in qs:
+            results.append({
+                'id': n.notification_id,
+                'title': n.title,
+                'message': n.message,
+                'category': n.category,
+                'timestamp': n.created_at.strftime('%B %d, %Y') if n.created_at else 'Recent',
+                'is_read': n.is_read,
+                'action_url': n.action_url,
+                'icon': n.icon
+            })
+        return results
 
     @classmethod
     def get_unread_count(cls, username):
-        user_list = cls._notifications.get(username, [])
-        return sum(1 for n in user_list if not n['is_read'])
+        return Notification.objects.filter(recipient__username__iexact=username, is_read=False).count()
 
     @classmethod
     def mark_as_read(cls, username, notif_id):
-        user_list = cls._notifications.get(username, [])
-        for n in user_list:
-            if n['id'] == notif_id:
-                n['is_read'] = True
-                return True, "Notification marked as read."
-        return False, "Notification not found."
+        n = Notification.objects.filter(recipient__username__iexact=username, notification_id=notif_id).first()
+        if not n:
+            return False, "Notification not found."
+        n.is_read = True
+        n.save()
+        return True, "Notification marked as read."
 
     @classmethod
     def mark_all_as_read(cls, username):
-        user_list = cls._notifications.get(username, [])
-        for n in user_list:
-            n['is_read'] = True
+        Notification.objects.filter(recipient__username__iexact=username).update(is_read=True)
         return True, "All notifications marked as read."
 
     @classmethod
     def create_notification(cls, username, title, message, category='System', action_url='', icon='bell'):
-        if username not in cls._notifications:
-            cls._notifications[username] = []
+        user, _ = User.objects.get_or_create(username=username, defaults={'email': f"{username}@justbaddo.local"})
         notif_id = f"notif-{uuid.uuid4().hex[:6]}"
-        entry = {
-            'id': notif_id,
-            'title': title,
-            'message': message,
-            'category': category,
+
+        n = Notification.objects.create(
+            notification_id=notif_id,
+            recipient=user,
+            title=title,
+            message=message,
+            category=category,
+            action_url=action_url,
+            icon=icon,
+            is_read=False
+        )
+
+        return {
+            'id': n.notification_id,
+            'title': n.title,
+            'message': n.message,
+            'category': n.category,
             'timestamp': 'Just now',
             'is_read': False,
-            'action_url': action_url,
-            'icon': icon
+            'action_url': n.action_url,
+            'icon': n.icon
         }
-        cls._notifications[username].insert(0, entry)
-        return entry

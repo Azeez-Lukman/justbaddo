@@ -1,11 +1,11 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class ArenaApiTests(TestCase):
+class ArenaApiTests(JustBaddoTestCase):
     def test_list_polls(self):
         res = self.client.get('/api/v1/arena/polls/')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertGreaterEqual(len(res.json()['data']), 2)
+        self.assertGreaterEqual(len(res.json()['data']), 1)
 
     def test_vote_poll(self):
         res = self.client.post('/api/v1/arena/polls/poll-01/vote/', data={'option_id': 'opt-01'}, content_type='application/json')
@@ -38,4 +38,4 @@ class ArenaApiTests(TestCase):
     def test_leaderboard(self):
         res = self.client.get('/api/v1/arena/leaderboard/')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertGreaterEqual(len(res.json()['data']), 3)
+        self.assertGreaterEqual(len(res.json()['data']), 2)

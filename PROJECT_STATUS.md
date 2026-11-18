@@ -16,8 +16,8 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 |---|---|---|
 | **Phase 1** | Frontend Development & Verified Discography Catalogue | **COMPLETED** |
 | **Phase 2** | Backend Foundation, Modular Monolith & REST APIs | **COMPLETED** |
-| **Phase 3** | Database Development (PostgreSQL Schema, Models & Seed) | **READY TO START** |
-| **Phase 4** | Testing, Frontend-to-Backend Integration | Pending |
+| **Phase 3** | Database Development (PostgreSQL Schema, Models & Seed) | **COMPLETED** |
+| **Phase 4** | Testing, Frontend-to-Backend Integration | **READY TO START** |
 | **Phase 5** | Authorised Streaming Provider Integration | Pending |
 | **Phase 6** | Direct Licensing Outreach & Territory Rights Clearances | Pending |
 | **Phase 7** | Self-Hosted Streaming Infrastructure | Long-term |
@@ -35,29 +35,38 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 | API Standard | RESTful JSON API with uniform `{status, message, data, meta}` envelope |
 | Playback Architecture | Provider-independent abstraction (`PlaybackService`), rights availability checks |
 | Development Playback | Zero-copyright Web Audio API synthesizer pulse generator |
-| Database Target | PostgreSQL (environment-driven configuration prepared; SQLite dev fallback) |
+| Database Engine | PostgreSQL 18 via `psycopg2-binary` (v2.9.13), configured via `.env` |
+| ORM & Migrations | Django ORM with declarative schema migrations (`0001_initial.py` applied) |
+| Disaster Recovery | Custom archive format (`pg_dump -Fc`), live recovery tested and verified |
 | Security | CSRF defense, API throttling, strict input validation, salted PBKDF2 password hashing |
 
 ---
 
-## Completed Backend Modules & API Endpoints (Phase 2)
+## Completed Database Layer (Phase 3)
 
-1. **`core`**: Global configuration, environment variables, system health check (`/api/v1/health/`), platform metadata (`/api/v1/platform/`), custom exception handler, and template renderer.
-2. **`accounts`**: Registration with terms validation, login, logout, current user profile, public user profiles, account settings, and password reset (`/api/v1/accounts/`).
-3. **`music`**: Verified Olamide discography archive (10 studio albums, EPs, singles, track BPM/key, and credits) (`/api/v1/music/`).
-4. **`playback`**: Provider-independent playback coordinator, rights validation (`JUSTBADDO_STREAMING`, `AUTHORISED_PROVIDER`, `METADATA_ONLY`), session initialization, and listening telemetry (`/api/v1/playback/`).
-5. **`playlists`**: User playlists and curated editorial collections, track addition and removal (`/api/v1/playlists/`).
-6. **`community`**: Interactive fan discussion boards, category filtering, threaded comments, and like reactions (`/api/v1/community/`).
-7. **`arena`**: Fan Arena song battles, polls, verified discography trivia runner with automatic scoring, and leaderboard (`/api/v1/arena/`).
-8. **`stories`**: Fan editorial essays, concert reflections (OLIC history), and submission review pipeline (`/api/v1/stories/`).
-9. **`notifications`**: Member notifications, unread counters, and mark-as-read actions (`/api/v1/notifications/`).
-10. **`licensing`**: Music rights clearance records, territory restrictions, and legal inquiry desk (`/api/v1/licensing/`).
-11. **`moderation`**: Content reporting queue, user warnings, suspensions, and safety actions (`/api/v1/moderation/`).
+1. **PostgreSQL Configuration**: Integrated PostgreSQL 18 service with 12-factor environment configuration in `.env` and `.env.example`.
+2. **Relational Models**: Implemented across 10 domain applications plus `core`:
+   - `accounts`: `UserProfile`, `AccountSettings`
+   - `music`: `Artist`, `Genre`, `Album`, `Track`, `TimelineMilestone`
+   - `playback`: `PlaybackSession`, `ListeningHistory`
+   - `playlists`: `Playlist`, `PlaylistTrack` (with unique order constraint)
+   - `community`: `Post`, `Comment`, `PostLike`, `Follow` (unique like/follow constraints)
+   - `arena`: `Poll`, `PollOption`, `PollVote`, `SongBattle`, `BattleVote`, `TriviaQuestion`, `TriviaSubmission` (single-vote constraints)
+   - `stories`: `Story` (with moderation review workflow)
+   - `notifications`: `Notification` (with unread status and timestamps)
+   - `licensing`: `RightsRecord`, `RightsInquiry` (territory and external platform metadata)
+   - `moderation`: `Report`, `ModerationAction`, `UserRestriction` (audit trails and penalties)
+3. **Database Seeding (`seed_catalogue`)**: Custom management command populated verified Olamide discography (5 albums, 30 tracks, 6 milestones, 3 profiles, 2 playlists, arena polls, battles, and trivia).
+4. **Django Admin**: Custom admin dashboards registered across all 11 applications with search, list filters, and inline relationships.
+5. **Services Swapped to ORM**: In-memory stores replaced with robust Django ORM queries and transactional operations.
+6. **Backup & Recovery Verification**: Full `pg_dump` and `pg_restore` cycle executed and verified on isolated test database.
+7. **Documentation Suite**: Created `DATABASE_README.md`, `DATABASE_ARCHITECTURE.md`, `DATABASE_SCHEMA.md`, `MIGRATIONS.md`, and `BACKUP_AND_RECOVERY.md`.
 
 ---
 
 ## Verification & Automated Testing
 
 - **Django System Check:** Passed (`0 issues identified`).
-- **Automated Test Suite:** 46 test cases executing across all 11 applications with 100% pass rate.
+- **Automated Test Suite:** 46 test cases executing across all 11 applications against PostgreSQL with 100% pass rate.
 - **Frontend Compatibility:** Maintained 100% visual and interactive parity with Phase 1 frontend.
+- **Backup Verification:** Validated restore of 144 KB dump file into isolated database with 100% row match.

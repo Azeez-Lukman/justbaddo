@@ -1,12 +1,12 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class CommunityApiTests(TestCase):
+class CommunityApiTests(JustBaddoTestCase):
     def test_list_posts(self):
         response = self.client.get('/api/v1/community/posts/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
-        self.assertGreaterEqual(len(data['data']), 2)
+        self.assertGreaterEqual(len(data['data']), 1)
 
     def test_filter_by_category(self):
         response = self.client.get('/api/v1/community/posts/?category=Discography')

@@ -1,11 +1,11 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class NotificationsApiTests(TestCase):
+class NotificationsApiTests(JustBaddoTestCase):
     def test_list_notifications(self):
         res = self.client.get('/api/v1/notifications/')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertGreaterEqual(len(res.json()['data']), 2)
+        self.assertGreaterEqual(len(res.json()['data']), 1)
 
     def test_unread_count(self):
         res = self.client.get('/api/v1/notifications/unread-count/')

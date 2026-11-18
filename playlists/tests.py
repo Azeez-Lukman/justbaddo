@@ -1,7 +1,7 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class PlaylistsApiTests(TestCase):
+class PlaylistsApiTests(JustBaddoTestCase):
     def test_list_playlists(self):
         response = self.client.get('/api/v1/playlists/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

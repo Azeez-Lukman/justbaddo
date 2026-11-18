@@ -1,7 +1,7 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class PlaybackApiTests(TestCase):
+class PlaybackApiTests(JustBaddoTestCase):
     def test_check_playable_track(self):
         response = self.client.get('/api/v1/playback/check/iki-01/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)

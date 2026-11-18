@@ -141,3 +141,37 @@ Expose lightweight Django REST Framework endpoints for dynamic interaction:
 - Installed `django-cors-headers` and configured `CORS_ALLOWED_ORIGINS` and `CSRF_TRUSTED_ORIGINS`.
 - Configured DRF throttling tiers (anonymous: 120/min, authenticated: 600/min, authentication attempts: 5/min).
 - Password validation uses Django's full validator suite with a minimum length of 8 characters.
+
+---
+
+## 7. Database Development Decisions & PostgreSQL Best Practices (Phase 3)
+
+### 1. Relational Integrity via Database-Level Unique Constraints
+- Rather than relying solely on application-layer checks, business integrity rules are strictly enforced at the PostgreSQL engine level:
+  - **`unique_together = ('poll', 'user')`** prevents duplicate votes in Fan Arena polls.
+  - **`unique_together = ('battle', 'user')`** guarantees single voting in song battles.
+  - **`unique_together = ('post', 'user')`** prevents duplicate likes on community posts.
+  - **`unique_together = ('playlist', 'track')`** and `('playlist', 'order')` ensure deterministic track ordering within playlists.
+  - **`unique_together = ('follower', 'following')`** prevents duplicate follow records.
+
+### 2. Normalized Discography Architecture
+- Separate `Artist`, `Genre`, `Album`, and `Track` models eliminate metadata redundancy.
+- Track metadata references album through explicit foreign keys (`CASCADE` on album deletion, `CASCADE` on track deletion).
+- Rights records (`RightsRecord`) link 1:1 with tracks to maintain explicit compliance records for territory restrictions and authorized streaming links without modifying core music metadata.
+
+### 3. Precomputed Transactional Denormalization
+- High-read community endpoints (feed, post details, poll choices) benefit from denormalized counter fields (`likes_count`, `comments_count`, `votes`).
+- When a user likes a post or votes in a poll, counters are updated transactionally alongside the creation of the relation record, eliminating costly `COUNT(*)` SQL aggregation queries under heavy read loads.
+
+### 4. Idempotent Catalogue Seeding Architecture
+- Created `music/management/commands/seed_catalogue.py` as an idempotent script utilizing `get_or_create()`.
+- The seeder can be run safely during local setup, staging provisioning, and CI test pipelines (`JustBaddoTestCase` in `core/test_base.py`) without generating duplicated discography records or colliding primary keys.
+
+### 5. Zero-Downtime Migration Policy
+- Standardized migration rules: all new schema columns must provide explicit default values or specify `null=True`.
+- Replaced direct in-place column renames with an expand-and-contract deployment strategy.
+- Mandated `CONCURRENTLY` index creation for future large-table schema evolutions in production.
+
+### 6. Verified Logical Backup and Disaster Recovery Strategy
+- Confirmed custom PostgreSQL archive format (`pg_dump -Fc`) as the standard backup artifact, offering compression and fine-grained selective restore capabilities via `pg_restore`.
+- Executed and validated a full backup and restore cycle on an isolated PostgreSQL test database (`justbaddo_db_restore_test`), confirming 100% record match and zero data loss.

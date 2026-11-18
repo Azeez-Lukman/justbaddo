@@ -1,7 +1,7 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class ModerationApiTests(TestCase):
+class ModerationApiTests(JustBaddoTestCase):
     def test_submit_report(self):
         payload = {
             'target_type': 'POST',

@@ -1,7 +1,7 @@
-from django.test import TestCase
+from core.test_base import JustBaddoTestCase
 from rest_framework import status
 
-class LicensingApiTests(TestCase):
+class LicensingApiTests(JustBaddoTestCase):
     def test_list_rights_records(self):
         res = self.client.get('/api/v1/licensing/rights/')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
