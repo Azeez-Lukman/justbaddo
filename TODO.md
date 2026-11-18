@@ -1,8 +1,10 @@
 # JUSTBADDO MUSIC — TODO
 
-This file tracks the development, catalogue archiving, frontend implementation, and licensing tasks for the JustBaddo platform.
+This file tracks the development, catalogue archiving, frontend implementation, backend architecture, and licensing tasks for the JustBaddo platform.
 
 Update the checklist as work progresses.
+
+---
 
 ## 1. Project Preparation & Foundation
 
@@ -14,6 +16,8 @@ Update the checklist as work progresses.
 - [x] Initialize Git repository.
 - [x] Establish frontend directory structure (`frontend/pages/`, `frontend/components/`, `frontend/static/`).
 - [x] Set up development environment.
+
+---
 
 ## 2. Frontend Development (Phase 1 — Complete)
 
@@ -43,6 +47,8 @@ Update the checklist as work progresses.
 - [x] Implement Web Audio API zero-copyright demonstration audio synthesizer (`static/js/music/mock-provider.js`).
 - [x] Maintain persistent player state (track, progress, volume, queue) across page navigation via `localStorage`.
 
+---
+
 ## 3. Music Catalogue Research & Data
 
 - [x] Record studio albums (Rapsodi, YBNL, BGEL, Street OT, Eyan Mayweather, The Glory, Lagos Nawa, Carpe Diem, UY Scuti, Unruly).
@@ -54,7 +60,41 @@ Update the checklist as work progresses.
 - [x] Record verified sources for discography entries.
 - [x] Tag playback statuses (`METADATA_ONLY`, `AUTHORISED_PROVIDER`, `JUSTBADDO_STREAMING`, `RESTRICTED`, `WITHDRAWN`).
 
-## 4. Provider Investigation (Phase 5)
+---
+
+## 4. Backend Development (Phase 2 — Complete)
+
+- [x] Configure Django project with environment-driven settings (`config/settings.py`).
+- [x] Establish modular monolith architecture across 11 applications (`core`, `accounts`, `music`, `playback`, `playlists`, `community`, `arena`, `stories`, `notifications`, `licensing`, `moderation`).
+- [x] Configure Django REST Framework with standardized exception formatting, custom pagination, and throttling.
+- [x] Implement service and repository abstraction layer for all domain logic.
+- [x] Implement Accounts & Authentication workflows (`register`, `login`, `logout`, `profile`, `settings`, `password-reset`).
+- [x] Implement Music Catalogue REST endpoints (`artist`, `albums`, `singles`, `tracks`, `search`, `timeline`).
+- [x] Implement Provider-Independent Playback architecture (`check`, `session`, `log`, `history`).
+- [x] Implement Playlists REST API (CRUD, add track, remove track).
+- [x] Implement Community Discussions REST API (feed, category filter, posts, threaded replies, reactions).
+- [x] Implement Fan Arena REST API (polls, voting, song battles, trivia challenge runner with scoring, leaderboard).
+- [x] Implement Fan Stories REST API (list, detail reader, submissions, moderation publishing).
+- [x] Implement Notifications REST API (list, unread count badge, mark read).
+- [x] Implement Licensing & Rights clearance endpoints and rightsholder inquiry desk.
+- [x] Implement Moderation reporting, review queue, and disciplinary actions.
+- [x] Connect template rendering for existing frontend pages (`frontend_views.py`).
+- [x] Author comprehensive backend test suite (46 automated tests passing with 0 errors).
+- [x] Produce backend architecture, API, authentication, and security specifications.
+
+---
+
+## 5. Database Development (Phase 3 — Upcoming)
+
+- [ ] Design final PostgreSQL relational schema (Albums, Tracks, Artists, Contributors, Playlists, Posts, Comments, Polls, Battles, Stories, Notifications, RightsRecords).
+- [ ] Implement Django ORM Models and field constraints.
+- [ ] Create and execute initial migrations.
+- [ ] Develop database seed system with verified Olamide discography archive.
+- [ ] Configure PostgreSQL production connection pooling and backup strategy.
+
+---
+
+## 6. Provider Investigation (Phase 5)
 
 - [ ] Research SoundCloud commercial integration permissions.
 - [ ] Investigate YouTube embedding requirements.
@@ -63,7 +103,9 @@ Update the checklist as work progresses.
 - [ ] Compare playback restrictions.
 - [ ] Document the selected initial provider.
 
-## 5. Licensing Outreach (Phase 6)
+---
+
+## 7. Licensing Outreach (Phase 6)
 
 - [ ] Identify artist management contacts.
 - [ ] Identify relevant record labels (Coded Tunes, YBNL Nation, EMPIRE).
@@ -72,11 +114,3 @@ Update the checklist as work progresses.
 - [ ] Prepare licensing introduction.
 - [ ] Consult music-rights legal counsel.
 - [ ] Establish royalty reporting procedures.
-
-## 6. Django Backend Integration (Phase 2 & 3 - Next Phase)
-
-- [ ] Port modular HTML templates into Django `templates/` and `templates/includes/`.
-- [ ] Configure PostgreSQL database models for Album, Track, Contributor, and Rights.
-- [ ] Implement Django authentication & user models (`accounts`).
-- [ ] Expose REST API endpoints for player, queue, and catalogue search.
-- [ ] Migrate local demonstration state into persistent database records.

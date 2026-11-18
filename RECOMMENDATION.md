@@ -115,3 +115,29 @@ Expose lightweight Django REST Framework endpoints for dynamic interaction:
    Initiate communication with artist management and master/publishing rights holders simultaneously.
 3. **Territorial Verification:**
    Ensure playback permissions explicitly define target territories (Nigeria vs International).
+
+---
+
+## 6. Backend Development Decisions (Phase 2)
+
+### 1. Modular Monolith over Microservices
+- We confirmed the **Modular Django Monolith** design across 11 dedicated applications. This eliminates network serialization latency, simplifies database transactions, and avoids DevOps orchestration overhead while preserving clean domain isolation.
+
+### 2. Service / Repository Layer as Phase 3 Bridge
+- In strict adherence to Phase 2 boundaries (no premature database migrations or raw database models before Phase 3), business logic is encapsulated in Domain Services (`MusicService`, `PlaybackService`, `ArenaService`, etc.).
+- Services use in-memory demonstration repositories that match the exact data schema established in the frontend.
+- When PostgreSQL models and migrations are introduced in Phase 3, only the internal repository queries inside the Services will be swapped to Django ORM QuerySets without affecting serializers, views, or client API contracts.
+
+### 3. Unified Error and Response Envelope
+- Configured a global exception handler in `core.exceptions.custom_exception_handler` and response helpers in `core.response.py`.
+- All endpoints predictably return `{ "status": "success" | "error", "message": "...", "data": {...}, "errors": {...} }`, eliminating inconsistencies across client consumption.
+
+### 4. Zero-Copyright Playback Enforcement at API Gateway
+- The `playback` app strictly blocks unauthorized streaming.
+- `PlaybackCheckView` inspects the track's rights status before any session token can be issued.
+- If a track is `METADATA_ONLY` or `RESTRICTED`, the API responds with HTTP 403 Forbidden.
+
+### 5. Multi-tiered Security Foundations
+- Installed `django-cors-headers` and configured `CORS_ALLOWED_ORIGINS` and `CSRF_TRUSTED_ORIGINS`.
+- Configured DRF throttling tiers (anonymous: 120/min, authenticated: 600/min, authentication attempts: 5/min).
+- Password validation uses Django's full validator suite with a minimum length of 8 characters.
