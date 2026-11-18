@@ -17,6 +17,12 @@ backups/
 # Environment variables
 .env
 .env.local
+.env.production
+
+# Static, Media & Logs
+staticfiles/
+media/
+logs/
 
 # IDE & OS
 .vscode/

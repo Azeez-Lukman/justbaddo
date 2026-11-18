@@ -1,0 +1,16 @@
+# JustBaddo - Production Requirements (Phase 5)
+-r requirements.txt
+
+# Production WSGI Application Server
+gunicorn==23.0.0
+
+# Static File Serving & Asset Compression
+whitenoise==6.12.0
+brotli==1.1.0
+
+# Redis Cache & Session Backend (Optional / Staged)
+redis==5.2.1
+django-redis==5.4.0
+
+# Production Monitoring & Error Tracking (Optional integration hook)
+# sentry-sdk==2.20.0

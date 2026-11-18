@@ -57,7 +57,8 @@ All public music playback must be covered by the relevant permissions, licences 
 - **Phase 2: Backend Development** — **COMPLETED** (Modular Django monolith, 11 applications, RESTful APIs, auth workflows, zero-copyright gateway).
 - **Phase 3: Database Development** — **COMPLETED** (PostgreSQL 18 connection, Django ORM models across all domains, migrations, verified discography seeder, Django Admin, backup/recovery verification).
 - **Phase 4: Testing & Integration** — **COMPLETED** (Frontend connected to live Django REST APIs and PostgreSQL storage, unified API client, CSRF and session auth, 54 automated tests passing).
-- **Phase 5: Authorised Streaming Provider Integration** — **READY TO START** (SoundCloud API, YouTube embeds, streaming policy, territory controls).
+- **Phase 5: Deployment & Launch Preparation** — **COMPLETED** (Production settings, Docker & Nginx stacks, backup scripts, security checklists, cost models).
+- **Phase 6: Direct Licensing Outreach & Territory Clearances** — **READY TO START** (Rightsholder outreach, label agreements, provider terms).
 
 ## Quickstart & Local Setup
 
@@ -127,6 +128,13 @@ Visit `http://localhost:8000/` for the application and `http://localhost:8000/ad
   - `docs/testing/TEST_CASES.md`
   - `docs/testing/BUG_TRACKER.md`
   - `docs/testing/INTEGRATION_REPORT.md`
+- Deployment & Launch:
+  - `docs/deployment/DEPLOYMENT_README.md`
+  - `docs/deployment/PRODUCTION_ARCHITECTURE.md`
+  - `docs/deployment/ENVIRONMENT_CONFIGURATION.md`
+  - `docs/deployment/SECURITY_CHECKLIST.md`
+  - `docs/deployment/BACKUP_AND_RECOVERY.md`
+  - `docs/deployment/LAUNCH_CHECKLIST.md`
 
 ## Development Philosophy
 

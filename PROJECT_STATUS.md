@@ -18,8 +18,8 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 | **Phase 2** | Backend Foundation, Modular Monolith & REST APIs | **COMPLETED** |
 | **Phase 3** | Database Development (PostgreSQL Schema, Models & Seed) | **COMPLETED** |
 | **Phase 4** | Testing, Frontend-to-Backend Integration | **COMPLETED** |
-| **Phase 5** | Authorised Streaming Provider Integration | **READY TO START** |
-| **Phase 6** | Direct Licensing Outreach & Territory Rights Clearances | Pending |
+| **Phase 5** | Deployment and Launch Preparation | **COMPLETED** |
+| **Phase 6** | Direct Licensing Outreach & Territory Rights Clearances | **READY TO START** |
 | **Phase 7** | Self-Hosted Streaming Infrastructure | Long-term |
 | **Phase 8** | Production Launch & Optimization | Pending |
 
@@ -80,10 +80,29 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 
 ---
 
+## Completed Deployment & Launch Preparation Layer (Phase 5)
+
+1. **Production Architecture & Cost Model**: Documented evaluation of hosting paradigms. Recommended Tier 1 Cloud VPS (Hetzner CPX21 / DigitalOcean Droplet) with Cloudflare CDN, operating at **~$11.00 – $26.50 / month**.
+2. **Hardened Production Settings**: Authored `config/settings_production.py` enforcing `DEBUG = False`, mandatory `SECRET_KEY` validation, HSTS headers (`31536000`), secure cookies, and production logging.
+3. **Containerization & WSGI Server**: Implemented multi-stage `Dockerfile` with unprivileged user `justbaddo` (UID 1000) and `docker-compose.prod.yml` orchestrating PostgreSQL 18, Gunicorn, Nginx, and Certbot.
+4. **Reverse Proxy & Edge Hardening**: Configured Nginx with TLS 1.2/1.3, rate-limiting zones (`auth_limit` 5r/m, `api_general` 20r/s), gzip compression, and 5MB upload caps.
+5. **Enhanced Database Health Check**: Updated `GET /api/v1/health/` with active PostgreSQL `SELECT 1` ping and response latency metrics.
+6. **Automated Backup & Recovery**: Authored `scripts/backup_production.sh` with custom-format compression (`pg_dump -Fc`), SHA256 integrity verification, 14-day retention pruning, and `scripts/restore_production.sh`.
+7. **Comprehensive Deployment Documentation Suite**:
+   - `docs/deployment/DEPLOYMENT_README.md`
+   - `docs/deployment/PRODUCTION_ARCHITECTURE.md`
+   - `docs/deployment/ENVIRONMENT_CONFIGURATION.md`
+   - `docs/deployment/SECURITY_CHECKLIST.md`
+   - `docs/deployment/BACKUP_AND_RECOVERY.md`
+   - `docs/deployment/LAUNCH_CHECKLIST.md`
+
+---
+
 ## Verification & Automated Testing
 
 - **Django System Check:** Passed (`0 issues identified`).
 - **Automated Test Suite:** 54 test cases executing across all 11 applications + end-to-end integration suite against PostgreSQL with 100% pass rate.
+- **Static Assets Compilation:** 183 static assets collected and compressed via WhiteNoise manifest storage.
 - **Frontend-Backend Integration:** 23/23 page templates verified returning HTTP 200 OK; dynamic endpoints bound to live database.
-- **Security Audit:** Zero unauthorized data mutations allowed; CSRF defense and session authentication verified.
+- **Security Audit:** Zero unauthorized data mutations allowed; CSRF defense, rate-limiting, and session authentication verified.
 - **Disaster Recovery:** Validated restore of dump file into isolated database with 100% row match.

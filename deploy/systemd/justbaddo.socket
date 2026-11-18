@@ -1,0 +1,11 @@
+[Unit]
+Description=JustBaddo Gunicorn WSGI Socket
+
+[Socket]
+ListenStream=/run/justbaddo/justbaddo.sock
+SocketUser=www-data
+SocketGroup=justbaddo
+SocketMode=0660
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,24 @@
+[Unit]
+Description=JustBaddo Gunicorn WSGI Application Daemon
+Requires=justbaddo.socket
+After=network.target postgresql.service
+
+[Service]
+Type=notify
+User=justbaddo
+Group=justbaddo
+RuntimeDirectory=justbaddo
+WorkingDirectory=/var/www/justbaddo
+EnvironmentFile=/var/www/justbaddo/.env.production
+ExecStart=/var/www/justbaddo/.venv/bin/gunicorn config.wsgi:application \
+          --config /var/www/justbaddo/deploy/gunicorn.conf.py \
+          --bind unix:/run/justbaddo/justbaddo.sock
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

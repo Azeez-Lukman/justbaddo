@@ -115,23 +115,29 @@ Update the checklist as work progresses.
 
 ---
 
-## 7. Authorised Streaming Provider Integration (Phase 5 — Upcoming)
+## 7. Deployment & Launch Preparation (Phase 5 — Complete)
 
-- [ ] Research SoundCloud commercial integration permissions.
-- [ ] Investigate YouTube embedding requirements.
-- [ ] Review other potential authorised providers.
-- [ ] Compare territory coverage (Nigeria vs International).
-- [ ] Compare playback restrictions.
-- [ ] Document the selected initial provider.
+- [x] Assess production hosting options (Cloud VPS, PaaS, Serverless) and establish recommended architecture.
+- [x] Create hardened production settings module (`config/settings_production.py`) with strict security headers, HSTS, and secret key validation.
+- [x] Configure production environment template (`.env.production.example`) with complete 12-factor variable specifications.
+- [x] Implement production multi-stage `Dockerfile` with unprivileged runtime user (`justbaddo`, UID 1000).
+- [x] Configure production multi-container orchestration (`docker-compose.prod.yml`) with PostgreSQL 18, Gunicorn, Nginx, and Certbot.
+- [x] Configure high-performance Nginx reverse proxy with TLS 1.2/1.3, rate limiting zones, gzip compression, and static asset caching.
+- [x] Configure production Gunicorn WSGI server (`deploy/gunicorn.conf.py`) and Systemd units (`justbaddo.service`, `justbaddo.socket`).
+- [x] Enhance backend health check endpoint (`GET /api/v1/health/`) with active PostgreSQL database ping and latency reporting.
+- [x] Implement automated production backup (`scripts/backup_production.sh`) and restoration verification (`scripts/restore_production.sh`) scripts with SHA256 checksums.
+- [x] Create zero-downtime deployment script (`scripts/deploy.sh`).
+- [x] Author comprehensive deployment documentation suite (`DEPLOYMENT_README.md`, `PRODUCTION_ARCHITECTURE.md`, `ENVIRONMENT_CONFIGURATION.md`, `SECURITY_CHECKLIST.md`, `BACKUP_AND_RECOVERY.md`, `LAUNCH_CHECKLIST.md`).
+- [x] Identify and document pre-launch operational blockers (domain registration, cloud host authorization, SMTP credentials, rights outreach).
 
 ---
 
-## 8. Licensing Outreach (Phase 6)
+## 8. Licensing Outreach & Authorised Provider Integration (Phase 6 — Upcoming)
 
-- [ ] Identify artist management contacts.
-- [ ] Identify relevant record labels (Coded Tunes, YBNL Nation, EMPIRE).
-- [ ] Identify master rights holders.
-- [ ] Identify composition rights holders & publishers.
-- [ ] Prepare licensing introduction.
-- [ ] Consult music-rights legal counsel.
+- [ ] Register custom domain (`justbaddo.com`) and configure Cloudflare DNS records upon user authorization.
+- [ ] Provision production cloud host (Hetzner CPX21 / DigitalOcean Droplet) upon user authorization.
+- [ ] Finalize SoundCloud API / YouTube embed developer agreements for public music playback.
+- [ ] Identify artist management and label contacts (Coded Tunes, YBNL Nation, EMPIRE Distribution).
+- [ ] Identify master rights holders and composition rights holders & publishers.
+- [ ] Consult music-rights legal counsel for Nigeria and international streaming compliance.
 - [ ] Establish royalty reporting procedures.

@@ -205,3 +205,28 @@ Expose lightweight Django REST Framework endpoints for dynamic interaction:
 ### 5. PostgreSQL Constraint Propagation to Frontend Feedback
 - Database-level unique constraints (e.g. `unique_together` on votes and likes) are mapped through DRF serializers to return clean HTTP 400 responses with descriptive messages (`"You have already voted in this poll"`).
 - Frontend UI modules catch these constraint errors and display user-friendly toast messages, preventing unhandled promise rejections or ambiguous generic errors.
+
+---
+
+## 9. Deployment & Production Infrastructure Recommendations (Phase 5)
+
+### 1. Monolithic Containerization over Kubernetes
+- For early-to-mid stage scale (0–50,000 MAU), deploy via **Docker Compose** on a single cloud VPS rather than prematurely managing Kubernetes clusters.
+- A multi-container Docker composition (`db`, `web`, `nginx`, `certbot`) provides process isolation, reproducible environments, and unified networking while requiring zero DevOps cluster overhead.
+
+### 2. Edge Proxy and DDoS Shielding via Cloudflare
+- Terminate public internet traffic through Cloudflare's free Anycast CDN before reaching the origin server.
+- This absorbs volumetric DDoS attacks, caches static assets globally (reducing server bandwidth by ~80%), and eliminates SSL renewal friction.
+
+### 3. Layered Static File Strategy (WhiteNoise + Nginx)
+- Combine Nginx direct static serving with Django's WhiteNoise `CompressedManifestStaticFilesStorage`.
+- Nginx delivers cached assets with zero Python overhead. WhiteNoise computes unique MD5 content hashes (`styles.1f9b3c.css`), allowing Nginx and Cloudflare to serve assets with `Cache-Control: immutable, max-age=31536000` without cache staleness risks upon redeployment.
+
+### 4. Zero-Trust Security Stance on Media & Audio
+- Strictly limit user media uploads to 5MB and validate MIME types and file extensions (`.jpg`, `.jpeg`, `.png`, `.webp`).
+- Disable script execution in the Nginx `/media/` location block.
+- For music playback, strictly enforce the `AudioProviderInterface` and never store unlicensed audio files on the application server.
+
+### 5. Automated Backup with Cryptographic Checksums
+- Backups must always generate SHA256 checksums alongside compressed custom-format dumps (`pg_dump -Fc`).
+- Enforce an automatic 14-day local retention policy, and schedule monthly restoration drills against an isolated staging database to guarantee recoverability.
