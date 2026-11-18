@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Catalogue & Community — JUSTBADDO</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black pb-player-safe">
+
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="sticky top-0 z-30 bg-[#070809]/90 border-b border-zinc-800/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-8">
+        <a href="../index.html" class="flex items-center gap-2 group">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+          <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="../index.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Home</a>
+          <a href="music.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Music</a>
+          <a href="community.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Community</a>
+          <a href="fan-arena.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Fan Arena</a>
+          <a href="stories.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Stories</a>
+          <a href="timeline.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Timeline</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="dashboard.html" class="p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="w-8 h-8 rounded-full object-cover">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full">
+    
+    <!-- Search Bar Hero -->
+    <div class="max-w-2xl mx-auto mb-10 text-center">
+      <h1 class="font-display text-2xl sm:text-3xl font-black text-white mb-4">Search JustBaddo</h1>
+      <div class="relative">
+        <i data-lucide="search" class="w-5 h-5 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+        <input type="search" id="jb-search-page-input" placeholder="Search by song name, album, producer, featured artist..." class="w-full bg-zinc-900 border border-zinc-800 focus:border-amber-500 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none shadow-xl transition-all">
+      </div>
+
+      <!-- Quick Suggestion Chips -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs">
+        <span class="text-zinc-500">Popular:</span>
+        <button class="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 hover:border-amber-500/50 text-zinc-300 transition-colors" data-suggestion-chip="Infinity">Infinity</button>
+        <button class="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 hover:border-amber-500/50 text-zinc-300 transition-colors" data-suggestion-chip="Carpe Diem">Carpe Diem</button>
+        <button class="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 hover:border-amber-500/50 text-zinc-300 transition-colors" data-suggestion-chip="Wo!!">Wo!!</button>
+        <button class="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 hover:border-amber-500/50 text-zinc-300 transition-colors" data-suggestion-chip="Pheelz">Pheelz</button>
+        <button class="px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 hover:border-amber-500/50 text-zinc-300 transition-colors" data-suggestion-chip="Eni Duro">Eni Duro</button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="jb-search-empty-state" class="py-16 text-center text-zinc-500 max-w-md mx-auto">
+      <i data-lucide="compass" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+      <h3 class="text-sm font-semibold text-zinc-300">Discover Olamide's Music & Community</h3>
+      <p class="text-xs text-zinc-500 mt-1">Type in a song title, album year, producer name or topic above to find matches instantly.</p>
+    </div>
+
+    <!-- Results Section -->
+    <div id="jb-search-results-section" class="hidden space-y-12">
+      <div class="flex items-center justify-between pb-3 border-b border-zinc-800">
+        <span class="text-sm text-zinc-400">Search results for: <span id="jb-search-query-display" class="font-bold text-amber-400"></span></span>
+      </div>
+
+      <!-- Matched Tracks -->
+      <div>
+        <h3 class="text-base font-bold text-zinc-100 mb-4 flex items-center gap-2">
+          <i data-lucide="music" class="w-4 h-4 text-amber-500"></i>
+          <span>Matching Tracks</span>
+        </h3>
+        <div id="jb-search-tracks-results" class="space-y-2"></div>
+      </div>
+
+      <!-- Matched Albums -->
+      <div>
+        <h3 class="text-base font-bold text-zinc-100 mb-4 flex items-center gap-2">
+          <i data-lucide="disc" class="w-4 h-4 text-amber-500"></i>
+          <span>Matching Albums & EPs</span>
+        </h3>
+        <div id="jb-search-albums-results" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- Matched Community Discussions -->
+      <div>
+        <h3 class="text-base font-bold text-zinc-100 mb-4 flex items-center gap-2">
+          <i data-lucide="messages-square" class="w-4 h-4 text-amber-500"></i>
+          <span>Matching Community Discussions</span>
+        </h3>
+        <div id="jb-search-posts-results" class="space-y-3"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Persistent Player -->
+  <div id="jb-persistent-player" class="fixed bottom-0 inset-x-0 z-40 bg-zinc-950/95 border-t border-zinc-800/80 backdrop-blur-xl transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5 min-w-0 w-1/4 sm:w-1/3">
+        <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-zinc-900 border border-zinc-800 cursor-pointer jb-player-expand-btn group">
+          <img src="" alt="Cover" class="jb-player-cover w-full h-full object-cover">
+        </div>
+        <div class="min-w-0">
+          <h4 class="jb-player-title text-sm font-bold text-zinc-100 truncate cursor-pointer hover:text-amber-400 transition-colors jb-player-expand-btn"></h4>
+          <p class="jb-player-artist text-xs text-zinc-400 truncate"></p>
+        </div>
+      </div>
+      <div class="flex flex-col items-center max-w-lg w-full flex-1">
+        <div class="flex items-center gap-5 sm:gap-6 mb-1.5">
+          <button class="jb-player-prev-btn text-zinc-300 hover:text-white p-1"><i data-lucide="skip-back" class="w-4 h-4"></i></button>
+          <button class="jb-play-pause-btn w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center"><i data-lucide="play" class="jb-play-pause-icon w-4 h-4 fill-current"></i></button>
+          <button class="jb-player-next-btn text-zinc-300 hover:text-white p-1"><i data-lucide="skip-forward" class="w-4 h-4"></i></button>
+        </div>
+        <div class="w-full flex items-center gap-3 text-[11px] font-mono text-zinc-400">
+          <span class="jb-player-current-time w-8 text-right">0:00</span>
+          <input type="range" min="0" max="100" value="0" step="0.1" class="jb-progress-slider w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
+          <span class="jb-player-duration w-8">0:00</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-3 sm:gap-4 w-1/4 sm:w-1/3">
+        <button class="jb-player-like-btn text-zinc-400 hover:text-rose-500 p-1.5"><i data-lucide="heart" class="w-4 h-4"></i></button>
+        <button class="jb-player-queue-btn relative text-zinc-400 hover:text-white p-1.5"><i data-lucide="list-music" class="w-4 h-4"></i><span class="jb-queue-count absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-black text-[9px] font-bold flex items-center justify-center">1</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Queue Drawer & Playlist Modals -->
+  <div id="jb-queue-drawer" class="jb-modal hidden fixed inset-0 z-50 overflow-hidden">
+    <div class="jb-modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="fixed inset-y-0 right-0 max-w-md w-full bg-zinc-900 border-l border-zinc-800 shadow-2xl flex flex-col z-10 animate-fadeIn">
+      <div class="p-6 border-b border-zinc-800 flex items-center justify-between">
+        <h3 class="text-lg font-bold text-zinc-100">Playback Queue</h3>
+        <button class="text-zinc-400 hover:text-white" data-modal-close><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div id="jb-queue-list" class="flex-1 overflow-y-auto p-4 space-y-2"></div>
+    </div>
+  </div>
+
+  <div id="jb-add-to-playlist-modal" class="jb-modal hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="jb-modal-backdrop fixed inset-0 bg-black/75 backdrop-blur-sm"></div>
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+      <div class="relative w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-zinc-100">Add to Playlist</h3>
+          <button class="text-zinc-400 hover:text-white" data-modal-close><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <div id="jb-add-to-playlist-items" class="space-y-2 mb-6 max-h-60 overflow-y-auto"></div>
+        <div class="pt-4 border-t border-zinc-800">
+          <input type="text" id="jb-new-playlist-title" placeholder="Playlist title" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-sm text-zinc-200 mb-2">
+          <button id="jb-create-playlist-btn" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs">Create & Add Track</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../static/js/data/catalogue.js"></script>
+  <script src="../static/js/data/community-data.js"></script>
+  <script src="../static/js/data/arena-data.js"></script>
+  <script src="../static/js/data/stories-data.js"></script>
+  <script src="../static/js/data/timeline-data.js"></script>
+  
+  <script src="../static/js/core/storage.js"></script>
+  <script src="../static/js/core/state.js"></script>
+  <script src="../static/js/core/ui.js"></script>
+  
+  <script src="../static/js/music/provider-interface.js"></script>
+  <script src="../static/js/music/mock-provider.js"></script>
+  <script src="../static/js/music/player.js"></script>
+  <script src="../static/js/music/queue.js"></script>
+  <script src="../static/js/music/playlists.js"></script>
+  
+  <script src="../static/js/pages/search-page.js"></script>
+  <script src="../static/js/core/app.js"></script>
+</body>
+</html>

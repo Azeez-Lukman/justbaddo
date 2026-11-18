@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Fan Account — JUSTBADDO</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col justify-between antialiased selection:bg-amber-500 selection:text-black">
+
+  <header class="p-6 max-w-7xl mx-auto w-full flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-2 group">
+      <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+      <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+    </a>
+    <a href="../index.html" class="text-xs text-zinc-400 hover:text-white transition-colors">
+      ← Back to Home
+    </a>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-md p-8 rounded-3xl bg-zinc-900/70 border border-zinc-800 shadow-2xl backdrop-blur-xl">
+      
+      <div class="text-center mb-8">
+        <h1 class="font-display text-2xl sm:text-3xl font-black text-white mb-2">Join the Community</h1>
+        <p class="text-xs text-zinc-400">Create your account to curate playlists, participate in the Fan Arena, and engage in discussions.</p>
+      </div>
+
+      <form id="jb-register-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Full Name</label>
+          <input type="text" id="jb-reg-name" placeholder="e.g. Babatunde Lawal" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" required>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Community Username</label>
+          <div class="relative">
+            <span class="text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs">@</span>
+            <input type="text" id="jb-reg-username" placeholder="baddofan99" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl pl-8 pr-3 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" required>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Email Address</label>
+          <input type="email" id="jb-reg-email" placeholder="you@domain.com" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" required>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Password</label>
+          <input type="password" id="jb-reg-password" placeholder="At least 8 characters" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" minlength="8" required>
+        </div>
+
+        <div class="flex items-start gap-2.5 text-xs text-zinc-400 pt-1">
+          <input type="checkbox" id="jb-reg-terms" class="w-4 h-4 mt-0.5 accent-amber-500 rounded cursor-pointer" required>
+          <label for="jb-reg-terms" class="cursor-pointer">
+            I agree to the <a href="terms.html" class="text-amber-500 hover:underline">Terms of Service</a> and <a href="community-guidelines.html" class="text-amber-500 hover:underline">Community Guidelines</a>.
+          </label>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors shadow-lg shadow-amber-500/20 mt-2">
+          Create Fan Account
+        </button>
+      </form>
+
+      <div class="mt-6 pt-6 border-t border-zinc-800/80 text-center text-xs text-zinc-400">
+        Already have an account? 
+        <a href="login.html" class="text-amber-400 font-semibold hover:underline">Sign In</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="p-6 text-center text-xs text-zinc-500">
+    © 2024–2026 JustBaddo. Frontend Demonstration Prototype.
+  </footer>
+
+  <script src="../static/js/core/storage.js"></script>
+  <script src="../static/js/core/state.js"></script>
+  <script src="../static/js/core/ui.js"></script>
+  <script src="../static/js/core/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('jb-register-form');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          JustBaddoUI.toast('Account created! Welcome to JustBaddo.', 'success');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 800);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@600;700;800&display=swap');
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Syne', var(--font-sans);
+
+  --bg-black: #070809;
+  --bg-charcoal: #0e1014;
+  --bg-card: #14171e;
+  --bg-card-hover: #1b202a;
+  --border-subtle: #222836;
+  --border-active: #f59e0b;
+
+  --accent-amber: #f59e0b;
+  --accent-orange: #ea580c;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-black);
+  color: var(--text-main);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090a0d;
+}
+::-webkit-scrollbar-thumb {
+  background: #232a38;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b4457;
+}
+
+/* Range Slider Styling for Audio Scrubber & Volume */
+input[type="range"] {
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+/* Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #272f3d;
+  height: 4px;
+  border-radius: 9999px;
+}
+input[type="range"]::-moz-range-track {
+  background-color: #272f3d;
+  height: 4px;
+  border-radius: 9999px;
+}
+
+/* Thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: #f59e0b;
+  margin-top: -4px;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+  background: #fbbf24;
+}
+
+input[type="range"]::-moz-range-thumb {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background: #f59e0b;
+  border: none;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+  transition: transform 0.15s ease;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Equalizer Bars Animation */
+@keyframes eqBar1 {
+  0%, 100% { height: 12px; }
+  50% { height: 4px; }
+}
+@keyframes eqBar2 {
+  0%, 100% { height: 6px; }
+  50% { height: 14px; }
+}
+@keyframes eqBar3 {
+  0%, 100% { height: 10px; }
+  50% { height: 2px; }
+}
+
+.animate-eq-1 { animation: eqBar1 0.8s infinite ease-in-out; }
+.animate-eq-2 { animation: eqBar2 0.8s infinite ease-in-out 0.2s; }
+.animate-eq-3 { animation: eqBar3 0.8s infinite ease-in-out 0.4s; }
+
+/* Accessible Focus States */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Safe area padding for persistent bottom player */
+.pb-player-safe {
+  padding-bottom: 7.5rem;
+}

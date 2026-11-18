@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — JUSTBADDO</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col justify-between antialiased selection:bg-amber-500 selection:text-black">
+
+  <header class="sticky top-0 z-30 bg-[#070809]/90 border-b border-zinc-800/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <a href="../index.html" class="flex items-center gap-2 group">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+        <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+      </a>
+      <a href="../index.html" class="text-xs text-zinc-400 hover:text-white transition-colors">← Back to Home</a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-12 w-full">
+    <div class="mb-10 pb-6 border-b border-zinc-800">
+      <span class="text-xs uppercase tracking-wider font-bold text-amber-500 block mb-1">Draft Policy</span>
+      <h1 class="font-display text-3xl font-black text-white">Privacy Policy</h1>
+      <p class="text-xs text-zinc-400 mt-1">Last revised: November 2026</p>
+    </div>
+
+    <div class="space-y-6 text-xs sm:text-sm text-zinc-300 leading-relaxed">
+      <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs">
+        <strong>Notice:</strong> This policy is a demonstration draft for the JustBaddo Phase 1 frontend. Formal legal review will occur prior to production Django backend deployment.
+      </div>
+
+      <h3 class="text-base font-bold text-zinc-100">1. Information We Collect</h3>
+      <p class="text-zinc-400">
+        In the current development environment, JustBaddo stores user preferences, active queue items, and demonstration playlists exclusively inside your browser's local storage (<code class="bg-zinc-800 px-1 py-0.5 rounded text-zinc-300">localStorage</code>). No personal data is transmitted to external tracking servers.
+      </p>
+
+      <h3 class="text-base font-bold text-zinc-100">2. Cookies and Storage</h3>
+      <p class="text-zinc-400">
+        We utilize local storage solely for preserving user interface preferences (such as audio volume, shuffle modes, and saved playlist structures).
+      </p>
+
+      <h3 class="text-base font-bold text-zinc-100">3. Community Content</h3>
+      <p class="text-zinc-400">
+        Posts and comments submitted to the community feed are displayed locally during the demonstration phase. Once connected to the backend database, public community contributions will be visible to other registered members.
+      </p>
+
+      <h3 class="text-base font-bold text-zinc-100">4. Your Data Rights</h3>
+      <p class="text-zinc-400">
+        You may clear your demonstration state, saved tracks, and playlists at any time by clearing your browser storage or using the clear action in the settings panel.
+      </p>
+    </div>
+  </main>
+
+  <footer class="p-6 border-t border-zinc-900 text-center text-xs text-zinc-500">
+    © 2024–2026 JustBaddo. Privacy Policy Draft.
+  </footer>
+
+  <script src="../static/js/core/ui.js"></script>
+  <script src="../static/js/core/app.js"></script>
+</body>
+</html>

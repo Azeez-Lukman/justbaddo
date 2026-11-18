@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUSTBADDO — The Premier Olamide Music & Fan Community Platform</title>
+  <meta name="description" content="Discover Olamide's complete discography, stream music, test your knowledge in the Fan Arena, and connect with fans worldwide on JustBaddo.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v4 Browser Engine -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Global Styles -->
+  <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black pb-player-safe">
+
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="sticky top-0 z-30 bg-[#070809]/90 border-b border-zinc-800/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand -->
+      <div class="flex items-center gap-8">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+          <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+        </a>
+
+        <!-- Desktop Links -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="index.html" class="jb-nav-link text-amber-400 font-semibold transition-colors">Home</a>
+          <a href="pages/music.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Music</a>
+          <a href="pages/community.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Community</a>
+          <a href="pages/fan-arena.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Fan Arena</a>
+          <a href="pages/stories.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Stories</a>
+          <a href="pages/timeline.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Timeline</a>
+        </nav>
+      </div>
+
+      <!-- Search & User Actions -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <form class="jb-search-form hidden lg:flex items-center relative">
+          <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none"></i>
+          <input type="search" placeholder="Search albums, tracks, lyrics..." class="jb-global-search-input w-56 xl:w-72 bg-zinc-900 border border-zinc-800 focus:border-amber-500/80 rounded-xl pl-9 pr-8 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none transition-all">
+          <span class="absolute right-2.5 px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 text-[10px] font-mono text-zinc-400 pointer-events-none">/</span>
+        </form>
+
+        <a href="pages/search.html" class="lg:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Search">
+          <i data-lucide="search" class="w-5 h-5"></i>
+        </a>
+
+        <!-- Notifications -->
+        <div class="relative">
+          <button class="p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors relative" data-dropdown-toggle="jb-notifications-menu" aria-label="Notifications">
+            <i data-lucide="bell" class="w-5 h-5"></i>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500"></span>
+          </button>
+
+          <div id="jb-notifications-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-80 sm:w-96 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-4 z-50 animate-fadeIn">
+            <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
+              <h4 class="text-sm font-bold text-zinc-100">Notifications</h4>
+              <span class="text-[11px] text-amber-500 font-medium">3 unread</span>
+            </div>
+            <div class="space-y-2.5 max-h-72 overflow-y-auto">
+              <div class="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex items-start gap-3">
+                <span class="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                <div>
+                  <p class="text-xs font-semibold text-zinc-200">New Poll in Fan Arena</p>
+                  <p class="text-[11px] text-zinc-400 mt-0.5">Which Olamide release era represents his peak cultural impact?</p>
+                  <span class="text-[10px] text-zinc-500 mt-1 block">10m ago</span>
+                </div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex items-start gap-3">
+                <span class="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                <div>
+                  <p class="text-xs font-semibold text-zinc-200">Community Discussion</p>
+                  <p class="text-[11px] text-zinc-400 mt-0.5">Folake Lawal posted: "How Carpe Diem redefined Olamide's sonic trajectory"</p>
+                  <span class="text-[10px] text-zinc-500 mt-1 block">1h ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-zinc-800 mt-3 text-center">
+              <a href="pages/notifications.html" class="text-xs text-zinc-400 hover:text-amber-400 font-medium transition-colors">View All Notifications</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Menu -->
+        <div class="relative">
+          <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Baddo Citizen" class="w-8 h-8 rounded-full object-cover">
+          </button>
+
+          <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
+            <div class="px-3 py-2.5 border-b border-zinc-800 mb-1">
+              <h5 class="text-xs font-bold text-zinc-100">Baddo Citizen</h5>
+              <span class="text-[11px] text-amber-500">Bariga Club Member</span>
+            </div>
+            <a href="pages/dashboard.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 text-zinc-400"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="pages/profile.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+              <i data-lucide="user" class="w-4 h-4 text-zinc-400"></i>
+              <span>My Profile</span>
+            </a>
+            <a href="pages/playlists.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+              <i data-lucide="library" class="w-4 h-4 text-zinc-400"></i>
+              <span>Saved & Playlists</span>
+            </a>
+            <a href="pages/settings.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+              <i data-lucide="settings" class="w-4 h-4 text-zinc-400"></i>
+              <span>Account Settings</span>
+            </a>
+            <div class="pt-1 mt-1 border-t border-zinc-800">
+              <a href="pages/login.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-rose-400 hover:bg-zinc-800 transition-colors">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                <span>Sign Out</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <button id="jb-mobile-menu-btn" class="md:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Open navigation menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MOBILE DRAWER ================= -->
+  <div id="jb-mobile-drawer" class="jb-modal hidden fixed inset-0 z-50">
+    <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+    <div class="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col justify-between z-10 animate-fadeIn">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
+          <a href="index.html" class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
+            <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+          </a>
+          <button id="jb-mobile-drawer-close" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <nav class="space-y-1.5 text-base font-medium">
+          <a href="index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-amber-400 font-semibold bg-zinc-900">
+            <i data-lucide="home" class="w-5 h-5 text-amber-400"></i>
+            <span>Home</span>
+          </a>
+          <a href="pages/music.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+            <i data-lucide="disc" class="w-5 h-5 text-zinc-400"></i>
+            <span>Music Catalogue</span>
+          </a>
+          <a href="pages/community.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+            <i data-lucide="users" class="w-5 h-5 text-zinc-400"></i>
+            <span>Community Feed</span>
+          </a>
+          <a href="pages/fan-arena.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+            <i data-lucide="swords" class="w-5 h-5 text-zinc-400"></i>
+            <span>Fan Arena</span>
+          </a>
+          <a href="pages/stories.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+            <i data-lucide="book-open" class="w-5 h-5 text-zinc-400"></i>
+            <span>Fan Stories</span>
+          </a>
+          <a href="pages/timeline.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+            <i data-lucide="calendar" class="w-5 h-5 text-zinc-400"></i>
+            <span>Career Timeline</span>
+          </a>
+          <a href="pages/search.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+            <i data-lucide="search" class="w-5 h-5 text-zinc-400"></i>
+            <span>Search & Filter</span>
+          </a>
+        </nav>
+      </div>
+      <div class="pt-6 border-t border-zinc-800 space-y-3">
+        <a href="pages/dashboard.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-sm font-semibold transition-colors">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Member Dashboard</span>
+        </a>
+        <a href="pages/register.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors">
+          <span>Join Community</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1">
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden pt-12 pb-20 border-b border-zinc-800/80 bg-gradient-to-b from-zinc-900/60 via-zinc-950 to-[#070809]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-semibold">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+              <span>The Independent Olamide Music Experience</span>
+            </div>
+            
+            <h1 class="font-display text-4xl sm:text-6xl font-black tracking-tight text-white leading-none">
+              BARIGA TO <br>
+              <span class="text-amber-500">THE WORLD.</span>
+            </h1>
+            
+            <p class="text-zinc-300 text-base sm:text-lg max-w-xl leading-relaxed">
+              Explore over a decade of groundbreaking Nigerian music. Stream verified discography releases, dive into album tracklists, engage in song battles, and connect with fans across the globe.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 pt-2">
+              <button class="px-6 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm transition-all transform hover:scale-105 shadow-xl shadow-amber-500/20 flex items-center gap-2" data-play-track-id="ikigai-02">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                <span>Listen to Latest EP</span>
+              </button>
+              <a href="pages/music.html" class="px-6 py-3.5 rounded-xl border border-zinc-700 hover:border-zinc-500 bg-zinc-900/70 hover:bg-zinc-800 text-zinc-100 font-semibold text-sm transition-colors flex items-center gap-2">
+                <i data-lucide="disc" class="w-4 h-4 text-zinc-400"></i>
+                <span>Browse Full Catalogue</span>
+              </a>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-3 gap-6 pt-6 border-t border-zinc-800/80 max-w-lg">
+              <div>
+                <span class="font-display font-black text-2xl text-white">10+</span>
+                <p class="text-xs text-zinc-400 mt-0.5">Studio Albums & EPs</p>
+              </div>
+              <div>
+                <span class="font-display font-black text-2xl text-white">14+</span>
+                <p class="text-xs text-zinc-400 mt-0.5">Years of Mastery</p>
+              </div>
+              <div>
+                <span class="font-display font-black text-2xl text-amber-500">100%</span>
+                <p class="text-xs text-zinc-400 mt-0.5">Verified Discography</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Artwork Showcase -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-md">
+              <!-- Decorative Backing Card -->
+              <div class="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-amber-500/30 to-amber-600/10 blur-xl opacity-75"></div>
+              
+              <!-- Featured Album Card -->
+              <div class="relative rounded-3xl border border-zinc-700/80 bg-zinc-900/90 p-6 shadow-2xl backdrop-blur-xl">
+                <div class="relative aspect-square rounded-2xl overflow-hidden mb-6 bg-zinc-950 group">
+                  <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=600&q=80" alt="Ikigai, Vol. 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5">
+                    <div>
+                      <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 mb-2 inline-block">2024 Latest Project</span>
+                      <h3 class="text-xl font-bold text-white">Ikigai / 生き甲斐, Vol. 1</h3>
+                      <p class="text-xs text-zinc-400">7 Verified Tracks • YBNL Nation / EMPIRE</p>
+                    </div>
+                  </div>
+                  <button class="absolute top-4 right-4 w-12 h-12 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg transition-transform transform hover:scale-110" data-play-album-id="ikigai-vol-1" title="Play Full Album">
+                    <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+                  </button>
+                </div>
+
+                <!-- Preview Track Row -->
+                <div class="space-y-2 text-xs">
+                  <div class="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer group" data-play-track-id="ikigai-02">
+                    <div class="flex items-center gap-3">
+                      <span class="text-zinc-500 font-mono w-4">02</span>
+                      <div>
+                        <h4 class="font-semibold text-zinc-200 group-hover:text-amber-400 transition-colors">Uptown Disco</h4>
+                        <p class="text-[11px] text-zinc-500">ft. Fireboy DML & Asake</p>
+                      </div>
+                    </div>
+                    <span class="text-zinc-500 font-mono">3:15</span>
+                  </div>
+
+                  <div class="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer group" data-play-track-id="ikigai-01">
+                    <div class="flex items-center gap-3">
+                      <span class="text-zinc-500 font-mono w-4">01</span>
+                      <div>
+                        <h4 class="font-semibold text-zinc-200 group-hover:text-amber-400 transition-colors">Metaverse</h4>
+                        <p class="text-[11px] text-zinc-500">Prod. Semzi</p>
+                      </div>
+                    </div>
+                    <span class="text-zinc-500 font-mono">2:47</span>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-zinc-800/80 flex items-center justify-between text-xs">
+                  <a href="pages/album.html?slug=ikigai-vol-1" class="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1">
+                    <span>View Album Details & Credits</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                  </a>
+                  <span class="text-[10px] text-zinc-500">Official Master</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FEATURED DISCOGRAPHY SECTION ================= -->
+    <section class="py-16 border-b border-zinc-800/80 bg-zinc-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
+          <div>
+            <span class="text-xs uppercase tracking-widest font-bold text-amber-500 mb-1 block">Verified Music Catalogue</span>
+            <h2 class="font-display text-2xl sm:text-3xl font-black text-white">Landmark Studio Albums</h2>
+          </div>
+          <a href="pages/music.html" class="text-xs font-semibold text-amber-400 hover:text-amber-300 flex items-center gap-1 self-start sm:self-auto">
+            <span>Explore All 10+ Releases</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+
+        <!-- Albums Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
+          
+          <!-- Album 1: Ikigai -->
+          <div class="group relative rounded-2xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 p-3.5 transition-all duration-300 flex flex-col justify-between">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-zinc-950">
+              <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80" alt="Ikigai, Vol. 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <button class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform group-hover:scale-100 scale-75" data-play-album-id="ikigai-vol-1" title="Play">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+            <div>
+              <span class="text-[10px] text-zinc-500 font-mono block">2024 • EP</span>
+              <a href="pages/album.html?slug=ikigai-vol-1" class="text-xs font-bold text-zinc-200 group-hover:text-amber-400 transition-colors line-clamp-1">Ikigai, Vol. 1</a>
+              <p class="text-[11px] text-zinc-400 mt-0.5">7 tracks</p>
+            </div>
+          </div>
+
+          <!-- Album 2: Unruly -->
+          <div class="group relative rounded-2xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 p-3.5 transition-all duration-300 flex flex-col justify-between">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-zinc-950">
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80" alt="Unruly" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <button class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform group-hover:scale-100 scale-75" data-play-album-id="unruly" title="Play">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+            <div>
+              <span class="text-[10px] text-zinc-500 font-mono block">2023 • LP</span>
+              <a href="pages/album.html?slug=unruly" class="text-xs font-bold text-zinc-200 group-hover:text-amber-400 transition-colors line-clamp-1">Unruly</a>
+              <p class="text-[11px] text-zinc-400 mt-0.5">15 tracks</p>
+            </div>
+          </div>
+
+          <!-- Album 3: UY Scuti -->
+          <div class="group relative rounded-2xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 p-3.5 transition-all duration-300 flex flex-col justify-between">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-zinc-950">
+              <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=300&q=80" alt="UY Scuti" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <button class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform group-hover:scale-100 scale-75" data-play-album-id="uy-scuti" title="Play">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+            <div>
+              <span class="text-[10px] text-zinc-500 font-mono block">2021 • LP</span>
+              <a href="pages/album.html?slug=uy-scuti" class="text-xs font-bold text-zinc-200 group-hover:text-amber-400 transition-colors line-clamp-1">UY Scuti</a>
+              <p class="text-[11px] text-zinc-400 mt-0.5">11 tracks</p>
+            </div>
+          </div>
+
+          <!-- Album 4: Carpe Diem -->
+          <div class="group relative rounded-2xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 p-3.5 transition-all duration-300 flex flex-col justify-between">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-zinc-950">
+              <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=300&q=80" alt="Carpe Diem" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <button class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform group-hover:scale-100 scale-75" data-play-album-id="carpe-diem" title="Play">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+            <div>
+              <span class="text-[10px] text-zinc-500 font-mono block">2020 • LP</span>
+              <a href="pages/album.html?slug=carpe-diem" class="text-xs font-bold text-zinc-200 group-hover:text-amber-400 transition-colors line-clamp-1">Carpe Diem</a>
+              <p class="text-[11px] text-zinc-400 mt-0.5">12 tracks</p>
+            </div>
+          </div>
+
+          <!-- Album 5: Eyan Mayweather -->
+          <div class="group relative rounded-2xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 p-3.5 transition-all duration-300 flex flex-col justify-between">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-zinc-950">
+              <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=300&q=80" alt="Eyan Mayweather" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <button class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform group-hover:scale-100 scale-75" data-play-album-id="eyan-mayweather" title="Play">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+            <div>
+              <span class="text-[10px] text-zinc-500 font-mono block">2015 • Solo LP</span>
+              <a href="pages/album.html?slug=eyan-mayweather" class="text-xs font-bold text-zinc-200 group-hover:text-amber-400 transition-colors line-clamp-1">Eyan Mayweather</a>
+              <p class="text-[11px] text-zinc-400 mt-0.5">21 solo tracks</p>
+            </div>
+          </div>
+
+          <!-- Album 6: Rapsodi -->
+          <div class="group relative rounded-2xl bg-zinc-900 border border-zinc-800/80 hover:border-zinc-700 p-3.5 transition-all duration-300 flex flex-col justify-between">
+            <div class="relative aspect-square rounded-xl overflow-hidden mb-3 bg-zinc-950">
+              <img src="https://images.unsplash.com/photo-1445985543470-41fdd6ce388d?auto=format&fit=crop&w=300&q=80" alt="Rapsodi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+              <button class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform group-hover:scale-100 scale-75" data-play-album-id="rapsodi" title="Play">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </button>
+            </div>
+            <div>
+              <span class="text-[10px] text-zinc-500 font-mono block">2011 • Debut</span>
+              <a href="pages/album.html?slug=rapsodi" class="text-xs font-bold text-zinc-200 group-hover:text-amber-400 transition-colors line-clamp-1">Rapsodi</a>
+              <p class="text-[11px] text-zinc-400 mt-0.5">16 tracks</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ESSENTIAL TRACKS & EDITORIAL PLAYLISTS ================= -->
+    <section class="py-16 border-b border-zinc-800/80 bg-[#070809]">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <!-- Essential Tracks Column -->
+          <div class="lg:col-span-7">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <span class="text-xs uppercase tracking-widest font-bold text-amber-500 mb-1 block">Timeless Classics</span>
+                <h3 class="font-display text-xl font-bold text-white">Popular Anthems</h3>
+              </div>
+              <span class="text-xs text-zinc-500">Demonstration Player</span>
+            </div>
+
+            <div class="space-y-2">
+              
+              <!-- Track 1 -->
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-850 transition-all group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <button class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="cd-03">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </button>
+                  <div class="min-w-0">
+                    <h4 class="text-sm font-semibold text-zinc-100 group-hover:text-amber-400 transition-colors truncate">Infinity</h4>
+                    <p class="text-xs text-zinc-400 truncate">feat. Omah Lay • Carpe Diem</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="text-zinc-500 font-mono">2:52</span>
+                  <button class="text-zinc-500 hover:text-amber-400 p-1" data-action-add-to-playlist="cd-03" title="Add to Playlist">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Track 2 -->
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-850 transition-all group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <button class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="ln-09">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </button>
+                  <div class="min-w-0">
+                    <h4 class="text-sm font-semibold text-zinc-100 group-hover:text-amber-400 transition-colors truncate">Wo!!</h4>
+                    <p class="text-xs text-zinc-400 truncate">Prod. Young Jonn • Lagos Nawa</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="text-zinc-500 font-mono">3:15</span>
+                  <button class="text-zinc-500 hover:text-amber-400 p-1" data-action-add-to-playlist="ln-09" title="Add to Playlist">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Track 3 -->
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-850 transition-all group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <button class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="em-03">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </button>
+                  <div class="min-w-0">
+                    <h4 class="text-sm font-semibold text-zinc-100 group-hover:text-amber-400 transition-colors truncate">Bobo (Shakiti Bobo)</h4>
+                    <p class="text-xs text-zinc-400 truncate">Prod. Young Jonn • Eyan Mayweather</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="text-zinc-500 font-mono">4:11</span>
+                  <button class="text-zinc-500 hover:text-amber-400 p-1" data-action-add-to-playlist="em-03" title="Add to Playlist">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Track 4 -->
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-850 transition-all group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <button class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="bgel-03">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </button>
+                  <div class="min-w-0">
+                    <h4 class="text-sm font-semibold text-zinc-100 group-hover:text-amber-400 transition-colors truncate">Durosoke</h4>
+                    <p class="text-xs text-zinc-400 truncate">Prod. Pheelz • BGEL</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="text-zinc-500 font-mono">4:02</span>
+                  <button class="text-zinc-500 hover:text-amber-400 p-1" data-action-add-to-playlist="bgel-03" title="Add to Playlist">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Track 5 -->
+              <div class="flex items-center justify-between p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-850 transition-all group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <button class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="rap-01">
+                    <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                  </button>
+                  <div class="min-w-0">
+                    <h4 class="text-sm font-semibold text-zinc-100 group-hover:text-amber-400 transition-colors truncate">Eni Duro</h4>
+                    <p class="text-xs text-zinc-400 truncate">Prod. ID Cabasa • Rapsodi</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="text-zinc-500 font-mono">4:15</span>
+                  <button class="text-zinc-500 hover:text-amber-400 p-1" data-action-add-to-playlist="rap-01" title="Add to Playlist">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Editorial Playlists Column -->
+          <div class="lg:col-span-5">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <span class="text-xs uppercase tracking-widest font-bold text-amber-500 mb-1 block">Curated Moods</span>
+                <h3 class="font-display text-xl font-bold text-white">Editorial Playlists</h3>
+              </div>
+              <a href="pages/playlists.html" class="text-xs font-semibold text-amber-400 hover:text-amber-300">View All</a>
+            </div>
+
+            <div class="space-y-4">
+              
+              <div class="p-4 rounded-2xl border border-zinc-800 bg-zinc-900/70 hover:border-zinc-700 transition-all flex items-center gap-4 group">
+                <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=200&q=80" alt="Baddo Essentials" class="w-16 h-16 rounded-xl object-cover shrink-0">
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm font-bold text-zinc-100 group-hover:text-amber-400 transition-colors">Baddo Essentials</h4>
+                  <p class="text-xs text-zinc-400 line-clamp-1 mt-0.5">The defining anthems spanning Bariga beginnings to world stages.</p>
+                  <span class="text-[10px] text-zinc-500 mt-1 block">8 tracks • 32 mins</span>
+                </div>
+                <button class="w-10 h-10 rounded-full bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="ikigai-02">
+                  <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                </button>
+              </div>
+
+              <div class="p-4 rounded-2xl border border-zinc-800 bg-zinc-900/70 hover:border-zinc-700 transition-all flex items-center gap-4 group">
+                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=200&q=80" alt="Street Anthems" class="w-16 h-16 rounded-xl object-cover shrink-0">
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm font-bold text-zinc-100 group-hover:text-amber-400 transition-colors">Bariga Street Anthems</h4>
+                  <p class="text-xs text-zinc-400 line-clamp-1 mt-0.5">High-energy bangers, legendary slangs and relentless tempo.</p>
+                  <span class="text-[10px] text-zinc-500 mt-1 block">8 tracks • 29 mins</span>
+                </div>
+                <button class="w-10 h-10 rounded-full bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="ln-09">
+                  <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                </button>
+              </div>
+
+              <div class="p-4 rounded-2xl border border-zinc-800 bg-zinc-900/70 hover:border-zinc-700 transition-all flex items-center gap-4 group">
+                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=200&q=80" alt="Midnight Mellow" class="w-16 h-16 rounded-xl object-cover shrink-0">
+                <div class="flex-1 min-w-0">
+                  <h4 class="text-sm font-bold text-zinc-100 group-hover:text-amber-400 transition-colors">Midnight Baddo: Melodic & Intimate</h4>
+                  <p class="text-xs text-zinc-400 line-clamp-1 mt-0.5">Sublime acoustics, relaxed tempo and soulful reflections.</p>
+                  <span class="text-[10px] text-zinc-500 mt-1 block">7 tracks • 24 mins</span>
+                </div>
+                <button class="w-10 h-10 rounded-full bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-black flex items-center justify-center transition-colors shrink-0" data-play-track-id="uy-03">
+                  <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= COMMUNITY PREVIEW & FAN ARENA ================= -->
+    <section class="py-16 border-b border-zinc-800/80 bg-zinc-950">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <!-- Community Discussions Preview -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs uppercase tracking-widest font-bold text-amber-500 mb-1 block">Community Voice</span>
+                <h3 class="font-display text-xl font-bold text-white">Active Discussions</h3>
+              </div>
+              <a href="pages/community.html" class="text-xs font-semibold text-amber-400 hover:text-amber-300">Join Conversation</a>
+            </div>
+
+            <!-- Post Card 1 -->
+            <article class="p-5 rounded-2xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80" alt="Folake Lawal" class="w-8 h-8 rounded-full object-cover">
+                  <div>
+                    <h5 class="text-xs font-bold text-zinc-200">Folake Lawal <span class="text-amber-400 font-mono text-[10px]">Lead Curator</span></h5>
+                    <span class="text-[10px] text-zinc-500">2 hours ago</span>
+                  </div>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">Album Analysis</span>
+              </div>
+              <h4 class="text-sm font-bold text-zinc-100 mb-1.5">How Carpe Diem redefined Olamide's sonic trajectory</h4>
+              <p class="text-xs text-zinc-300 line-clamp-2 leading-relaxed mb-3">
+                When Carpe Diem dropped in October 2020, people did not immediately realise we were entering a whole new artistic era moving towards silky mid-tempo afro-fusion.
+              </p>
+              <div class="flex items-center gap-4 text-xs text-zinc-500 pt-3 border-t border-zinc-800/60">
+                <span class="flex items-center gap-1"><i data-lucide="heart" class="w-3.5 h-3.5 text-rose-500 fill-rose-500"></i> 184</span>
+                <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 42 replies</span>
+              </div>
+            </article>
+
+            <!-- Post Card 2 -->
+            <article class="p-5 rounded-2xl border border-zinc-800 bg-zinc-900/60 hover:border-zinc-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2.5">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Tunde Adeyemi" class="w-8 h-8 rounded-full object-cover">
+                  <div>
+                    <h5 class="text-xs font-bold text-zinc-200">Tunde Adeyemi <span class="text-zinc-400 font-mono text-[10px]">Veteran Fan</span></h5>
+                    <span class="text-[10px] text-zinc-500">5 hours ago</span>
+                  </div>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">Nostalgia</span>
+              </div>
+              <h4 class="text-sm font-bold text-zinc-100 mb-1.5">Remembering the iconic one-take "Eni Duro" video (2010)</h4>
+              <p class="text-xs text-zinc-300 line-clamp-2 leading-relaxed mb-3">
+                14 years later, nothing matches the raw hunger of Eni Duro shot in Lagos with rapid outfit changes. It shifted Nigerian rap straight into mainstream hegemony.
+              </p>
+              <div class="flex items-center gap-4 text-xs text-zinc-500 pt-3 border-t border-zinc-800/60">
+                <span class="flex items-center gap-1"><i data-lucide="heart" class="w-3.5 h-3.5 text-rose-500"></i> 295</span>
+                <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 68 replies</span>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Fan Arena Preview -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs uppercase tracking-widest font-bold text-amber-500 mb-1 block">Fan Arena</span>
+                <h3 class="font-display text-xl font-bold text-white">Live Poll & Battle</h3>
+              </div>
+              <a href="pages/fan-arena.html" class="text-xs font-semibold text-amber-400 hover:text-amber-300">Enter Arena</a>
+            </div>
+
+            <!-- Live Battle Card -->
+            <div class="p-5 rounded-2xl border border-zinc-800 bg-zinc-900/60">
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs uppercase font-bold text-amber-500">Featured Song Battle</span>
+                <span class="text-xs text-zinc-500 font-mono">2,314 votes</span>
+              </div>
+              <h4 class="text-sm font-bold text-zinc-100 mb-4">The Viral Dance Clash: Wo!! vs Bobo</h4>
+              
+              <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
+                  <h5 class="text-xs font-bold text-zinc-200">Wo!! (2017)</h5>
+                  <p class="text-[10px] text-zinc-500 mb-2">Lagos Nawa</p>
+                  <span class="text-sm font-mono font-bold text-amber-400">54%</span>
+                </div>
+                <div class="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-center">
+                  <h5 class="text-xs font-bold text-zinc-200">Bobo (2015)</h5>
+                  <p class="text-[10px] text-zinc-500 mb-2">Eyan Mayweather</p>
+                  <span class="text-sm font-mono font-bold text-zinc-400">46%</span>
+                </div>
+              </div>
+
+              <a href="pages/fan-arena.html" class="w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="swords" class="w-4 h-4 text-amber-400"></i>
+                <span>Cast Your Vote in Arena</span>
+              </a>
+            </div>
+
+            <!-- Career Timeline Teaser -->
+            <div class="p-5 rounded-2xl border border-zinc-800 bg-gradient-to-r from-zinc-900 to-zinc-950 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-amber-500 font-semibold">Historic Chronology</span>
+                <h4 class="text-sm font-bold text-zinc-100 mt-0.5">Explore 14 Years of Documented Milestones</h4>
+                <p class="text-xs text-zinc-400 mt-1">From Bariga in 2010 to global joint ventures with EMPIRE.</p>
+              </div>
+              <a href="pages/timeline.html" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs shrink-0 transition-colors">
+                View Timeline
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CALL TO ACTION ================= -->
+    <section class="py-20 bg-gradient-to-t from-zinc-950 via-[#070809] to-zinc-950 text-center">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 space-y-6">
+        <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-lg shadow-amber-500/50"></span>
+        <h2 class="font-display text-3xl sm:text-5xl font-black text-white">Join the JustBaddo Community</h2>
+        <p class="text-zinc-400 text-base leading-relaxed max-w-xl mx-auto">
+          Participate in fan quizzes, curate your custom playlists, track your listening history, and celebrate the music of Olamide with fans across Nigeria and the world.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <a href="pages/register.html" class="px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm transition-all transform hover:scale-105 shadow-xl shadow-amber-500/20">
+            Create Free Fan Account
+          </a>
+          <a href="pages/music.html" class="px-8 py-3.5 rounded-xl border border-zinc-700 hover:border-zinc-500 bg-zinc-900/80 text-zinc-200 font-semibold text-sm transition-colors">
+            Start Listening
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= GLOBAL FOOTER ================= -->
+  <footer class="bg-zinc-950 border-t border-zinc-900 pt-16 pb-28 text-zinc-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-10 pb-12 border-b border-zinc-900">
+        <div class="md:col-span-2 space-y-4">
+          <a href="index.html" class="flex items-center gap-2 group">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
+            <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+          </a>
+          <p class="text-zinc-400 leading-relaxed max-w-sm">
+            An independent digital music discovery and fan community platform celebrating the discography, legacy, and culture of Olamide Baddo.
+          </p>
+          <div class="p-3.5 rounded-xl border border-zinc-800/80 bg-zinc-900/40 text-[11px] text-zinc-400 leading-relaxed">
+            <span class="text-amber-400 font-semibold block mb-0.5">Independent Fan Platform</span>
+            JustBaddo is not officially affiliated with Olamide, YBNL Nation, or his management. All trademarks, track names and logos belong to their respective rights holders.
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-zinc-200 uppercase tracking-wider text-[11px] mb-4">Discography</h4>
+          <ul class="space-y-2.5">
+            <li><a href="pages/album.html?slug=ikigai-vol-1" class="hover:text-amber-400 transition-colors">Ikigai, Vol. 1 (2024)</a></li>
+            <li><a href="pages/album.html?slug=unruly" class="hover:text-amber-400 transition-colors">Unruly (2023)</a></li>
+            <li><a href="pages/album.html?slug=uy-scuti" class="hover:text-amber-400 transition-colors">UY Scuti (2021)</a></li>
+            <li><a href="pages/album.html?slug=carpe-diem" class="hover:text-amber-400 transition-colors">Carpe Diem (2020)</a></li>
+            <li><a href="pages/album.html?slug=ybnl" class="hover:text-amber-400 transition-colors">YBNL (2012)</a></li>
+            <li><a href="pages/album.html?slug=rapsodi" class="hover:text-amber-400 transition-colors">Rapsodi (2011)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-zinc-200 uppercase tracking-wider text-[11px] mb-4">Community</h4>
+          <ul class="space-y-2.5">
+            <li><a href="pages/community.html" class="hover:text-amber-400 transition-colors">Discussions Feed</a></li>
+            <li><a href="pages/fan-arena.html" class="hover:text-amber-400 transition-colors">Fan Arena Polls</a></li>
+            <li><a href="pages/fan-arena.html" class="hover:text-amber-400 transition-colors">Song Battles</a></li>
+            <li><a href="pages/fan-arena.html" class="hover:text-amber-400 transition-colors">Trivia Quizzes</a></li>
+            <li><a href="pages/stories.html" class="hover:text-amber-400 transition-colors">Fan Stories</a></li>
+            <li><a href="pages/timeline.html" class="hover:text-amber-400 transition-colors">Career Milestones</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-zinc-200 uppercase tracking-wider text-[11px] mb-4">Platform & Legal</h4>
+          <ul class="space-y-2.5">
+            <li><a href="pages/about.html" class="hover:text-amber-400 transition-colors">About JustBaddo</a></li>
+            <li><a href="pages/community-guidelines.html" class="hover:text-amber-400 transition-colors">Community Guidelines</a></li>
+            <li><a href="pages/privacy.html" class="hover:text-amber-400 transition-colors">Privacy Policy</a></li>
+            <li><a href="pages/terms.html" class="hover:text-amber-400 transition-colors">Terms of Service</a></li>
+            <li><a href="pages/contact.html" class="hover:text-amber-400 transition-colors">Contact & Rights Inquiries</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500">
+        <p>© 2024–2026 JustBaddo. Built for music fans and cultural preservation.</p>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>Phase 1 Frontend Prototype • Zero Copyrighted Streams Distributed</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= PERSISTENT BOTTOM MUSIC PLAYER ================= -->
+  <div id="jb-persistent-player" class="fixed bottom-0 inset-x-0 z-40 bg-zinc-950/95 border-t border-zinc-800/80 backdrop-blur-xl transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Left: Track Metadata -->
+      <div class="flex items-center gap-3.5 min-w-0 w-1/4 sm:w-1/3">
+        <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-zinc-900 border border-zinc-800 cursor-pointer jb-player-expand-btn group">
+          <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=150&q=80" alt="Current Track" class="jb-player-cover w-full h-full object-cover group-hover:scale-105 transition-transform">
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+            <i data-lucide="maximize-2" class="w-4 h-4 text-white"></i>
+          </div>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <h4 class="jb-player-title text-sm font-bold text-zinc-100 truncate cursor-pointer hover:text-amber-400 transition-colors jb-player-expand-btn">Uptown Disco</h4>
+            <span class="jb-player-status-badge hidden lg:inline-block text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.5 rounded-full border bg-amber-950 text-amber-400 border-amber-800">Preview</span>
+          </div>
+          <p class="jb-player-artist text-xs text-zinc-400 truncate">Olamide ft. Fireboy DML & Asake</p>
+        </div>
+      </div>
+
+      <!-- Center: Playback Controls & Progress Bar -->
+      <div class="flex flex-col items-center max-w-lg w-full flex-1">
+        <div class="flex items-center gap-5 sm:gap-6 mb-1.5">
+          <button class="jb-player-shuffle-btn text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Shuffle" aria-label="Toggle Shuffle">
+            <i data-lucide="shuffle" class="w-4 h-4"></i>
+          </button>
+          <button class="jb-player-prev-btn text-zinc-300 hover:text-white transition-colors p-1" title="Previous Track" aria-label="Previous Track">
+            <i data-lucide="skip-back" class="w-4 h-4"></i>
+          </button>
+          <button class="jb-play-pause-btn w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-all transform hover:scale-105 shadow-md shadow-amber-500/20" title="Play/Pause" aria-label="Play">
+            <i data-lucide="play" class="jb-play-pause-icon w-4 h-4 fill-current"></i>
+          </button>
+          <button class="jb-player-next-btn text-zinc-300 hover:text-white transition-colors p-1" title="Next Track" aria-label="Next Track">
+            <i data-lucide="skip-forward" class="w-4 h-4"></i>
+          </button>
+          <button class="jb-player-repeat-btn relative text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Repeat" aria-label="Toggle Repeat">
+            <i data-lucide="repeat" class="w-4 h-4"></i>
+            <span class="jb-repeat-badge hidden absolute -top-1 -right-1 text-[8px] font-bold text-amber-400"></span>
+          </button>
+        </div>
+
+        <div class="w-full flex items-center gap-3 text-[11px] font-mono text-zinc-400">
+          <span class="jb-player-current-time w-8 text-right">0:00</span>
+          <div class="relative flex-1 flex items-center">
+            <input type="range" min="0" max="100" value="0" step="0.1" class="jb-progress-slider w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Track Progress">
+          </div>
+          <span class="jb-player-duration w-8">3:15</span>
+        </div>
+      </div>
+
+      <!-- Right: Utility Controls (Volume, Queue, Expand) -->
+      <div class="flex items-center justify-end gap-3 sm:gap-4 w-1/4 sm:w-1/3">
+        <button class="jb-player-like-btn text-zinc-400 hover:text-rose-500 transition-colors p-1.5" title="Save Track" aria-label="Save Track">
+          <i data-lucide="heart" class="w-4 h-4"></i>
+        </button>
+
+        <div class="hidden md:flex items-center gap-2 group">
+          <button class="jb-volume-btn text-zinc-400 hover:text-white transition-colors" title="Mute/Unmute" aria-label="Mute">
+            <i data-lucide="volume-2" class="jb-volume-icon w-4 h-4"></i>
+          </button>
+          <input type="range" min="0" max="1" step="0.01" value="0.7" class="jb-volume-slider w-16 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Volume">
+        </div>
+
+        <button class="jb-player-queue-btn relative text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800" title="Play Queue" aria-label="View Queue">
+          <i data-lucide="list-music" class="w-4 h-4"></i>
+          <span class="jb-queue-count absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-black text-[9px] font-bold flex items-center justify-center">1</span>
+        </button>
+
+        <button class="jb-player-expand-btn text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800" title="Expand Player" aria-label="Expand Player">
+          <i data-lucide="maximize-2" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= EXPANDED PLAYER MODAL ================= -->
+  <div id="jb-expanded-player-modal" class="jb-modal hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+    <div class="relative min-h-screen flex items-center justify-center p-4 sm:p-6">
+      <div class="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between mb-8">
+          <div class="flex items-center gap-2">
+            <span class="text-xs uppercase tracking-wider font-bold text-amber-500">JustBaddo Player</span>
+            <span class="jb-player-status-badge text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border bg-amber-950 text-amber-400 border-amber-800">Preview</span>
+          </div>
+          <button class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors" data-modal-close aria-label="Close expanded player">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="w-64 h-64 sm:w-72 sm:h-72 mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/80 border border-zinc-800 mb-8 bg-zinc-950">
+          <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=600&q=80" alt="Album Cover" class="jb-player-cover w-full h-full object-cover">
+        </div>
+
+        <div class="text-center mb-6">
+          <h2 class="jb-player-title text-2xl font-bold text-zinc-100 mb-1">Uptown Disco</h2>
+          <p class="jb-player-artist text-base text-zinc-400 mb-1">Olamide ft. Fireboy DML & Asake</p>
+          <p class="jb-player-album text-xs text-amber-500/90 font-medium">Ikigai / 生き甲斐, Vol. 1</p>
+        </div>
+
+        <div class="mb-6">
+          <div class="relative flex items-center mb-2">
+            <input type="range" min="0" max="100" value="0" step="0.1" class="jb-progress-slider w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Track progress slider">
+          </div>
+          <div class="flex justify-between text-xs font-mono text-zinc-400">
+            <span class="jb-player-current-time">0:00</span>
+            <span class="jb-player-duration">3:15</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-6 mb-8">
+          <button class="jb-player-shuffle-btn text-zinc-400 hover:text-amber-400 transition-colors p-2" aria-label="Toggle Shuffle">
+            <i data-lucide="shuffle" class="w-5 h-5"></i>
+          </button>
+          <button class="jb-player-prev-btn text-zinc-300 hover:text-white transition-colors p-2" aria-label="Previous track">
+            <i data-lucide="skip-back" class="w-6 h-6"></i>
+          </button>
+          <button class="jb-play-pause-btn w-14 h-14 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-all transform hover:scale-105 shadow-xl shadow-amber-500/25" aria-label="Play or pause">
+            <i data-lucide="play" class="jb-play-pause-icon w-6 h-6 fill-current"></i>
+          </button>
+          <button class="jb-player-next-btn text-zinc-300 hover:text-white transition-colors p-2" aria-label="Next track">
+            <i data-lucide="skip-forward" class="w-6 h-6"></i>
+          </button>
+          <button class="jb-player-repeat-btn relative text-zinc-400 hover:text-amber-400 transition-colors p-2" aria-label="Toggle Repeat">
+            <i data-lucide="repeat" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div class="flex items-center justify-between pt-6 border-t border-zinc-800 text-sm">
+          <button class="jb-player-like-btn flex items-center gap-2 text-zinc-400 hover:text-rose-500 transition-colors">
+            <i data-lucide="heart" class="w-4 h-4"></i>
+            <span>Save to Library</span>
+          </button>
+          <button class="flex items-center gap-2 text-zinc-400 hover:text-amber-400 transition-colors" onclick="JustBaddoPlaylists.openAddToPlaylistModal(JustBaddoState.state.player.currentTrack?.id)">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>Add to Playlist</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= QUEUE DRAWER ================= -->
+  <div id="jb-queue-drawer" class="jb-modal hidden fixed inset-0 z-50 overflow-hidden">
+    <div class="jb-modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="fixed inset-y-0 right-0 max-w-md w-full bg-zinc-900 border-l border-zinc-800 shadow-2xl flex flex-col z-10 animate-fadeIn">
+      <div class="p-6 border-b border-zinc-800 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="list-music" class="w-5 h-5 text-amber-500"></i>
+          <h3 class="text-lg font-bold text-zinc-100">Playback Queue</h3>
+          <span class="jb-queue-count text-xs px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 font-mono">1</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="jb-clear-queue-btn" class="text-xs text-zinc-400 hover:text-rose-400 transition-colors px-2 py-1">Clear</button>
+          <button class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-800 transition-colors" data-modal-close aria-label="Close queue">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+      <div id="jb-queue-list" class="flex-1 overflow-y-auto p-4 space-y-2"></div>
+      <div class="p-4 border-t border-zinc-800/80 bg-zinc-950/60 text-xs text-zinc-500 flex items-center gap-2">
+        <i data-lucide="info" class="w-4 h-4 shrink-0 text-amber-500"></i>
+        <span>Demonstration player queue. State persists across page navigation.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ADD TO PLAYLIST MODAL ================= -->
+  <div id="jb-add-to-playlist-modal" class="jb-modal hidden fixed inset-0 z-50 overflow-y-auto">
+    <div class="jb-modal-backdrop fixed inset-0 bg-black/75 backdrop-blur-sm"></div>
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+      <div class="relative w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-2xl">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-bold text-zinc-100">Add to Playlist</h3>
+          <button class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-800 transition-colors" data-modal-close>
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <div id="jb-add-to-playlist-items" class="space-y-2 mb-6 max-h-60 overflow-y-auto"></div>
+        <div class="pt-4 border-t border-zinc-800">
+          <h4 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Or Create New Playlist</h4>
+          <div class="space-y-3">
+            <input type="text" id="jb-new-playlist-title" placeholder="Playlist title (e.g. Street Anthems)" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none">
+            <input type="text" id="jb-new-playlist-desc" placeholder="Optional description" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none">
+            <button id="jb-create-playlist-btn" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors">
+              Create & Add Track
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script src="static/js/data/catalogue.js"></script>
+  <script src="static/js/data/community-data.js"></script>
+  <script src="static/js/data/arena-data.js"></script>
+  <script src="static/js/data/stories-data.js"></script>
+  <script src="static/js/data/timeline-data.js"></script>
+  
+  <script src="static/js/core/storage.js"></script>
+  <script src="static/js/core/state.js"></script>
+  <script src="static/js/core/ui.js"></script>
+  
+  <script src="static/js/music/provider-interface.js"></script>
+  <script src="static/js/music/mock-provider.js"></script>
+  <script src="static/js/music/player.js"></script>
+  <script src="static/js/music/queue.js"></script>
+  <script src="static/js/music/playlists.js"></script>
+  
+  <script src="static/js/core/app.js"></script>
+</body>
+</html>

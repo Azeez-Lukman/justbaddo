@@ -1,0 +1,185 @@
+<!-- ==========================================
+     JUSTBADDO GLOBAL TOP NAVIGATION COMPONENT
+     ========================================== -->
+
+<header class="sticky top-0 z-30 bg-zinc-950/90 border-b border-zinc-800/80 backdrop-blur-xl">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+    
+    <!-- Brand / Wordmark -->
+    <div class="flex items-center gap-8">
+      <a href="/index.html" class="flex items-center gap-2 group">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+        <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+      </a>
+
+      <!-- Desktop Primary Nav Links -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="/index.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Home</a>
+        <a href="/pages/music.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Music</a>
+        <a href="/pages/community.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Community</a>
+        <a href="/pages/fan-arena.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Fan Arena</a>
+        <a href="/pages/stories.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Stories</a>
+        <a href="/pages/timeline.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Timeline</a>
+      </nav>
+    </div>
+
+    <!-- Center/Right Search & Controls -->
+    <div class="flex items-center gap-3 sm:gap-4">
+      <!-- Search Bar -->
+      <form class="jb-search-form hidden lg:flex items-center relative">
+        <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none"></i>
+        <input type="search" placeholder="Search albums, tracks, lyrics..." class="jb-global-search-input w-56 xl:w-72 bg-zinc-900 border border-zinc-800 focus:border-amber-500/80 rounded-xl pl-9 pr-8 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none transition-all">
+        <span class="absolute right-2.5 px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 text-[10px] font-mono text-zinc-400 pointer-events-none">/</span>
+      </form>
+
+      <!-- Quick Search Link for smaller screens -->
+      <a href="/pages/search.html" class="lg:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Search">
+        <i data-lucide="search" class="w-5 h-5"></i>
+      </a>
+
+      <!-- Notifications Dropdown Trigger -->
+      <div class="relative">
+        <button class="p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors relative" data-dropdown-toggle="jb-notifications-menu" aria-label="Notifications">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500"></span>
+        </button>
+
+        <!-- Notifications Dropdown Menu -->
+        <div id="jb-notifications-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-80 sm:w-96 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-4 z-50 animate-fadeIn">
+          <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
+            <h4 class="text-sm font-bold text-zinc-100">Notifications</h4>
+            <span class="text-[11px] text-amber-500 font-medium">3 unread</span>
+          </div>
+          <div class="space-y-2.5 max-h-72 overflow-y-auto">
+            <div class="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex items-start gap-3">
+              <span class="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+              <div>
+                <p class="text-xs font-semibold text-zinc-200">New Poll in Fan Arena</p>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Which Olamide release era represents his peak cultural impact?</p>
+                <span class="text-[10px] text-zinc-500 mt-1 block">10m ago</span>
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex items-start gap-3">
+              <span class="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+              <div>
+                <p class="text-xs font-semibold text-zinc-200">Community Discussion</p>
+                <p class="text-[11px] text-zinc-400 mt-0.5">Folake Lawal posted: "How Carpe Diem redefined Olamide's sonic trajectory"</p>
+                <span class="text-[10px] text-zinc-500 mt-1 block">1h ago</span>
+              </div>
+            </div>
+          </div>
+          <div class="pt-3 border-t border-zinc-800 mt-3 text-center">
+            <a href="/pages/notifications.html" class="text-xs text-zinc-400 hover:text-amber-400 font-medium transition-colors">View All Notifications</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Profile Menu -->
+      <div class="relative">
+        <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Baddo Citizen" class="w-8 h-8 rounded-full object-cover">
+        </button>
+
+        <!-- User Dropdown Menu -->
+        <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
+          <div class="px-3 py-2.5 border-b border-zinc-800 mb-1">
+            <h5 class="text-xs font-bold text-zinc-100">Baddo Citizen</h5>
+            <span class="text-[11px] text-amber-500">Bariga Club Member</span>
+          </div>
+          <a href="/pages/dashboard.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+            <i data-lucide="layout-dashboard" class="w-4 h-4 text-zinc-400"></i>
+            <span>Dashboard</span>
+          </a>
+          <a href="/pages/profile.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+            <i data-lucide="user" class="w-4 h-4 text-zinc-400"></i>
+            <span>My Profile</span>
+          </a>
+          <a href="/pages/playlists.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+            <i data-lucide="library" class="w-4 h-4 text-zinc-400"></i>
+            <span>Saved & Playlists</span>
+          </a>
+          <a href="/pages/settings.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+            <i data-lucide="settings" class="w-4 h-4 text-zinc-400"></i>
+            <span>Account Settings</span>
+          </a>
+          <div class="pt-1 mt-1 border-t border-zinc-800">
+            <a href="/pages/login.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-rose-400 hover:bg-zinc-800 transition-colors">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+              <span>Sign Out</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="jb-mobile-menu-btn" class="md:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Open menu">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+
+    </div>
+  </div>
+</header>
+
+<!-- ==========================================
+     MOBILE NAVIGATION DRAWER OVERLAY
+     ========================================== -->
+<div id="jb-mobile-drawer" class="jb-modal hidden fixed inset-0 z-50">
+  <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+  
+  <div class="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col justify-between z-10 animate-fadeIn">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
+        <a href="/index.html" class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
+          <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+        </a>
+        <button id="jb-mobile-drawer-close" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Close menu">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Nav Links -->
+      <nav class="space-y-1.5 text-base font-medium">
+        <a href="/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="home" class="w-5 h-5 text-zinc-400"></i>
+          <span>Home</span>
+        </a>
+        <a href="/pages/music.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="disc" class="w-5 h-5 text-zinc-400"></i>
+          <span>Music Catalogue</span>
+        </a>
+        <a href="/pages/community.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="users" class="w-5 h-5 text-zinc-400"></i>
+          <span>Community Feed</span>
+        </a>
+        <a href="/pages/fan-arena.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="swords" class="w-5 h-5 text-zinc-400"></i>
+          <span>Fan Arena</span>
+        </a>
+        <a href="/pages/stories.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="book-open" class="w-5 h-5 text-zinc-400"></i>
+          <span>Fan Stories</span>
+        </a>
+        <a href="/pages/timeline.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="calendar" class="w-5 h-5 text-zinc-400"></i>
+          <span>Career Timeline</span>
+        </a>
+        <a href="/pages/search.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="search" class="w-5 h-5 text-zinc-400"></i>
+          <span>Search & Filter</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Mobile Drawer Bottom Profile / Join -->
+    <div class="pt-6 border-t border-zinc-800 space-y-3">
+      <a href="/pages/dashboard.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-sm font-semibold transition-colors">
+        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+        <span>Member Dashboard</span>
+      </a>
+      <a href="/pages/register.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors">
+        <span>Join Community</span>
+      </a>
+    </div>
+  </div>
+</div>
