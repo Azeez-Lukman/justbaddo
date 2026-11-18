@@ -39,7 +39,7 @@ class HealthCheckView(APIView):
         payload = {
             'status': 'healthy' if is_healthy else 'unhealthy',
             'service': 'justbaddo-backend',
-            'version': '1.0.0-phase5',
+            'version': '1.0.0-phase6',
             'environment': 'development' if settings.DEBUG else 'production',
             'checks': {
                 'database': {
@@ -72,7 +72,7 @@ class PlatformMetadataView(APIView):
                 'artist': 'Olamide Baddo',
                 'tagline': 'Voice of the Street — Discography & Fan Community',
                 'disclaimer': getattr(settings, 'JUSTBADDO_AFFILIATION_DISCLAIMER', ''),
-                'active_phase': 'Phase 2: Backend Development',
+                'active_phase': 'Phase 6: Authorised Music Streaming & Player Activation',
                 'modules': [
                     'accounts', 'music', 'playback', 'playlists',
                     'community', 'arena', 'stories', 'notifications',

@@ -5,9 +5,10 @@
 
 window.JustBaddoPlayer = {
   provider: null,
+  currentSessionId: null,
 
   init() {
-    this.provider = new MockAudioProvider();
+    this.provider = new AudioProviderManager();
 
     // Wire callbacks from provider to central state
     this.provider.setCallbacks({
@@ -22,20 +23,27 @@ window.JustBaddoPlayer = {
       onTimeUpdate: (currentTime, duration) => {
         this.updateProgressUI(currentTime, duration);
       },
+      onBuffering: () => {
+        document.querySelectorAll('.jb-player-status-badge').forEach(el => {
+          el.textContent = 'BUFFERING...';
+        });
+      },
       onEnded: () => {
         const finishedTrack = JustBaddoState.state.player.currentTrack;
         if (finishedTrack && window.JustBaddoApi) {
           window.JustBaddoApi.playback.logPlay({
             track_id: finishedTrack.id,
+            session_id: this.currentSessionId,
             duration_played: Math.round(this.provider.getDuration() || 180),
             completed: true
           }).catch(e => console.warn('[Playback Log Sync]', e.message));
         }
+        this.currentSessionId = null;
         this.next(true); // advance to next track
       },
       onError: (err) => {
         console.error('[JustBaddoPlayer] Error:', err);
-        JustBaddoUI.toast('Unable to play track in demonstration mode', 'error');
+        JustBaddoUI.toast('Playback error. Switched to fallback audio.', 'error');
       }
     });
 
@@ -64,44 +72,107 @@ window.JustBaddoPlayer = {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
   },
 
-  loadTrack(track, autoPlay = true) {
-    if (!track) return;
-    this.provider.loadTrack(track);
-    JustBaddoState.setPlayerState({ currentTrack: track, currentTime: 0, duration: this.provider.getDuration() });
-
-    // Update Player UI elements (bottom bar + expanded modal)
+  updatePlayerUI(track, badgeLabel = null, badgeClass = null) {
     document.querySelectorAll('.jb-player-title').forEach(el => el.textContent = track.title);
     document.querySelectorAll('.jb-player-artist').forEach(el => el.textContent = track.featured ? `Olamide ft. ${track.featured}` : 'Olamide');
     document.querySelectorAll('.jb-player-album').forEach(el => el.textContent = track.albumTitle || 'Catalogue Track');
     document.querySelectorAll('.jb-player-cover').forEach(el => {
       if (el.tagName === 'IMG') {
-        el.onerror = () => { el.src = 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80'; };
-        el.src = track.coverArt || track.albumCover || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80';
+        el.onerror = () => { el.src = '/static/images/defaults/default-album-cover.svg'; };
+        el.src = track.coverArt || track.albumCover || '/static/images/defaults/default-album-cover.svg';
       }
     });
 
-    // Update status badge in expanded player
-    const statusObj = JUSTBADDO_CATALOGUE.playbackStatuses[track.status] || JUSTBADDO_CATALOGUE.playbackStatuses.JUSTBADDO_STREAMING;
-    document.querySelectorAll('.jb-player-status-badge').forEach(el => {
-      el.className = `jb-player-status-badge text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border ${statusObj.badgeClass}`;
-      el.textContent = statusObj.label;
-    });
+    if (badgeLabel) {
+      document.querySelectorAll('.jb-player-status-badge').forEach(el => {
+        el.className = `jb-player-status-badge text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border ${badgeClass || 'border-zinc-700 bg-zinc-800 text-zinc-300'}`;
+        el.textContent = badgeLabel;
+      });
+    }
+  },
 
+  loadTrack(track, autoPlay = true) {
+    if (!track) return;
+
+    const statusUpper = (track.status || '').toUpperCase();
+
+    // Availability validation before attempting playback
+    if (statusUpper === 'METADATA_ONLY') {
+      this.updatePlayerUI(track, 'METADATA ONLY', 'border-zinc-700 bg-zinc-800 text-zinc-400');
+      JustBaddoUI.toast(`"${track.title}" is a metadata-only catalogue entry. Audio is not cleared for streaming.`, 'info');
+      this.updatePlayPauseUI(false);
+      return;
+    }
+    if (statusUpper === 'RESTRICTED') {
+      this.updatePlayerUI(track, 'RESTRICTED', 'border-rose-800 bg-rose-950/60 text-rose-400');
+      JustBaddoUI.toast(`"${track.title}" is restricted from playback in your territory.`, 'warning');
+      this.updatePlayPauseUI(false);
+      return;
+    }
+    if (statusUpper === 'WITHDRAWN') {
+      this.updatePlayerUI(track, 'WITHDRAWN', 'border-red-900 bg-red-950/80 text-red-400');
+      JustBaddoUI.toast(`"${track.title}" has been withdrawn by rightsholders.`, 'warning');
+      this.updatePlayPauseUI(false);
+      return;
+    }
+
+    this.updatePlayerUI(track);
     this.updateProgressUI(0, this.provider.getDuration());
     this.updateLikeButtonUI();
 
+    // Initialize backend playback session for rights validation & telemetry
     if (window.JustBaddoApi && track.id) {
-      window.JustBaddoApi.playback.createSession(track.id).catch(e => console.warn('[Playback Session Sync]', e.message));
-    }
+      window.JustBaddoApi.playback.createSession(track.id)
+        .then(res => {
+          const session = (res && res.data) ? res.data : null;
+          if (session && session.session_id) {
+            this.currentSessionId = session.session_id;
+            this.provider.loadTrack(track, session);
 
-    if (autoPlay) {
-      this.play();
+            // Update badge based on verified server session
+            const provName = (session.provider || '').toLowerCase();
+            if (session.availability_state === 'self_hosted_available') {
+              this.updatePlayerUI(track, 'DIRECT LICENSED', 'border-emerald-600 bg-emerald-950/50 text-emerald-400');
+            } else if (provName === 'soundcloud') {
+              this.updatePlayerUI(track, 'SOUNDCLOUD PARTNER', 'border-amber-600 bg-amber-950/50 text-amber-400');
+            } else if (provName === 'youtube') {
+              this.updatePlayerUI(track, 'YOUTUBE OFFICIAL', 'border-red-600 bg-red-950/50 text-red-400');
+            } else {
+              this.updatePlayerUI(track, 'DEMO SYNTH PULSE', 'border-amber-700 bg-amber-950/40 text-amber-400');
+            }
+          } else {
+            this.provider.loadTrack(track);
+          }
+
+          JustBaddoState.setPlayerState({ currentTrack: track, currentTime: 0, duration: this.provider.getDuration() });
+          if (autoPlay) this.play();
+        })
+        .catch(err => {
+          console.warn('[Playback Session Verification]', err);
+          if (err.status === 403) {
+            this.updatePlayerUI(track, 'RESTRICTED', 'border-rose-800 bg-rose-950/60 text-rose-400');
+            JustBaddoUI.toast(err.message || 'Track playback is restricted.', 'warning');
+            this.updatePlayPauseUI(false);
+          } else {
+            // Local offline fallback
+            this.provider.loadTrack(track);
+            JustBaddoState.setPlayerState({ currentTrack: track, currentTime: 0, duration: this.provider.getDuration() });
+            if (autoPlay) this.play();
+          }
+        });
+    } else {
+      this.provider.loadTrack(track);
+      JustBaddoState.setPlayerState({ currentTrack: track, currentTime: 0, duration: this.provider.getDuration() });
+      if (autoPlay) this.play();
     }
   },
 
   playTrack(track) {
-    if (!track.isPlayable) {
-      JustBaddoUI.toast(`Track status is "${track.status}". Demonstration playback unavailable.`, 'warning');
+    if (!track.isPlayable && (track.status || '').toUpperCase() !== 'JUSTBADDO_STREAMING') {
+      const msg = (track.status || '').toUpperCase() === 'METADATA_ONLY'
+        ? `"${track.title}" is metadata-only. Audio rights not cleared.`
+        : `Track status is "${track.status}". Playback restricted.`;
+      JustBaddoUI.toast(msg, 'warning');
       return;
     }
     this.loadTrack(track, true);

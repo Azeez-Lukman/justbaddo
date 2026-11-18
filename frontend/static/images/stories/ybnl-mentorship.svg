@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <radialGradient id="ybnlStoryBg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#3b1b05"/>
+      <stop offset="50%" stop-color="#19110b"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </radialGradient>
+    <linearGradient id="goldMent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#ybnlStoryBg)"/>
+  <rect x="50" y="50" width="1100" height="575" rx="20" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.3"/>
+  <g transform="translate(100, 130)">
+    <rect width="160" height="34" rx="17" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="80" y="22" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="2" fill="#f59e0b">YBNL NATION</text>
+  </g>
+  <text x="100" y="250" font-family="'Syne', sans-serif" font-weight="900" font-size="64" letter-spacing="4" fill="url(#goldMent)">THE YBNL A&amp;R</text>
+  <text x="100" y="325" font-family="'Syne', sans-serif" font-weight="800" font-size="46" letter-spacing="2" fill="#ffffff">GOLDEN TOUCH</text>
+  <text x="100" y="395" font-family="'Plus Jakarta Sans', sans-serif" font-weight="400" font-size="19" fill="#a1a1aa">
+    <tspan x="100" dy="0">Mentorship as a movement: How Olamide built one of the most generous</tspan>
+    <tspan x="100" dy="30">and prolific talent incubation dynasties in African music history.</tspan>
+  </text>
+  <g transform="translate(100, 520)">
+    <line x1="0" y1="0" x2="1000" y2="0" stroke="#27272a" stroke-width="1.5"/>
+    <text x="0" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" fill="#f4f4f5">Zainab Bello • Music Industry A&amp;R</text>
+    <text x="1000" y="35" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#f59e0b">INDUSTRY ANALYSIS</text>
+  </g>
+</svg>

@@ -43,13 +43,20 @@ class PlaybackSessionInitView(APIView):
             return api_error(message="Invalid session parameters.", code="VALIDATION_ERROR", errors=serializer.errors)
 
         track_id = serializer.validated_data['track_id']
-        client_provider = serializer.validated_data['client_provider']
+        territory = serializer.validated_data.get('territory') or request.META.get('HTTP_CF_IPCOUNTRY', 'NG')
+        client_provider = serializer.validated_data.get('client_provider', 'mock_synth')
         device = serializer.validated_data.get('device_type', 'web_browser')
+        client_ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR'))
+        if client_ip and ',' in client_ip:
+            client_ip = client_ip.split(',')[0].strip()
 
         session, message = PlaybackService.create_session(
             track_id=track_id,
+            territory=territory,
             client_provider=client_provider,
-            device=device
+            device=device,
+            user=request.user,
+            client_ip=client_ip
         )
 
         if not session:
@@ -59,7 +66,7 @@ class PlaybackSessionInitView(APIView):
 
 class PlaybackLogView(APIView):
     """
-    Log listening telemetry for dashboard stats.
+    Log listening telemetry for dashboard stats and playback tracking.
     POST /api/v1/playback/log/
     """
     permission_classes = [AllowAny]
@@ -74,7 +81,10 @@ class PlaybackLogView(APIView):
             track_id=serializer.validated_data['track_id'],
             username=username,
             duration_seconds=serializer.validated_data['duration_seconds'],
-            completed=serializer.validated_data.get('completed_listen', False)
+            completed=serializer.validated_data.get('completed_listen', False),
+            session_id=serializer.validated_data.get('session_id'),
+            playback_event=serializer.validated_data.get('playback_event', 'completed'),
+            client_timestamp=serializer.validated_data.get('client_timestamp')
         )
         return api_success(data=record, message="Listening progress recorded.")
 
@@ -86,6 +96,10 @@ class UserListeningHistoryView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        username = request.user.username if request.user.is_authenticated else 'baddofan99'
-        history = PlaybackService.get_user_history(username)
+        target_username = request.query_params.get('username')
+        if not target_username:
+            target_username = request.user.username if request.user.is_authenticated else 'baddofan99'
+
+        viewer = request.user if request.user.is_authenticated else None
+        history = PlaybackService.get_user_history(target_username, viewer=viewer)
         return api_success(data=history, meta={'count': len(history)})

@@ -19,6 +19,23 @@ class MockAudioProvider extends AudioProviderInterface {
     this.oscillator = null;
   }
 
+  getCapabilities() {
+    return {
+      providerName: 'web_audio_synth',
+      displayName: 'Web Audio API Synth (Zero-Copyright Demo)',
+      canSeek: true,
+      canChangeVolume: true,
+      supportsHeadless: true,
+      requiresUserGesture: false,
+      isAuthorizedStream: false
+    };
+  }
+
+  getState() {
+    if (!this.currentTrack) return 'IDLE';
+    return this.isPlaying ? 'PLAYING' : 'PAUSED';
+  }
+
   _initAudioContext() {
     if (!this.audioCtx && typeof window !== 'undefined') {
       const AudioContext = window.AudioContext || window.webkitAudioContext;

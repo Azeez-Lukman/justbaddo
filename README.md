@@ -58,7 +58,8 @@ All public music playback must be covered by the relevant permissions, licences 
 - **Phase 3: Database Development** — **COMPLETED** (PostgreSQL 18 connection, Django ORM models across all domains, migrations, verified discography seeder, Django Admin, backup/recovery verification).
 - **Phase 4: Testing & Integration** — **COMPLETED** (Frontend connected to live Django REST APIs and PostgreSQL storage, unified API client, CSRF and session auth, 54 automated tests passing).
 - **Phase 5: Deployment & Launch Preparation** — **COMPLETED** (Production settings, Docker & Nginx stacks, backup scripts, security checklists, cost models).
-- **Phase 6: Direct Licensing Outreach & Territory Clearances** — **READY TO START** (Rightsholder outreach, label agreements, provider terms).
+- **Phase 6: Authorised Music Streaming & Player Activation** — **COMPLETED** (Provider-independent audio architecture, 4 provider adapters [Mock Synth, SoundCloud Widget, YouTube IFrame, Self-Hosted], 5 availability states, rights clearance verification, listening telemetry deduplication, 62 automated tests passing on PostgreSQL, zero pitch-black/broken assets with local SVG asset suite).
+- **Phase 7: Self-Hosted Direct Streaming Infrastructure & Master Licensing Execution** — **READY TO START** (Direct S3/HLS private audio delivery, master rightsholder negotiations with YBNL/EMPIRE, signed URL DRM).
 
 ## Quickstart & Local Setup
 
@@ -109,6 +110,13 @@ Visit `http://localhost:8000/` for the application and `http://localhost:8000/ad
   - `docs/music/JUSTBADDO_MUSIC_ARCHITECTURE.md`
   - `docs/music/JUSTBADDO_MUSIC_LICENSING.md`
   - `docs/music/JUSTBADDO_CATALOGUE_SCHEMA.md`
+  - `docs/music/PHASE_6_README.md`
+  - `docs/music/STREAMING_PROVIDER_ASSESSMENT.md`
+  - `docs/music/PLAYBACK_ARCHITECTURE.md`
+  - `docs/music/PROVIDER_INTEGRATION.md`
+  - `docs/music/PLAYBACK_API.md`
+  - `docs/music/LICENSING_AND_RIGHTS_CHECKLIST.md`
+  - `docs/music/SELF_HOSTED_STREAMING_ROADMAP.md`
 - Frontend:
   - `docs/frontend/FRONTEND_README.md`
 - Backend:

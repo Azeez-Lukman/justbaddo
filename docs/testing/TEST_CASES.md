@@ -11,6 +11,7 @@ This document details the complete automated test suite for JustBaddo, encompass
 | **Accounts & Auth** | `accounts/tests.py` | 5 | 100% (5/5) | ~12s |
 | **Music Catalogue** | `music/tests.py` | 4 | 100% (4/4) | ~10s |
 | **Playback & Telemetry** | `playback/tests.py` | 4 | 100% (4/4) | ~10s |
+| **Phase 6 Playback Activation** | `playback/tests_phase6.py` | 8 | 100% (8/8) | ~9s |
 | **Playlists** | `playlists/tests.py` | 4 | 100% (4/4) | ~9s |
 | **Community Feed & Posts** | `community/tests.py` | 6 | 100% (6/6) | ~14s |
 | **Fan Arena** | `arena/tests.py` | 7 | 100% (7/7) | ~18s |
@@ -18,7 +19,7 @@ This document details the complete automated test suite for JustBaddo, encompass
 | **Notifications** | `notifications/tests.py` | 6 | 100% (6/6) | ~15s |
 | **Licensing & Rights** | `licensing/tests.py` | 4 | 100% (4/4) | ~10s |
 | **Moderation** | `moderation/tests.py` | 4 | 100% (4/4) | ~9s |
-| **TOTAL** | **12 Test Suites** | **54 Tests** | **100% PASS** | **118.03s** |
+| **TOTAL** | **13 Test Suites** | **62 Tests** | **100% PASS** | **124.12s** |
 
 ---
 
@@ -194,3 +195,47 @@ This document details the complete automated test suite for JustBaddo, encompass
 - **TC-MOD-002**: List Moderation Queue — Staff review of pending reports.
 - **TC-MOD-003**: Execute Moderation Action — Applies disciplinary resolution.
 - **TC-MOD-004**: User Restriction Enforcement — Verifies user restrictions table.
+
+---
+
+### Suite 13: Phase 6 Playback & Provider Activation (`playback/tests_phase6.py`)
+
+- **TC-P6-001: Availability States Verification**
+  - **Target**: `GET /api/v1/playback/check/<track_id>/`
+  - **Scenario**: Validates classification across all 5 availability states (`metadata_only`, `provider_available`, `self_hosted_available`, `restricted`, `withdrawn`). Confirms that only cleared states allow `can_play = True`.
+  - **Result**: PASS
+
+- **TC-P6-002: Territory Restriction Enforcement**
+  - **Target**: `GET /api/v1/playback/check/<track_id>/?territory=...` & `POST /api/v1/playback/session/`
+  - **Scenario**: Tests track restricted to Nigeria & Ghana (`['NG', 'GH']`). Verifies territory `NG` succeeds, while territory `US` receives `can_play = False` and HTTP 403 Forbidden on session initialization.
+  - **Result**: PASS
+
+- **TC-P6-003: Expired Licensing Permissions Blocker**
+  - **Target**: `POST /api/v1/playback/session/`
+  - **Scenario**: Tests track with `valid_until` in the past. Verifies `rights_status = 'expired'` and session creation is strictly rejected with HTTP 403.
+  - **Result**: PASS
+
+- **TC-P6-004: Future Effective Start Date Blocker**
+  - **Target**: `GET /api/v1/playback/check/<track_id>/`
+  - **Scenario**: Tests track with `valid_from` set in the future. Verifies `rights_status = 'pending_start'` and `can_play = False`.
+  - **Result**: PASS
+
+- **TC-P6-005: Playback Session Provider Capabilities Profile**
+  - **Target**: `POST /api/v1/playback/session/`
+  - **Scenario**: Verifies that session creation returns supported provider capability profile (`can_seek`, `can_change_volume`, `supports_headless`, `requires_user_gesture`).
+  - **Result**: PASS
+
+- **TC-P6-006: Duplicate Completion Event Telemetry Deduplication**
+  - **Target**: `POST /api/v1/playback/log/`
+  - **Scenario**: Submits two identical completion events within 60 seconds. Verifies the second event returns `status: 'duplicate_suppressed'` without creating duplicate rows in `ListeningHistory`.
+  - **Result**: PASS
+
+- **TC-P6-007: Session Invalidation Post-Completion**
+  - **Target**: `POST /api/v1/playback/log/`
+  - **Scenario**: Verifies that upon completion log, `session.is_valid` is set to `False` and `ended_at` is populated. Further log attempts with the same session token are rejected.
+  - **Result**: PASS
+
+- **TC-P6-008: User Listening History Privacy Preference Guard**
+  - **Target**: `GET /api/v1/playback/history/?username=<username>`
+  - **Scenario**: Verifies that when a user sets `private_listening_activity = True` in Account Settings, third-party viewers receive an empty list (`[]`), while the user themselves retains full access to their history.
+  - **Result**: PASS

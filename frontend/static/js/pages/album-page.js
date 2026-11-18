@@ -61,10 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadFromBackend();
 
+  function escapeAttr(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   // Render Header Details
   const coverImg = document.getElementById('jb-album-cover');
   if (coverImg) {
-    coverImg.onerror = () => { coverImg.src = 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80'; };
+    coverImg.onerror = () => { coverImg.src = '/static/images/defaults/default-album-cover.svg'; };
     coverImg.src = album.coverArt;
   }
 
@@ -160,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const otherAlbums = JUSTBADDO_CATALOGUE.albums.filter(a => a.id !== album.id).slice(0, 4);
     relatedContainer.innerHTML = otherAlbums.map(rel => `
       <a href="album.html?slug=${rel.slug}" class="group p-3 rounded-xl bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700 transition-all flex items-center gap-3">
-        <img src="${rel.coverArt}" alt="${rel.title}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80'" class="w-12 h-12 rounded-lg object-cover shrink-0">
+        <img src="${rel.coverArt}" alt="${escapeAttr(rel.title)}" onerror="this.onerror=null;this.src='/static/images/defaults/default-album-cover.svg'" class="w-12 h-12 rounded-lg object-cover shrink-0">
         <div class="min-w-0">
           <h5 class="text-xs font-bold text-zinc-200 group-hover:text-amber-400 transition-colors truncate">${rel.title}</h5>
           <span class="text-[11px] text-zinc-500">${rel.releaseYear} • ${rel.type}</span>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <radialGradient id="storyGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#2e1d0c"/>
+      <stop offset="70%" stop-color="#111114"/>
+      <stop offset="100%" stop-color="#070809"/>
+    </radialGradient>
+    <linearGradient id="stGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#storyGlow)"/>
+  <rect x="40" y="40" width="1120" height="595" rx="20" fill="none" stroke="url(#stGold)" stroke-width="2" opacity="0.3"/>
+  <text x="600" y="320" text-anchor="middle" font-family="'Syne', sans-serif" font-weight="900" font-size="52" letter-spacing="6" fill="#f59e0b">JUSTBADDO STORIES</text>
+  <text x="600" y="380" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="20" letter-spacing="4" fill="#a1a1aa">FAN CHRONICLES &amp; ESSAYS</text>
+</svg>

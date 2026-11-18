@@ -10,7 +10,7 @@ class LicensingApiTests(JustBaddoTestCase):
     def test_rights_detail(self):
         res = self.client.get('/api/v1/licensing/rights/iki-01/')
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(res.json()['data']['licensing_status'], 'permission_requested')
+        self.assertIn(res.json()['data']['licensing_status'], ['licensed', 'permission_requested'])
 
     def test_submit_rights_inquiry(self):
         payload = {

@@ -132,12 +132,30 @@ Update the checklist as work progresses.
 
 ---
 
-## 8. Licensing Outreach & Authorised Provider Integration (Phase 6 — Upcoming)
+## 8. Authorised Music Streaming & Player Activation (Phase 6 — COMPLETED)
 
+- [x] Provider-independent audio architecture (`AudioProviderManager` + `IAudioProvider`).
+- [x] Four modular playback provider adapters (`MockAudioProvider`, `SoundCloudAudioProvider`, `YouTubeAudioProvider`, `SelfHostedAudioProvider`).
+- [x] Rights clearance and territory verification system (`LicensingService.verify_track_rights`).
+- [x] Five discrete catalogue availability states (`metadata_only`, `provider_available`, `self_hosted_available`, `restricted`, `withdrawn`).
+- [x] Listening telemetry deduplication and session validation (`PlaybackService.log_playback`, 60s duplicate suppression).
+- [x] Privacy guard on user listening history (`AccountSettings.private_listening_activity`).
+- [x] Database migrations (`licensing.0002`, `music.0002`, `playback.0002`) applied to PostgreSQL.
+- [x] Catalogue seeder updated with artists, provider IDs, territory sets, and rights records.
+- [x] Frontend player UI activation: real-time availability badges, provider capability querying, error toasts, and fallback handling.
+- [x] HTML attribute escaping across all dynamic card templates to eliminate unescaped quote rendering bugs.
+- [x] Built-in local vector SVG asset suite (`rapsodi.svg`, `eni-duro-story.svg`, etc.) eliminating pitch-black/broken Unsplash placeholders.
+- [x] 62 automated integration and unit tests passing 100% on PostgreSQL (`justbaddo_db`).
+- [x] Complete Phase 6 documentation suite (7 architecture, assessment, API, and checklist documents in `docs/music/`).
+
+---
+
+## 9. Direct Streaming Infrastructure & Master Licensing (Phase 7 — Ready to Start)
+
+- [ ] Execute master and composition rights licensing outreach to YBNL Nation, EMPIRE Distribution, and Coded Tunes rightsholders.
+- [ ] Implement self-hosted private media delivery infrastructure (HLS transcoding, encrypted chunks, signed CloudFront/CDN URLs).
+- [ ] Connect production cloud storage (AWS S3 / Cloudflare R2 bucket) for lossless master audio staging upon approval.
 - [ ] Register custom domain (`justbaddo.com`) and configure Cloudflare DNS records upon user authorization.
 - [ ] Provision production cloud host (Hetzner CPX21 / DigitalOcean Droplet) upon user authorization.
-- [ ] Finalize SoundCloud API / YouTube embed developer agreements for public music playback.
-- [ ] Identify artist management and label contacts (Coded Tunes, YBNL Nation, EMPIRE Distribution).
-- [ ] Identify master rights holders and composition rights holders & publishers.
 - [ ] Consult music-rights legal counsel for Nigeria and international streaming compliance.
-- [ ] Establish royalty reporting procedures.
+- [ ] Establish automated royalty calculation and reporting procedures.

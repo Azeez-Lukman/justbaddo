@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <radialGradient id="bgelBg" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#362208"/>
+      <stop offset="65%" stop-color="#14110e"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </radialGradient>
+    <linearGradient id="goldHead" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bgelBg)"/>
+  <rect x="40" y="40" width="720" height="720" rx="16" fill="none" stroke="url(#goldHead)" stroke-width="2.5" opacity="0.6"/>
+  <!-- Crown Icon -->
+  <g transform="translate(400, 230)" fill="url(#goldHead)">
+    <polygon points="0,-40 30,10 60,-20 80,30 -80,30 -60,-20 -30,10"/>
+  </g>
+  <text x="400" y="340" text-anchor="middle" font-family="'Syne', sans-serif" font-weight="900" font-size="44" letter-spacing="10" fill="#ffffff">OLAMIDE</text>
+  <text x="400" y="450" text-anchor="middle" font-family="'Syne', sans-serif" font-weight="900" font-size="70" letter-spacing="10" fill="url(#goldHead)">BADDEST GUY</text>
+  <text x="400" y="525" text-anchor="middle" font-family="'Syne', sans-serif" font-weight="900" font-size="64" letter-spacing="10" fill="url(#goldHead)">EVER LIVETH</text>
+  <text x="400" y="595" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" letter-spacing="4" fill="#a1a1aa">DUROSOKE • YEMI MY LOVER • TURN UP</text>
+  <text x="400" y="700" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="4" fill="#f59e0b">THE HEADIES ALBUM OF THE YEAR • 2013</text>
+</svg>

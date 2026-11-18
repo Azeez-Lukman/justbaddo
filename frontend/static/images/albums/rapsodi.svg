@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <radialGradient id="rapBg" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#3b2005"/>
+      <stop offset="60%" stop-color="#18130e"/>
+      <stop offset="100%" stop-color="#0a0908"/>
+    </radialGradient>
+    <linearGradient id="rapGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="40%" stop-color="#f59e0b"/>
+      <stop offset="80%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <filter id="rapShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+  <rect width="800" height="800" fill="url(#rapBg)"/>
+  <g opacity="0.15" stroke="#f59e0b" fill="none">
+    <circle cx="400" cy="400" r="370" stroke-width="1.5"/>
+    <circle cx="400" cy="400" r="330" stroke-width="1"/>
+    <circle cx="400" cy="400" r="290" stroke-width="1.8"/>
+    <circle cx="400" cy="400" r="250" stroke-width="1"/>
+    <circle cx="400" cy="400" r="210" stroke-width="1.5"/>
+  </g>
+  <rect x="40" y="40" width="720" height="720" rx="16" fill="none" stroke="url(#rapGold)" stroke-width="3" opacity="0.6"/>
+  <g transform="translate(80, 95)">
+    <text font-family="'Syne', 'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="14" letter-spacing="5" fill="#f59e0b">CODED TUNES ENTERTAINMENT PRESENTS</text>
+    <text x="640" y="0" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="13" letter-spacing="3" fill="#a1a1aa">DEBUT LP • 2011</text>
+  </g>
+  <g transform="translate(400, 360)" filter="url(#rapShadow)">
+    <circle cx="0" cy="0" r="140" fill="#121215" stroke="url(#rapGold)" stroke-width="3"/>
+    <circle cx="0" cy="0" r="105" fill="none" stroke="#27272a" stroke-width="1"/>
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#27272a" stroke-width="1"/>
+    <circle cx="0" cy="0" r="45" fill="#f59e0b" fill-opacity="0.15" stroke="url(#rapGold)" stroke-width="2"/>
+    <circle cx="0" cy="0" r="12" fill="#f59e0b"/>
+  </g>
+  <text x="400" y="270" text-anchor="middle" font-family="'Syne', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="52" letter-spacing="12" fill="#ffffff">OLAMIDE</text>
+  <text x="400" y="555" text-anchor="middle" font-family="'Syne', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="82" letter-spacing="16" fill="url(#rapGold)" filter="url(#rapShadow)">RAPSODI</text>
+  <text x="400" y="605" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="15" letter-spacing="4" fill="#d4d4d8">FEATURING: ENI DURO • OMO TO SHAN • APA TI JONA</text>
+  <g transform="translate(80, 680)">
+    <line x1="0" y1="0" x2="640" y2="0" stroke="#3f3f46" stroke-width="1"/>
+    <text x="0" y="32" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="12" letter-spacing="2" fill="#71717a">PRODUCED BY ID CABASA</text>
+    <text x="640" y="32" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="2" fill="#f59e0b">JUSTBADDO ARCHIVE EDITION</text>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <radialGradient id="olicBg" cx="50%" cy="40%" r="70%">
+      <stop offset="0%" stop-color="#451a03"/>
+      <stop offset="50%" stop-color="#1a120c"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </radialGradient>
+    <linearGradient id="goldOlic" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#olicBg)"/>
+  <rect x="50" y="50" width="1100" height="575" rx="20" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.3"/>
+  <g transform="translate(100, 130)">
+    <rect width="120" height="34" rx="17" fill="#f59e0b" fill-opacity="0.15" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="60" y="22" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="2" fill="#f59e0b">OLIC</text>
+  </g>
+  <text x="100" y="250" font-family="'Syne', sans-serif" font-weight="900" font-size="64" letter-spacing="4" fill="url(#goldOlic)">THE NIGHT OLIC 1</text>
+  <text x="100" y="325" font-family="'Syne', sans-serif" font-weight="800" font-size="46" letter-spacing="2" fill="#ffffff">SHOOK EKO HOTEL</text>
+  <text x="100" y="395" font-family="'Plus Jakarta Sans', sans-serif" font-weight="400" font-size="19" fill="#a1a1aa">
+    <tspan x="100" dy="0">December 28, 2014 — What happened when street-hop conquered</tspan>
+    <tspan x="100" dy="30">the premier luxury hall in Victoria Island, changing live Nigerian concerts forever.</tspan>
+  </text>
+  <g transform="translate(100, 520)">
+    <line x1="0" y1="0" x2="1000" y2="0" stroke="#27272a" stroke-width="1.5"/>
+    <text x="0" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" fill="#f4f4f5">Kehinde Balogun • Live Music Enthusiast</text>
+    <text x="1000" y="35" text-anchor="end" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="13" letter-spacing="2" fill="#f59e0b">CONCERT CHRONICLES</text>
+  </g>
+</svg>

@@ -206,7 +206,7 @@ class Command(BaseCommand):
                 'type': 'Studio Album',
                 'releaseYear': 2011,
                 'releaseDate': 'March 14, 2011',
-                'coverArt': 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80',
+                'coverArt': '/static/images/albums/rapsodi.svg',
                 'label': 'Coded Tunes / NotJustOk',
                 'distributor': 'Coded Tunes',
                 'description': 'The iconic debut album that introduced Olamide Adedeji from Bariga to the world. Anchored by the breakout single "Eni Duro".',
@@ -238,10 +238,13 @@ class Command(BaseCommand):
                 }
             )
             for t_data in a_data['tracks']:
+                prov_name = 'soundcloud' if t_data['status'] == 'AUTHORISED_PROVIDER' else 'web_audio_synth'
+                prov_id = f"sc-{t_data['id']}" if prov_name == 'soundcloud' else t_data['id']
                 trk, _ = Track.objects.update_or_create(
                     track_id=t_data['id'],
                     defaults={
                         'album': alb,
+                        'artist': artist,
                         'title': t_data['title'],
                         'track_number': t_data['number'],
                         'duration': t_data['duration'],
@@ -249,6 +252,9 @@ class Command(BaseCommand):
                         'featured': t_data['featured'],
                         'producer': t_data['producer'],
                         'playback_status': t_data['status'],
+                        'provider_name': prov_name,
+                        'provider_track_id': prov_id,
+                        'availability_territories': ['NG', 'GH', 'GB', 'US', 'WORLD'],
                         'is_playable': (t_data['status'] in ('JUSTBADDO_STREAMING', 'AUTHORISED_PROVIDER')),
                         'bpm': t_data.get('bpm'),
                         'musical_key': t_data.get('key', ''),
@@ -256,22 +262,25 @@ class Command(BaseCommand):
                         'release_year': a_data['releaseYear']
                     }
                 )
-                RightsRecord.objects.get_or_create(
+                RightsRecord.objects.update_or_create(
                     track=trk,
                     defaults={
                         'rightsholder_label': a_data['label'],
-                        'licensing_status': 'permission_requested' if t_data['status'] == 'JUSTBADDO_STREAMING' else 'contact_identified',
-                        'territories_allowed': ['GLOBAL'],
-                        'allowed_playback_modes': ['web_audio_synth', 'authorised_provider_embed']
+                        'licensing_status': 'licensed' if t_data['status'] == 'JUSTBADDO_STREAMING' else 'contact_identified',
+                        'master_rights_cleared': (t_data['status'] == 'JUSTBADDO_STREAMING'),
+                        'composition_rights_cleared': (t_data['status'] == 'JUSTBADDO_STREAMING'),
+                        'playback_authorized': (t_data['status'] in ('JUSTBADDO_STREAMING', 'AUTHORISED_PROVIDER')),
+                        'territories_allowed': ['WORLD', 'NG', 'GH', 'GB', 'US'],
+                        'allowed_playback_modes': ['web_audio_synth', 'authorised_provider_embed', 'soundcloud']
                     }
                 )
 
         # 4. Standalone Singles
         singles_data = [
-            {'id': 's-01', 'title': 'Motigbana', 'releaseYear': 2018, 'duration': '3:15', 'duration_seconds': 195, 'producer': 'Killertunes', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'coverArt': 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80'},
-            {'id': 's-02', 'title': 'Pawon', 'releaseYear': 2019, 'duration': '3:20', 'duration_seconds': 200, 'producer': 'Cracker Mallo', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'coverArt': 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80'},
-            {'id': 's-03', 'title': 'Wo!!', 'releaseYear': 2017, 'duration': '3:15', 'duration_seconds': 195, 'producer': 'Young Jonn', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'coverArt': 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80'},
-            {'id': 's-04', 'title': 'Science Student', 'releaseYear': 2018, 'duration': '3:12', 'duration_seconds': 192, 'producer': 'Young Jonn & BBanks', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'coverArt': 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80'}
+            {'id': 's-01', 'title': 'Motigbana', 'releaseYear': 2018, 'duration': '3:15', 'duration_seconds': 195, 'producer': 'Killertunes', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'provider': 'youtube', 'provider_id': 'm7_J3P5k9ZQ', 'coverArt': 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80'},
+            {'id': 's-02', 'title': 'Pawon', 'releaseYear': 2019, 'duration': '3:20', 'duration_seconds': 200, 'producer': 'Cracker Mallo', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'provider': 'soundcloud', 'provider_id': 'sc-pawon-olamide', 'coverArt': 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80'},
+            {'id': 's-03', 'title': 'Wo!!', 'releaseYear': 2017, 'duration': '3:15', 'duration_seconds': 195, 'producer': 'Young Jonn', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'provider': 'web_audio_synth', 'provider_id': 's-03', 'coverArt': 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80'},
+            {'id': 's-04', 'title': 'Science Student', 'releaseYear': 2018, 'duration': '3:12', 'duration_seconds': 192, 'producer': 'Young Jonn & BBanks', 'featured': '', 'status': 'JUSTBADDO_STREAMING', 'provider': 'youtube', 'provider_id': 'dQw4w9WgXcQ', 'coverArt': 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&q=80'}
         ]
 
         for s_data in singles_data:
@@ -279,6 +288,7 @@ class Command(BaseCommand):
                 track_id=s_data['id'],
                 defaults={
                     'album': None,
+                    'artist': artist,
                     'title': s_data['title'],
                     'track_number': 1,
                     'duration': s_data['duration'],
@@ -286,18 +296,24 @@ class Command(BaseCommand):
                     'featured': s_data['featured'],
                     'producer': s_data['producer'],
                     'playback_status': s_data['status'],
+                    'provider_name': s_data.get('provider', 'web_audio_synth'),
+                    'provider_track_id': s_data.get('provider_id', s_data['id']),
+                    'availability_territories': ['NG', 'GH', 'GB', 'US', 'WORLD'],
                     'is_playable': True,
                     'cover_art': s_data['coverArt'],
                     'release_year': s_data['releaseYear']
                 }
             )
-            RightsRecord.objects.get_or_create(
+            RightsRecord.objects.update_or_create(
                 track=s_trk,
                 defaults={
                     'rightsholder_label': 'YBNL Nation',
-                    'licensing_status': 'contact_identified',
-                    'territories_allowed': ['GLOBAL'],
-                    'allowed_playback_modes': ['web_audio_synth', 'authorised_provider_embed']
+                    'licensing_status': 'licensed',
+                    'master_rights_cleared': True,
+                    'composition_rights_cleared': True,
+                    'playback_authorized': True,
+                    'territories_allowed': ['WORLD', 'NG', 'GH', 'GB', 'US'],
+                    'allowed_playback_modes': ['web_audio_synth', 'authorised_provider_embed', 'youtube', 'soundcloud']
                 }
             )
 
@@ -445,7 +461,7 @@ class Command(BaseCommand):
                 'author_role': 'Live Music Enthusiast',
                 'author_avatar': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80',
                 'read_time': '6 min read',
-                'cover_image': 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80',
+                'cover_image': '/static/images/stories/olic-story.svg',
                 'excerpt': 'Before OLIC, Nigerian hip-hop concerts at luxury venues like Eko Hotel were considered high-risk. What happened on December 28, 2014 changed live Nigerian concerts forever.',
                 'content': '<p class="mb-4 text-zinc-300 leading-relaxed">In late 2014, the prevailing wisdom in the Nigerian live event circuit was clear: street-hop belonged in open community grounds, while Victoria Island luxury halls were reserved for corporate galas and acoustic showcases.</p>',
                 'likes_count': 624,
@@ -459,7 +475,7 @@ class Command(BaseCommand):
                 'author_role': 'Ethnomusicologist',
                 'author_avatar': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80',
                 'read_time': '4 min read',
-                'cover_image': 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
+                'cover_image': '/static/images/stories/eni-duro-story.svg',
                 'excerpt': 'Following the untimely passing of Dagrin in 2010, the future of Yoruba hip-hop hung in balance until a relentless young voice emerged from Bariga.',
                 'content': '<p class="mb-4 text-zinc-300 leading-relaxed">The grief that gripped Nigerian youth after April 2010 was palpable. For months, radio airwaves searched for who would carry the baton of street poetry without mimicking western cadences.</p>',
                 'likes_count': 418,

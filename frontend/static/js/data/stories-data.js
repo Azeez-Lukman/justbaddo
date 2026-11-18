@@ -12,7 +12,7 @@ window.JUSTBADDO_STORIES = [
     authorAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80',
     date: 'August 14, 2023',
     readTime: '6 min read',
-    coverImage: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80',
+    coverImage: '/static/images/stories/olic-story.svg',
     excerpt: 'Before OLIC, Nigerian hip-hop concerts at luxury venues like Eko Hotel were considered high-risk. What happened on December 28, 2014 changed live Nigerian concerts forever.',
     content: `
       <p class="mb-4 text-zinc-300 leading-relaxed">In 2014, when the announcement came that Olamide would be hosting a solo concert at the prestigious Eko Convention Centre in Victoria Island, sceptics doubted whether an indigenous street rapper could pull such a crowd into Lagos' premier luxury hall.</p>
@@ -30,7 +30,7 @@ window.JUSTBADDO_STORIES = [
     authorAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80',
     date: 'November 2, 2023',
     readTime: '4 min read',
-    coverImage: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
+    coverImage: '/static/images/stories/eni-duro-story.svg',
     excerpt: 'Following the untimely passing of Dagrin in 2010, the future of Yoruba hip-hop hung in balance until a relentless young voice emerged from Bariga.',
     content: `
       <p class="mb-4 text-zinc-300 leading-relaxed">The grief that gripped Nigerian youth after April 2010 was palpable. For months, radio airwaves searched for who would carry the baton of street poetry without mimicking western cadences.</p>
@@ -48,7 +48,7 @@ window.JUSTBADDO_STORIES = [
     authorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
     date: 'January 18, 2024',
     readTime: '5 min read',
-    coverImage: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80',
+    coverImage: '/static/images/stories/ybnl-mentorship.svg',
     excerpt: 'Beyond his own discography, Olamide will go down in African music history as one of the most generous and prolific talent discoverers of modern times.',
     content: `
       <p class="mb-4 text-zinc-300 leading-relaxed">Consider the roster that has passed through or blossomed directly under the YBNL umbrella: Adekunle Gold, Lil Kesh, Viktoh, Chinko Ekun, Pheelz, Young Jonn, Fireboy DML, and Asake.</p>

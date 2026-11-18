@@ -36,7 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Track Cover & Titles
   const coverImg = document.getElementById('jb-track-cover');
-  if (coverImg) coverImg.src = track.coverArt || track.albumCover || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80';
+  if (coverImg) {
+    coverImg.onerror = () => { coverImg.src = '/static/images/defaults/default-album-cover.svg'; };
+    coverImg.src = track.coverArt || track.albumCover || '/static/images/defaults/default-album-cover.svg';
+  }
 
   const titleEl = document.getElementById('jb-track-title');
   if (titleEl) titleEl.textContent = track.title;

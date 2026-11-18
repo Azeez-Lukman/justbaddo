@@ -12,6 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const emptyState = document.getElementById('jb-search-empty-state');
   const resultsContainer = document.getElementById('jb-search-results-section');
 
+  function escapeAttr(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   let currentQuery = urlParams.get('q') || '';
 
@@ -83,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         albumsContainer.innerHTML = matchedAlbums.map(a => `
           <a href="album.html?slug=${a.slug}" class="group p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 hover:border-zinc-700 transition-all flex items-center gap-3.5">
-            <img src="${a.coverArt}" alt="${a.title}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=300&q=80'" class="w-14 h-14 rounded-xl object-cover shrink-0">
+            <img src="${a.coverArt}" alt="${escapeAttr(a.title)}" onerror="this.onerror=null;this.src='/static/images/defaults/default-album-cover.svg'" class="w-14 h-14 rounded-xl object-cover shrink-0">
             <div class="min-w-0">
               <span class="text-[10px] text-zinc-500 font-mono block">${a.releaseYear} • ${a.type}</span>
               <h4 class="text-sm font-bold text-zinc-100 group-hover:text-amber-400 transition-colors truncate">${a.title}</h4>

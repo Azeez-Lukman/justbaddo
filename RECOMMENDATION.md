@@ -230,3 +230,32 @@ Expose lightweight Django REST Framework endpoints for dynamic interaction:
 ### 5. Automated Backup with Cryptographic Checksums
 - Backups must always generate SHA256 checksums alongside compressed custom-format dumps (`pg_dump -Fc`).
 - Enforce an automatic 14-day local retention policy, and schedule monthly restoration drills against an isolated staging database to guarantee recoverability.
+
+---
+
+## 10. Authorised Music Streaming & Asset Resiliency Decisions (Phase 6)
+
+### 1. Provider-Independent Playback Abstraction
+- Never couple frontend player controls directly to a vendor-specific SDK (SoundCloud, YouTube, Spotify).
+- Enforce a strict `IAudioProvider` contract (`loadTrack`, `play`, `pause`, `seek`, `setVolume`, `getCapabilities`, `getState`, `destroy`). The `AudioProviderManager` dynamically routes playback based on track availability status and capabilities without altering UI player code.
+
+### 2. Five Discrete Playback Availability States
+- Disconnect catalogue metadata discovery from playback authorization by categorizing recordings into 5 distinct states:
+  1. `metadata_only`: Recording details and credits are discoverable, playback disabled with informational prompt.
+  2. `provider_available`: Authorised playback streamed through third-party embed or official partner API.
+  3. `self_hosted_available`: Direct playback from JustBaddo's licensed private CDN/HLS storage.
+  4. `restricted`: Rights restricted by user subscription tier or geographical territory.
+  5. `withdrawn`: Recording previously available but rights expired or pulled.
+- This gives users full transparency into rights status without breaking navigation.
+
+### 3. YouTube TOS and IFrame Embed Integrity
+- YouTube Terms of Service Section II.D strictly forbids separating audio from video or playing in headless hidden frames without video display.
+- All YouTube playback must maintain minimum visible player frame dimensions and preserve official branding and controls.
+
+### 4. Self-Contained Vector Asset Suites over Fragile External CDNs
+- Do not rely on third-party image CDNs (e.g., Unsplash) for primary discography cover art and editorial banners. Unsplash links are prone to intermittent DNS timeouts, rate-limiting, and pitch-black photographic variations that appear broken in dark-mode interfaces.
+- Bundle lightweight, high-contrast branded SVGs directly in `frontend/static/images/` and bind local fallback images to every `<img>` element's `onerror` handler.
+
+### 5. Defensive HTML Attribute Escaping in Dynamic JavaScript Templates
+- All dynamic strings injected into HTML attributes (such as `alt="${item.title}"`) must be entity-escaped using an `escapeAttr()` helper.
+- Double quotes inside titles (e.g. `How "Eni Duro" Saved My Faith...`) prematurely close attribute quotes, corrupt element parsing in the browser, and break error handlers. Always sanitize attribute interpolations.

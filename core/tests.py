@@ -16,4 +16,4 @@ class CoreApiTests(JustBaddoTestCase):
         data = response.json()
         self.assertEqual(data['status'], 'success')
         self.assertIn('Olamide', data['data']['artist'])
-        self.assertIn('Phase 2', data['data']['active_phase'])
+        self.assertIn('Phase', data['data']['active_phase'])

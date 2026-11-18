@@ -13,6 +13,10 @@ class TrackSummarySerializer(serializers.Serializer):
     producer = serializers.CharField(allow_blank=True)
     status = serializers.CharField()
     isPlayable = serializers.BooleanField()
+    provider = serializers.CharField(required=False, default='web_audio_synth')
+    provider_track_id = serializers.CharField(required=False, allow_blank=True)
+    provider_embed_url = serializers.URLField(required=False, allow_blank=True)
+    availability_territories = serializers.ListField(child=serializers.CharField(), required=False)
     bpm = serializers.IntegerField(required=False)
     key = serializers.CharField(required=False, allow_blank=True)
 

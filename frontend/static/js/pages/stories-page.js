@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const storiesContainer = document.getElementById('jb-stories-list');
   const readerModal = document.getElementById('jb-story-reader-modal');
 
+  function escapeAttr(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   function renderStories() {
     if (!storiesContainer) return;
     const stories = JUSTBADDO_STORIES;
@@ -15,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <article class="group p-6 rounded-3xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between">
         <div>
           <div class="aspect-video rounded-2xl overflow-hidden mb-5 bg-zinc-950">
-            <img src="${story.coverImage}" alt="${story.title}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <img src="${story.coverImage}" alt="${escapeAttr(story.title)}" onerror="this.onerror=null;this.src='/static/images/defaults/default-story-cover.svg'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           </div>
           <div class="flex items-center gap-2 mb-3">
             <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">${story.tags[0] || 'Fan Reflection'}</span>
@@ -27,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="pt-4 border-t border-zinc-800/80 flex items-center justify-between">
           <div class="flex items-center gap-2.5">
-            <img src="${story.authorAvatar}" alt="${story.author}" class="w-8 h-8 rounded-full object-cover border border-zinc-700">
+            <img src="${story.authorAvatar}" alt="${escapeAttr(story.author)}" onerror="this.onerror=null;this.src='/static/images/defaults/default-avatar.svg'" class="w-8 h-8 rounded-full object-cover border border-zinc-700">
             <div>
               <h5 class="text-xs font-semibold text-zinc-200">${story.author}</h5>
               <span class="text-[10px] text-zinc-500">${story.authorRole}</span>
@@ -58,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (dateEl) dateEl.textContent = `${story.date} • ${story.readTime}`;
     if (contentEl) contentEl.innerHTML = story.content;
     if (coverEl) {
-      coverEl.onerror = () => { coverEl.src = 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'; };
+      coverEl.onerror = () => { coverEl.src = '/static/images/defaults/default-story-cover.svg'; };
       coverEl.src = story.coverImage;
     }
 

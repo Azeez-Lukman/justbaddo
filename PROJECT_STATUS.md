@@ -19,8 +19,8 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 | **Phase 3** | Database Development (PostgreSQL Schema, Models & Seed) | **COMPLETED** |
 | **Phase 4** | Testing, Frontend-to-Backend Integration | **COMPLETED** |
 | **Phase 5** | Deployment and Launch Preparation | **COMPLETED** |
-| **Phase 6** | Direct Licensing Outreach & Territory Rights Clearances | **READY TO START** |
-| **Phase 7** | Self-Hosted Streaming Infrastructure | Long-term |
+| **Phase 6** | Authorised Music Streaming & Player Activation | **COMPLETED** |
+| **Phase 7** | Self-Hosted Direct Streaming Infrastructure & Master Licensing | **READY TO START** |
 | **Phase 8** | Production Launch & Optimization | Pending |
 
 ---
@@ -98,11 +98,29 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 
 ---
 
+## Completed Authorised Music Streaming & Player Activation Layer (Phase 6)
+
+1. **Provider-Independent Playback Engine**: Implemented `AudioProviderManager` with 4 interchangeable provider adapters (`MockAudioProvider`, `SoundCloudAudioProvider`, `YouTubeAudioProvider`, `SelfHostedAudioProvider`) adhering strictly to `IAudioProvider`.
+2. **Rights Clearance & Availability Engine**: Implemented `LicensingService.verify_track_rights` enforcing 5 availability states (`metadata_only`, `provider_available`, `self_hosted_available`, `restricted`, `withdrawn`) with ISO territory matching, tier permissions, and validity windows.
+3. **Session Token & Telemetry Deduplication**: Created `PlaybackSession` model and token validation with 60-second duplicate listen suppression and privacy controls via `AccountSettings.private_listening_activity`.
+4. **Persistent Vector Asset Suite**: Created high-resolution branded SVG covers (`rapsodi.svg`, `eni-duro-story.svg`, etc.) and fallbacks in `frontend/static/images/`, eliminating pitch-black artwork and broken third-party image placeholders.
+5. **UI Resiliency & Attribute Escaping**: Sanitized all dynamic template string interpolations with `escapeAttr()` across stories, catalogue, album, and queue modules to prevent unescaped quote rendering bugs.
+6. **Documentation Suite Authored**:
+   - `docs/music/PHASE_6_README.md`
+   - `docs/music/STREAMING_PROVIDER_ASSESSMENT.md`
+   - `docs/music/PLAYBACK_ARCHITECTURE.md`
+   - `docs/music/PROVIDER_INTEGRATION.md`
+   - `docs/music/PLAYBACK_API.md`
+   - `docs/music/LICENSING_AND_RIGHTS_CHECKLIST.md`
+   - `docs/music/SELF_HOSTED_STREAMING_ROADMAP.md`
+
+---
+
 ## Verification & Automated Testing
 
 - **Django System Check:** Passed (`0 issues identified`).
-- **Automated Test Suite:** 54 test cases executing across all 11 applications + end-to-end integration suite against PostgreSQL with 100% pass rate.
-- **Static Assets Compilation:** 183 static assets collected and compressed via WhiteNoise manifest storage.
+- **Automated Test Suite:** 62 test cases executing across all 11 applications + Phase 6 playback integration suite against PostgreSQL with 100% pass rate.
+- **Static Assets Compilation:** 196 static assets collected and compressed via WhiteNoise manifest storage.
 - **Frontend-Backend Integration:** 23/23 page templates verified returning HTTP 200 OK; dynamic endpoints bound to live database.
-- **Security Audit:** Zero unauthorized data mutations allowed; CSRF defense, rate-limiting, and session authentication verified.
+- **Security Audit:** Zero unauthorized data mutations allowed; CSRF defense, rate-limiting, session authentication, and privacy guards verified.
 - **Disaster Recovery:** Validated restore of dump file into isolated database with 100% row match.

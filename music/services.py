@@ -97,6 +97,10 @@ class MusicService:
                 'producer': t.producer,
                 'status': t.playback_status,
                 'isPlayable': t.is_playable,
+                'provider': t.provider_name,
+                'provider_track_id': t.provider_track_id,
+                'provider_embed_url': t.provider_embed_url,
+                'availability_territories': t.availability_territories,
                 'bpm': t.bpm or 110,
                 'key': t.musical_key or 'Am'
             })
@@ -157,6 +161,10 @@ class MusicService:
             'producer': t.producer,
             'status': t.playback_status,
             'isPlayable': t.is_playable,
+            'provider': t.provider_name,
+            'provider_track_id': t.provider_track_id,
+            'provider_embed_url': t.provider_embed_url,
+            'availability_territories': t.availability_territories,
             'bpm': t.bpm,
             'key': t.musical_key,
             'album_id': t.album.slug if t.album else None,

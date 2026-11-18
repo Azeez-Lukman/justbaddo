@@ -15,6 +15,9 @@ This document logs all functional, structural, and security defects identified d
 | **BUG-007** | Medium | `accounts` | Missing `PUT` method on `AccountSettingsView` causing HTTP 405 | **VERIFIED FIXED** |
 | **BUG-008** | Medium | `playback` | Playback telemetry log serializer parameter naming mismatch | **VERIFIED FIXED** |
 | **BUG-009** | High | `frontend` | Frontend pages relying solely on mock scripts without API client | **VERIFIED FIXED** |
+| **BUG-010** | High | `playback` | Serializer default boolean overwrite masking `completed: True` | **VERIFIED FIXED** |
+| **BUG-011** | High | `playback` | Privacy attribute mismatch (`history_visibility` vs `private_listening_activity`) | **VERIFIED FIXED** |
+| **BUG-012** | Low | `core` | Hardcoded active phase string expectation in metadata test | **VERIFIED FIXED** |
 
 ---
 
@@ -107,3 +110,51 @@ This document logs all functional, structural, and security defects identified d
 - **Root Cause**: Phase 1 templates were developed using static demonstration scripts without an API abstraction layer.
 - **Resolution**: Created [`frontend/static/js/core/api-client.js`](file:///c:/Users/USER/Documents/JustBaddo/frontend/static/js/core/api-client.js) and injected it across `index.html` and all 22 page templates.
 - **Verification**: Tested end-to-end against all 22 page templates.
+
+---
+
+### BUG-010: Serializer Default Boolean Overwrite Masking `completed: True`
+- **Severity**: High (Telemetry & Session Invalidation Failed)
+- **Module**: `playback/serializers.py`
+- **Symptom**: Submitting `completed: True` to `/api/v1/playback/log/` failed to trigger session invalidation and deduplication.
+- **Root Cause**: `completed_listen = serializers.BooleanField(default=False)` populated `attrs['completed_listen'] = False` before `validate()` ran, causing `if 'completed_listen' not in attrs` to evaluate to `False`.
+- **Resolution**: Updated `validate()` in [`playback/serializers.py`](file:///c:/Users/USER/Documents/JustBaddo/playback/serializers.py) to compute `is_completed = bool(attrs.get('completed_listen') or attrs.get('completed', False))` and assign to both attributes.
+- **Verification**: Verified via `test_session_invalidation_after_completion` and `test_duplicate_completion_event_deduplication`.
+
+---
+
+### BUG-011: Privacy Attribute Name Mismatch in `PlaybackService.get_user_history`
+- **Severity**: High (HTTP 500 Unhandled Exception)
+- **Module**: `playback/services.py`
+- **Symptom**: Querying `/api/v1/playback/history/?username=<user>` crashed with `AttributeError: 'AccountSettings' object has no attribute 'history_visibility'`.
+- **Root Cause**: `AccountSettings` model stores `private_listening_activity`, while `PlaybackService` looked up `history_visibility`.
+- **Resolution**: Changed lookup to `getattr(settings_obj, 'private_listening_activity', False)` in [`playback/services.py`](file:///c:/Users/USER/Documents/JustBaddo/playback/services.py).
+- **Verification**: `test_user_history_privacy_guard` passed with HTTP 200 OK.
+
+---
+
+### BUG-012: Hardcoded Active Phase String in Metadata Test
+- **Severity**: Low (Test Fragility)
+- **Module**: `core/tests.py`
+- **Symptom**: `CoreApiTests.test_platform_metadata` failed with `AssertionError: 'Phase 2' not found in 'Phase 6: Authorised Music Streaming & Player Activation'`.
+- **Root Cause**: Test hardcoded an expectation for `'Phase 2'` string in platform metadata.
+- **Resolution**: Updated assertion to `self.assertIn('Phase', data['data']['active_phase'])` in [`core/tests.py`](file:///c:/Users/USER/Documents/JustBaddo/core/tests.py).
+- **Verification**: `test_platform_metadata` passed with HTTP 200 OK.
+
+---
+
+### BUG-013: Unescaped Quotes in Story Card Alt Attributes & Pitch-Black Third-Party Cover Art
+- **Severity**: Medium (Visual Regression & Broken Image Placeholder in Browser)
+- **Module**: `frontend/static/js/pages/stories-page.js`, `frontend/static/js/pages/music-page.js`, `frontend/static/js/data/catalogue.js`, `frontend/static/js/data/stories-data.js`
+- **Symptom**:
+  1. On `/pages/stories.html`, the card for `How "Eni Duro" Saved My Faith in Indigenous African Rap` displayed a broken image placeholder rendered with `4How` instead of story cover artwork.
+  2. On `/pages/music.html`, the card for debut album `Rapsodi` (2011) appeared as an empty/solid pitch-black container.
+- **Root Cause**:
+  1. Double quotes in story title `How "Eni Duro" Saved My Faith...` were interpolated directly into `alt="${story.title}"` without HTML attribute escaping, terminating `alt="How "` prematurely, corrupting element attributes, and breaking the `onerror` handler in Chrome.
+  2. The Unsplash URL selected for Rapsodi (`photo-1508700115892-45ecd05ae2ad`) was an almost pure black photograph (mean RGB [42, 30, 24]), rendering as an invisible black box on dark-mode card containers.
+  3. Lack of dependable, self-contained local vector artwork fallbacks in `frontend/static/images/`.
+- **Resolution**:
+  1. Authored `escapeAttr()` utility across `stories-page.js`, `music-page.js`, `album-page.js`, `search-page.js`, and `queue.js` to escape quotes, ampersands, and angle brackets.
+  2. Generated high-contrast, branded SVG artworks (`rapsodi.svg`, `eni-duro-story.svg`, `default-album-cover.svg`, `default-story-cover.svg`, etc.) in `frontend/static/images/`.
+  3. Updated `stories-data.js`, `catalogue.js`, `seed_catalogue.py`, and `index.html` to reference the local SVG assets and bound reliable local fallbacks to all `onerror` handlers.
+- **Verification**: Browser requests to `/static/images/albums/rapsodi.svg` and `/static/images/stories/eni-duro-story.svg` return HTTP 200 OK. Rapsodi displays vibrant gold/amber vinyl iconography; Eni Duro story displays high-resolution urban typography; all 62 automated tests pass with 0 failures.

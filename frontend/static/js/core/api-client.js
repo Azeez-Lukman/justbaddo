@@ -127,10 +127,13 @@
 
     /* Playback & Telemetry */
     playback = {
-      checkRights: (trackId) => this.request(`playback/check/${encodeURIComponent(trackId)}/`),
-      createSession: (trackId) => this.request('playback/session/', { method: 'POST', body: { track_id: trackId } }),
+      checkRights: (trackId, territory = 'NG') => this.request(`playback/check/${encodeURIComponent(trackId)}/?territory=${encodeURIComponent(territory)}`),
+      createSession: (trackId, territory = 'NG', clientProvider = 'web_audio_synth') => this.request('playback/session/', {
+        method: 'POST',
+        body: { track_id: trackId, territory, client_provider: clientProvider }
+      }),
       logPlay: (logData) => this.request('playback/log/', { method: 'POST', body: logData }),
-      getHistory: () => this.request('playback/history/')
+      getHistory: (username) => this.request(username ? `playback/history/?username=${encodeURIComponent(username)}` : 'playback/history/')
     };
 
     /* Playlists */

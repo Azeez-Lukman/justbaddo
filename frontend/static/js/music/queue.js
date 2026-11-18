@@ -22,6 +22,16 @@ window.JustBaddoQueue = {
     const container = document.getElementById('jb-queue-list');
     if (!container) return;
 
+    function escapeAttr(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
     const queue = JustBaddoState.state.queue;
     const currentTrack = JustBaddoState.state.player.currentTrack;
 
@@ -43,7 +53,7 @@ window.JustBaddoQueue = {
         <div class="group flex items-center justify-between p-3 rounded-xl transition-all duration-200 ${isCurrent ? 'bg-amber-500/10 border border-amber-500/30' : 'hover:bg-zinc-800/50 border border-transparent'}">
           <div class="flex items-center gap-3 min-w-0 flex-1 cursor-pointer" data-queue-play-index="${idx}">
             <div class="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 bg-zinc-800">
-              <img src="${track.coverArt || track.albumCover || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=150&q=80'}" alt="${track.title}" class="w-full h-full object-cover">
+              <img src="${track.coverArt || track.albumCover || '/static/images/defaults/default-album-cover.svg'}" alt="${escapeAttr(track.title)}" onerror="this.onerror=null;this.src='/static/images/defaults/default-album-cover.svg'" class="w-full h-full object-cover">
               ${isCurrent ? `
                 <div class="absolute inset-0 bg-black/60 flex items-center justify-center">
                   <div class="flex items-end gap-0.5 h-3">

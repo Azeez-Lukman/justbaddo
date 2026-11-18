@@ -73,6 +73,7 @@ class Track(models.Model):
     ]
 
     album = models.ForeignKey(Album, null=True, blank=True, on_delete=models.CASCADE, related_name='tracks')
+    artist = models.ForeignKey(Artist, null=True, blank=True, on_delete=models.SET_NULL, related_name='tracks')
     track_id = models.CharField(max_length=50, unique=True)
     title = models.CharField(max_length=150)
     track_number = models.PositiveIntegerField(default=1)
@@ -84,6 +85,10 @@ class Track(models.Model):
     musical_key = models.CharField(max_length=10, blank=True)
     playback_status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='JUSTBADDO_STREAMING')
     is_playable = models.BooleanField(default=True)
+    provider_name = models.CharField(max_length=50, default='web_audio_synth')
+    provider_track_id = models.CharField(max_length=150, blank=True)
+    provider_embed_url = models.URLField(max_length=500, blank=True)
+    availability_territories = models.JSONField(default=list, blank=True)
     cover_art = models.URLField(max_length=500, blank=True)
     composer = models.CharField(max_length=150, default='Olamide Adedeji')
     recording_location = models.CharField(max_length=100, default='Lagos, Nigeria')
