@@ -8,7 +8,55 @@ window.JustBaddoUI = {
     this.setupToastsContainer();
     this.setupDropdownListeners();
     this.setupModalDismissListeners();
+    this.setupAuthUI();
     this.refreshIcons();
+  },
+
+  setupAuthUI() {
+    if (!window.JustBaddoState) return;
+
+    const renderAuthElements = (user) => {
+      const userMenu = document.getElementById('jb-user-menu');
+      const userToggle = document.querySelector('[data-dropdown-toggle="jb-user-menu"]');
+      if (!userMenu) return;
+
+      if (user) {
+        // Authenticated State
+        const nameEl = userMenu.querySelector('h5');
+        const badgeEl = userMenu.querySelector('span.text-amber-500');
+        const avatarEl = userToggle ? userToggle.querySelector('img') : null;
+
+        if (nameEl) nameEl.textContent = user.display_name || user.username || 'Baddo Citizen';
+        if (badgeEl) badgeEl.textContent = user.badge || 'Bariga Club Member';
+        if (avatarEl && user.avatar_url) avatarEl.src = user.avatar_url;
+
+        // Ensure Sign Out button calls logout API
+        const signoutLink = userMenu.querySelector('a[href*="login.html"]');
+        if (signoutLink) {
+          signoutLink.id = 'jb-auth-signout-btn';
+          signoutLink.addEventListener('click', async (e) => {
+            e.preventDefault();
+            await JustBaddoState.logout();
+            JustBaddoUI.toast('Signed out successfully.', 'info');
+            setTimeout(() => { window.location.reload(); }, 600);
+          });
+        }
+      } else {
+        // Guest State
+        const nameEl = userMenu.querySelector('h5');
+        const badgeEl = userMenu.querySelector('span.text-amber-500');
+        if (nameEl) nameEl.textContent = 'Guest Visitor';
+        if (badgeEl) badgeEl.textContent = 'Sign In to Participate';
+      }
+    };
+
+    JustBaddoState.on('auth-changed', (user) => {
+      renderAuthElements(user);
+    });
+
+    if (JustBaddoState.state.currentUser) {
+      renderAuthElements(JustBaddoState.state.currentUser);
+    }
   },
 
   refreshIcons() {

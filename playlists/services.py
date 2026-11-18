@@ -105,7 +105,9 @@ class PlaylistService:
         if pl.creator.username != creator:
             return False, "You do not own this playlist."
 
-        track = Track.objects.filter(track_id__iexact=track_id).first()
+        track = Track.objects.filter(track_id__iexact=str(track_id)).first()
+        if not track and str(track_id).isdigit():
+            track = Track.objects.filter(id=int(track_id)).first()
         if not track:
             return False, "Track not found in catalogue."
 
@@ -124,7 +126,9 @@ class PlaylistService:
         if pl.creator.username != creator:
             return False, "You do not own this playlist."
 
-        pt = PlaylistTrack.objects.filter(playlist=pl, track__track_id__iexact=track_id).first()
+        pt = PlaylistTrack.objects.filter(playlist=pl, track__track_id__iexact=str(track_id)).first()
+        if not pt and str(track_id).isdigit():
+            pt = PlaylistTrack.objects.filter(playlist=pl, track__id=int(track_id)).first()
         if not pt:
             return False, "Track was not in this playlist."
 

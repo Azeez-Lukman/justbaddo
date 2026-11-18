@@ -23,6 +23,14 @@ window.JustBaddoPlayer = {
         this.updateProgressUI(currentTime, duration);
       },
       onEnded: () => {
+        const finishedTrack = JustBaddoState.state.player.currentTrack;
+        if (finishedTrack && window.JustBaddoApi) {
+          window.JustBaddoApi.playback.logPlay({
+            track_id: finishedTrack.id,
+            duration_played: Math.round(this.provider.getDuration() || 180),
+            completed: true
+          }).catch(e => console.warn('[Playback Log Sync]', e.message));
+        }
         this.next(true); // advance to next track
       },
       onError: (err) => {
@@ -81,6 +89,10 @@ window.JustBaddoPlayer = {
 
     this.updateProgressUI(0, this.provider.getDuration());
     this.updateLikeButtonUI();
+
+    if (window.JustBaddoApi && track.id) {
+      window.JustBaddoApi.playback.createSession(track.id).catch(e => console.warn('[Playback Session Sync]', e.message));
+    }
 
     if (autoPlay) {
       this.play();

@@ -19,6 +19,10 @@ class ModerationApiTests(JustBaddoTestCase):
         self.assertGreaterEqual(len(res.json()['data']), 1)
 
     def test_apply_action(self):
+        from django.contrib.auth.models import User
+        user = User.objects.get(username='baddofan99')
+        self.client.force_login(user)
+
         payload = {
             'report_id': 'rep-001',
             'action': 'REMOVE_CONTENT',

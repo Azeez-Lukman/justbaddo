@@ -105,22 +105,20 @@ class CurrentUserProfileView(APIView):
     GET /api/v1/accounts/profile/
     PATCH /api/v1/accounts/profile/
     """
-    permission_classes = [AllowAny]  # Supports demo user fallback if unauthenticated
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        username = request.user.username if request.user.is_authenticated else 'baddofan99'
-        profile = AccountService.get_profile(username)
+        profile = AccountService.get_profile(request.user.username)
         if not profile:
             return api_error(message="Profile not found.", code="NOT_FOUND", status_code=status.HTTP_404_NOT_FOUND)
         return api_success(data=profile)
 
     def patch(self, request):
-        username = request.user.username if request.user.is_authenticated else 'baddofan99'
         serializer = ProfileUpdateSerializer(data=request.data, partial=True)
         if not serializer.is_valid():
             return api_error(message="Invalid profile update data.", code="VALIDATION_ERROR", errors=serializer.errors)
 
-        updated = AccountService.update_profile(username, serializer.validated_data)
+        updated = AccountService.update_profile(request.user.username, serializer.validated_data)
         return api_success(data=updated, message="Profile updated successfully.")
 
 class PublicUserProfileView(APIView):
@@ -157,6 +155,9 @@ class AccountSettingsView(APIView):
 
         updated = AccountService.update_settings(username, serializer.validated_data)
         return api_success(data=updated, message="Settings updated successfully.")
+
+    def put(self, request):
+        return self.patch(request)
 
 class PasswordResetRequestView(APIView):
     """

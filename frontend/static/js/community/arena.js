@@ -18,6 +18,85 @@ window.JustBaddoArena = {
     this.renderQuizOverview();
     this.renderLeaderboard();
     this.bindEvents();
+    this.loadFromBackend();
+  },
+
+  async loadFromBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const pollsRes = await window.JustBaddoApi.arena.getPolls();
+      if (pollsRes && pollsRes.data && Array.isArray(pollsRes.data) && pollsRes.data.length > 0) {
+        JUSTBADDO_ARENA.polls = pollsRes.data.map(p => ({
+          id: p.id,
+          question: p.question,
+          description: p.description || '',
+          totalVotes: p.total_votes || 0,
+          hasVoted: p.user_has_voted || false,
+          userVotedOption: p.user_voted_option_id || null,
+          options: (p.options || []).map(o => ({
+            id: o.id,
+            text: o.text,
+            votes: o.votes || 0,
+            percentage: o.percentage || 0
+          }))
+        }));
+        this.renderPolls();
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
+
+    try {
+      const battlesRes = await window.JustBaddoApi.arena.getBattles();
+      if (battlesRes && battlesRes.data && Array.isArray(battlesRes.data) && battlesRes.data.length > 0) {
+        JUSTBADDO_ARENA.battles = battlesRes.data.map(b => ({
+          id: b.id,
+          title: b.title,
+          category: b.category,
+          totalVotes: (b.track_a_votes || 0) + (b.track_b_votes || 0),
+          hasVoted: b.user_has_voted || false,
+          userVotedSong: b.user_voted_choice || null,
+          trackA: {
+            id: b.track_a?.id || 'track-a',
+            title: b.track_a?.title || 'Track A',
+            year: b.track_a?.release_year || 2013,
+            album: b.track_a?.album_title || 'Album',
+            votes: b.track_a_votes || 0,
+            percentage: b.track_a_percentage || 50,
+            cover: b.track_a?.cover_image_url || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80'
+          },
+          trackB: {
+            id: b.track_b?.id || 'track-b',
+            title: b.track_b?.title || 'Track B',
+            year: b.track_b?.release_year || 2012,
+            album: b.track_b?.album_title || 'Album',
+            votes: b.track_b_votes || 0,
+            percentage: b.track_b_percentage || 50,
+            cover: b.track_b?.cover_image_url || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80'
+          }
+        }));
+        this.renderBattles();
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
+
+    try {
+      const lbRes = await window.JustBaddoApi.arena.getLeaderboard();
+      if (lbRes && lbRes.data && Array.isArray(lbRes.data) && lbRes.data.length > 0) {
+        JUSTBADDO_ARENA.leaderboard = lbRes.data.map((item, idx) => ({
+          rank: idx + 1,
+          name: item.display_name || item.username,
+          handle: `@${item.username}`,
+          badge: item.badge || 'Bariga Member',
+          points: item.points || 0,
+          avatar: item.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80'
+        }));
+        this.renderLeaderboard();
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
   },
 
   renderPolls() {
@@ -328,6 +407,12 @@ window.JustBaddoArena = {
           });
           this.renderPolls();
           JustBaddoUI.toast('Vote recorded!', 'success');
+
+          if (window.JustBaddoApi) {
+            window.JustBaddoApi.arena.votePoll(pollId, optId).catch(err => {
+              console.warn('[Poll Vote Backend Sync]', err.message);
+            });
+          }
         }
         return;
       }
@@ -351,6 +436,12 @@ window.JustBaddoArena = {
           battle.trackB.percentage = 100 - battle.trackA.percentage;
           this.renderBattles();
           JustBaddoUI.toast('Battle vote recorded!', 'success');
+
+          if (window.JustBaddoApi) {
+            window.JustBaddoApi.arena.voteBattle(battleId, trackTarget).catch(err => {
+              console.warn('[Battle Vote Backend Sync]', err.message);
+            });
+          }
         }
         return;
       }

@@ -35,7 +35,10 @@ class PostCreateSerializer(serializers.Serializer):
         'Discography',
         'Lyrics & Meaning',
         'Concerts & OLIC',
-        'General Fan Chat'
+        'General Fan Chat',
+        'Discussion',
+        'Album Analysis',
+        'Catalogue Nostalgia'
     ])
     content = serializers.CharField(min_length=10, max_length=5000)
 

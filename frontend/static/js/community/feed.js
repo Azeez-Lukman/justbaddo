@@ -9,6 +9,44 @@ window.JustBaddoCommunity = {
   init() {
     this.renderPosts();
     this.bindEvents();
+    this.loadFromBackend();
+  },
+
+  async loadFromBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const res = await window.JustBaddoApi.community.getFeed(this.activeCategory);
+      if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
+        JUSTBADDO_COMMUNITY.posts = res.data.map(p => ({
+          id: p.id,
+          author: {
+            id: p.author?.id || 'auth-1',
+            name: p.author?.display_name || p.author?.username || 'Fan Citizen',
+            handle: `@${p.author?.username || 'baddofan'}`,
+            avatar: p.author?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+            badge: p.author?.badge || 'Bariga Club'
+          },
+          timeAgo: p.created_at || 'Recently',
+          category: p.category || 'General',
+          title: p.title,
+          content: p.content,
+          likes: p.likes_count || 0,
+          isLiked: p.is_liked || false,
+          commentsCount: p.comments_count || (p.comments ? p.comments.length : 0),
+          sharesCount: 0,
+          comments: (p.comments || []).map(c => ({
+            id: c.id,
+            author: c.author?.display_name || c.author?.username || 'Community Fan',
+            avatar: c.author?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=120&q=80',
+            time: c.created_at || 'Just now',
+            text: c.content
+          }))
+        }));
+        this.renderPosts();
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
   },
 
   renderPosts() {
@@ -155,6 +193,12 @@ window.JustBaddoCommunity = {
           post.likes += post.isLiked ? 1 : -1;
           this.renderPosts();
           JustBaddoUI.toast(post.isLiked ? 'Liked post' : 'Unliked post', 'info');
+
+          if (window.JustBaddoApi && !postId.startsWith('post-demo')) {
+            window.JustBaddoApi.community.toggleLike(postId).catch(err => {
+              console.warn('[Community Like Sync]', err.message);
+            });
+          }
         }
         return;
       }
@@ -215,6 +259,12 @@ window.JustBaddoCommunity = {
           const targetComments = document.getElementById(`comments-${postId}`);
           if (targetComments) targetComments.classList.remove('hidden');
           JustBaddoUI.toast('Reply posted', 'success');
+
+          if (window.JustBaddoApi && !postId.startsWith('post-demo')) {
+            window.JustBaddoApi.community.addComment(postId, text).catch(err => {
+              console.warn('[Comment Sync]', err.message);
+            });
+          }
         }
         return;
       }
@@ -258,6 +308,18 @@ window.JustBaddoCommunity = {
 
         JUSTBADDO_COMMUNITY.posts.unshift(newPost);
         this.renderPosts();
+
+        if (window.JustBaddoApi) {
+          window.JustBaddoApi.community.createPost({
+            title: title,
+            content: content,
+            category: category
+          }).then(res => {
+            if (res && res.data && res.data.id) {
+              newPost.id = res.data.id;
+            }
+          }).catch(err => console.warn('[Post Create Sync]', err.message));
+        }
 
         if (titleInput) titleInput.value = '';
         if (contentInput) contentInput.value = '';

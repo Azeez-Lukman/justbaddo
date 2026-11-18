@@ -37,10 +37,18 @@ class AccountsApiTests(JustBaddoTestCase):
         self.assertEqual(data['data']['username'], 'baddofan99')
 
     def test_get_profile(self):
+        from django.contrib.auth.models import User
+        user = User.objects.get(username='baddofan99')
+        self.client.force_login(user)
         response = self.client.get('/api/v1/accounts/profile/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         self.assertEqual(data['data']['username'], 'baddofan99')
+
+    def test_get_profile_unauthenticated(self):
+        self.client.logout()
+        response = self.client.get('/api/v1/accounts/profile/')
+        self.assertIn(response.status_code, [status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN])
 
     def test_get_public_profile(self):
         response = self.client.get('/api/v1/accounts/users/baddofan99/')

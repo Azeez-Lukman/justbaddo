@@ -190,6 +190,7 @@
   <script src="../static/js/data/stories-data.js"></script>
   <script src="../static/js/data/timeline-data.js"></script>
   
+  <script src="../static/js/core/api-client.js"></script>
   <script src="../static/js/core/storage.js"></script>
   <script src="../static/js/core/state.js"></script>
   <script src="../static/js/core/ui.js"></script>
@@ -202,12 +203,73 @@
   
   <script src="../static/js/core/app.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       const form = document.getElementById('jb-settings-form');
+      const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
+      // Hydrate profile and settings from live backend if logged in
+      if (window.JustBaddoApi) {
+        try {
+          const profileRes = await JustBaddoApi.auth.getProfile();
+          if (profileRes && profileRes.data) {
+            const u = profileRes.data;
+            const displayNameInput = form.querySelector('input[value="Baddo Citizen"], input[placeholder*="Name"]');
+            const bioTextarea = form.querySelector('textarea');
+            if (displayNameInput && u.display_name) displayNameInput.value = u.display_name;
+            if (bioTextarea && u.bio) bioTextarea.value = u.bio;
+          }
+        } catch (e) {
+          // Keep default demo values if guest
+        }
+
+        try {
+          const settingsRes = await JustBaddoApi.auth.getSettings();
+          if (settingsRes && settingsRes.data) {
+            const s = settingsRes.data;
+            const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+            if (checkboxes.length >= 5) {
+              checkboxes[0].checked = s.auto_advance_queue ?? true;
+              checkboxes[1].checked = s.audio_preview_enabled ?? true;
+              checkboxes[2].checked = !s.private_listening_activity;
+              checkboxes[3].checked = s.email_notifications ?? true;
+              checkboxes[4].checked = s.community_activity_digest ?? true;
+            }
+          }
+        } catch (e) {
+          // Keep defaults
+        }
+      }
+
       if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
           e.preventDefault();
-          JustBaddoUI.toast('Account settings updated successfully', 'success');
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="animate-pulse">Saving...</span>';
+          }
+
+          const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+          const payload = {
+            auto_advance_queue: checkboxes[0] ? checkboxes[0].checked : true,
+            audio_preview_enabled: checkboxes[1] ? checkboxes[1].checked : true,
+            private_listening_activity: checkboxes[2] ? !checkboxes[2].checked : false,
+            email_notifications: checkboxes[3] ? checkboxes[3].checked : true,
+            community_activity_digest: checkboxes[4] ? checkboxes[4].checked : true,
+          };
+
+          try {
+            if (window.JustBaddoApi) {
+              await JustBaddoApi.auth.updateSettings(payload);
+            }
+            JustBaddoUI.toast('Account settings updated successfully', 'success');
+          } catch (err) {
+            JustBaddoUI.toast(err.message || 'Unable to save settings', 'error');
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Save Settings';
+            }
+          }
         });
       }
     });

@@ -166,6 +166,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  async function loadFromBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const res = await window.JustBaddoApi.music.getAlbums();
+      if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
+        res.data.forEach(album => {
+          const exists = JUSTBADDO_CATALOGUE.albums.find(a => a.slug === album.slug);
+          if (exists) {
+            exists.title = album.title;
+            exists.releaseYear = album.release_year;
+            if (album.cover_image_url) exists.coverArt = album.cover_image_url;
+            if (album.total_tracks) exists.trackCount = album.total_tracks;
+          }
+        });
+        renderCatalogue();
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
+  }
+
   // Initial render
   renderCatalogue();
+  loadFromBackend();
 });

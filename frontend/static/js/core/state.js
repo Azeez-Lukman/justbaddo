@@ -22,6 +22,8 @@ window.JustBaddoState = {
     queue: [],
     savedTrackIds: [],
     userPlaylists: [],
+    currentUser: null,
+    isAuthenticated: false,
     notifications: [
       { id: 'notif-1', title: 'New Poll in Fan Arena', message: 'Which Baddo era represents his peak cultural impact? Vote now.', time: '10m ago', read: false, type: 'arena' },
       { id: 'notif-2', title: 'Community Discussion', message: 'Folake Lawal mentioned you in "How Carpe Diem redefined Olamide".', time: '1h ago', read: false, type: 'community' },
@@ -78,6 +80,85 @@ window.JustBaddoState = {
         }
       ];
     }
+
+    // Try synchronizing session with live backend API
+    this.syncWithBackend();
+  },
+
+  async syncWithBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const res = await window.JustBaddoApi.auth.getProfile();
+      if (res && res.data) {
+        this.state.currentUser = res.data;
+        this.state.isAuthenticated = true;
+        this.emit('auth-changed', this.state.currentUser);
+
+        // Fetch live user playlists from PostgreSQL
+        try {
+          const plRes = await window.JustBaddoApi.playlists.list();
+          if (plRes && plRes.data && Array.isArray(plRes.data)) {
+            this.state.userPlaylists = plRes.data.map(p => ({
+              id: p.id,
+              title: p.title,
+              description: p.description,
+              createdAt: p.created_at,
+              trackIds: p.tracks ? p.tracks.map(t => t.id || t) : []
+            }));
+            this.emit('playlists-updated', this.state.userPlaylists);
+          }
+        } catch (e) {
+          // Keep local fallback
+        }
+
+        // Fetch live notifications from PostgreSQL
+        try {
+          const notifRes = await window.JustBaddoApi.notifications.list();
+          if (notifRes && notifRes.data && Array.isArray(notifRes.data)) {
+            this.state.notifications = notifRes.data.map(n => ({
+              id: n.id,
+              title: n.title,
+              message: n.message,
+              time: n.created_at || 'Just now',
+              read: n.is_read,
+              type: n.notification_type
+            }));
+            this.emit('notifications-updated', this.state.notifications);
+          }
+        } catch (e) {
+          // Keep local fallback
+        }
+      }
+    } catch (err) {
+      // User is unauthenticated / guest visitor
+      this.state.currentUser = null;
+      this.state.isAuthenticated = false;
+      this.emit('auth-changed', null);
+    }
+  },
+
+  async login(credentials) {
+    if (!window.JustBaddoApi) throw new Error('API client unavailable');
+    const res = await window.JustBaddoApi.auth.login(credentials);
+    if (res && res.data) {
+      this.state.currentUser = res.data;
+      this.state.isAuthenticated = true;
+      this.emit('auth-changed', this.state.currentUser);
+      await this.syncWithBackend();
+    }
+    return res;
+  },
+
+  async logout() {
+    if (!window.JustBaddoApi) return;
+    try {
+      await window.JustBaddoApi.auth.logout();
+    } catch (e) {
+      // Continue client cleanup
+    }
+    this.state.currentUser = null;
+    this.state.isAuthenticated = false;
+    this.emit('auth-changed', null);
   },
 
   // Event Subscription
@@ -169,6 +250,21 @@ window.JustBaddoState = {
     this.state.userPlaylists.unshift(newPlaylist);
     JustBaddoStorage.set('user_playlists', this.state.userPlaylists);
     this.emit('playlists-updated', this.state.userPlaylists);
+
+    if (this.state.isAuthenticated && window.JustBaddoApi) {
+      window.JustBaddoApi.playlists.create({
+        title: title.trim(),
+        description: description.trim(),
+        is_public: true
+      }).then(res => {
+        if (res && res.data && res.data.id) {
+          newPlaylist.id = res.data.id;
+          JustBaddoStorage.set('user_playlists', this.state.userPlaylists);
+          this.emit('playlists-updated', this.state.userPlaylists);
+        }
+      }).catch(err => console.warn('[Playlist API Create]', err.message));
+    }
+
     return newPlaylist;
   },
 
@@ -178,6 +274,11 @@ window.JustBaddoState = {
       playlist.trackIds.push(trackId);
       JustBaddoStorage.set('user_playlists', this.state.userPlaylists);
       this.emit('playlists-updated', this.state.userPlaylists);
+
+      if (this.state.isAuthenticated && window.JustBaddoApi && !playlistId.startsWith('user-pl-')) {
+        window.JustBaddoApi.playlists.addTrack(playlistId, trackId)
+          .catch(err => console.warn('[Playlist API Add]', err.message));
+      }
       return true;
     }
     return false;
@@ -189,6 +290,11 @@ window.JustBaddoState = {
       playlist.trackIds = playlist.trackIds.filter(id => id !== trackId);
       JustBaddoStorage.set('user_playlists', this.state.userPlaylists);
       this.emit('playlists-updated', this.state.userPlaylists);
+
+      if (this.state.isAuthenticated && window.JustBaddoApi && !playlistId.startsWith('user-pl-')) {
+        window.JustBaddoApi.playlists.removeTrack(playlistId, trackId)
+          .catch(err => console.warn('[Playlist API Remove]', err.message));
+      }
       return true;
     }
     return false;

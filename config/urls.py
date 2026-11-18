@@ -68,6 +68,7 @@ urlpatterns = [
 
     # Frontend Template Rendering (Modular integration with Phase 1 templates)
     path('', IndexView.as_view(), name='frontend-index'),
+    path('index.html', IndexView.as_view(), name='frontend-index-html'),
     path('pages/<str:page_name>', render_page, name='frontend-page'),
 ]
 

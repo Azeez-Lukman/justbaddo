@@ -8,6 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const playlistsContainer = document.getElementById('jb-dash-playlists');
   const savedCountEl = document.getElementById('jb-dash-saved-count');
 
+  function renderUserProfile() {
+    const user = JustBaddoState.state.currentUser;
+    if (!user) return;
+
+    const bannerTitle = document.querySelector('h1.text-xl, h1.text-2xl');
+    const badgeEl = document.querySelector('.p-6 span.bg-amber-500\\/20, .p-8 span.bg-amber-500\\/20');
+    const handleEl = document.querySelector('p.text-xs.text-zinc-400');
+    const avatarEl = document.querySelector('.p-6 img.rounded-2xl, .p-8 img.rounded-2xl');
+
+    if (bannerTitle) bannerTitle.textContent = `Welcome back, ${user.display_name || user.username}`;
+    if (badgeEl) badgeEl.textContent = user.badge || 'Bariga Club';
+    if (handleEl) handleEl.textContent = `@${user.username} • Fan Member`;
+    if (avatarEl && user.avatar_url) avatarEl.src = user.avatar_url;
+  }
+
   function renderSavedTracks() {
     if (!savedTracksContainer) return;
 
@@ -88,6 +103,11 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPlaylists();
   });
 
+  JustBaddoState.on('auth-changed', () => {
+    renderUserProfile();
+  });
+
+  renderUserProfile();
   renderSavedTracks();
   renderPlaylists();
 });

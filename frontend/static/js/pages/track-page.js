@@ -12,6 +12,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.title = `${track.title} — Track Details — JUSTBADDO`;
 
+  async function loadFromBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const res = await window.JustBaddoApi.music.getTrack(trackId);
+      if (res && res.data) {
+        const liveTrack = res.data;
+        if (titleEl) titleEl.textContent = liveTrack.title;
+        if (artistEl) artistEl.textContent = liveTrack.featured_artists ? `Olamide ft. ${liveTrack.featured_artists}` : 'Olamide';
+        if (producerEl && liveTrack.producer) producerEl.textContent = liveTrack.producer;
+        if (bpmEl && liveTrack.bpm) bpmEl.textContent = `${liveTrack.bpm} BPM`;
+        if (keyEl && liveTrack.musical_key) keyEl.textContent = liveTrack.musical_key;
+        if (durationEl && liveTrack.duration_seconds) {
+          durationEl.textContent = `${Math.floor(liveTrack.duration_seconds/60)}:${(liveTrack.duration_seconds%60).toString().padStart(2, '0')}`;
+        }
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
+  }
+
+  loadFromBackend();
+
   // Track Cover & Titles
   const coverImg = document.getElementById('jb-track-cover');
   if (coverImg) coverImg.src = track.coverArt || track.albumCover || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=400&q=80';

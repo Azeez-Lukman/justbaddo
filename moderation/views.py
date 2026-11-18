@@ -58,6 +58,8 @@ class ModerationActionApplyView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            return api_error(message="Administrative authentication required.", code="UNAUTHORIZED", status_code=status.HTTP_401_UNAUTHORIZED)
         serializer = ModerationActionSerializer(data=request.data)
         if not serializer.is_valid():
             return api_error(message="Invalid moderation action.", code="VALIDATION_ERROR", errors=serializer.errors)

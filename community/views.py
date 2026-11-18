@@ -33,6 +33,8 @@ class PostListCreateView(APIView):
         return api_success(data=serializer.data, meta={'count': len(posts)})
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            return api_error(message="Authentication required to publish a discussion.", code="UNAUTHORIZED", status_code=status.HTTP_401_UNAUTHORIZED)
         serializer = PostCreateSerializer(data=request.data)
         if not serializer.is_valid():
             return api_error(message="Invalid post data.", code="VALIDATION_ERROR", errors=serializer.errors)

@@ -9,6 +9,10 @@ class PlaylistsApiTests(JustBaddoTestCase):
         self.assertGreaterEqual(len(data['data']), 2)
 
     def test_create_and_delete_playlist(self):
+        from django.contrib.auth.models import User
+        user = User.objects.get(username='baddofan99')
+        self.client.force_login(user)
+
         create_payload = {
             'title': 'Test Night Drive',
             'description': 'Smooth tunes for late nights',

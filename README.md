@@ -56,7 +56,8 @@ All public music playback must be covered by the relevant permissions, licences 
 - **Phase 1: Frontend Development** — **COMPLETED** (Full responsive UI, player controls, mock Web Audio API synthesizer, 21 pages).
 - **Phase 2: Backend Development** — **COMPLETED** (Modular Django monolith, 11 applications, RESTful APIs, auth workflows, zero-copyright gateway).
 - **Phase 3: Database Development** — **COMPLETED** (PostgreSQL 18 connection, Django ORM models across all domains, migrations, verified discography seeder, Django Admin, backup/recovery verification).
-- **Phase 4: Testing & Integration** — **READY TO START** (Connecting frontend UI to live backend REST endpoints and PostgreSQL storage).
+- **Phase 4: Testing & Integration** — **COMPLETED** (Frontend connected to live Django REST APIs and PostgreSQL storage, unified API client, CSRF and session auth, 54 automated tests passing).
+- **Phase 5: Authorised Streaming Provider Integration** — **READY TO START** (SoundCloud API, YouTube embeds, streaming policy, territory controls).
 
 ## Quickstart & Local Setup
 
@@ -121,6 +122,11 @@ Visit `http://localhost:8000/` for the application and `http://localhost:8000/ad
   - `docs/database/DATABASE_SCHEMA.md`
   - `docs/database/MIGRATIONS.md`
   - `docs/database/BACKUP_AND_RECOVERY.md`
+- Testing & Integration:
+  - `docs/testing/TESTING_README.md`
+  - `docs/testing/TEST_CASES.md`
+  - `docs/testing/BUG_TRACKER.md`
+  - `docs/testing/INTEGRATION_REPORT.md`
 
 ## Development Philosophy
 

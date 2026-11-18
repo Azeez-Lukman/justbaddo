@@ -59,5 +59,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  async function loadFromBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const res = await window.JustBaddoApi.music.getTimeline();
+      if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
+        JUSTBADDO_TIMELINE = res.data.map(m => ({
+          year: m.year,
+          title: m.title,
+          category: m.category,
+          description: m.description,
+          source: m.source_reference || 'Headies / Industry Archive'
+        }));
+        renderTimeline();
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
+  }
+
   renderTimeline();
+  loadFromBackend();
 });

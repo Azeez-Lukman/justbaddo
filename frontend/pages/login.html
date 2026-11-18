@@ -82,6 +82,7 @@
     © 2024–2026 JustBaddo. Frontend Demonstration Prototype.
   </footer>
 
+  <script src="../static/js/core/api-client.js"></script>
   <script src="../static/js/core/storage.js"></script>
   <script src="../static/js/core/state.js"></script>
   <script src="../static/js/core/ui.js"></script>
@@ -100,15 +101,41 @@
         });
       }
 
-      // Handle login demo submission
+      // Handle live backend login submission
       const form = document.getElementById('jb-login-form');
+      const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
       if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
           e.preventDefault();
-          JustBaddoUI.toast('Signed in successfully! Redirecting to Dashboard...', 'success');
-          setTimeout(() => {
-            window.location.href = 'dashboard.html';
-          }, 800);
+          const usernameOrEmail = document.getElementById('jb-login-email').value.trim();
+          const password = document.getElementById('jb-login-password').value;
+          const remember = form.querySelector('input[type="checkbox"]')?.checked || false;
+
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="animate-pulse">Authenticating...</span>';
+          }
+
+          try {
+            await JustBaddoState.login({
+              username_or_email: usernameOrEmail,
+              password: password,
+              remember_me: remember
+            });
+            JustBaddoUI.toast('Signed in successfully! Redirecting to Dashboard...', 'success');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 600);
+          } catch (err) {
+            console.error('[Login Error]', err);
+            const msg = err.data?.message || err.message || 'Invalid credentials. Please verify your details.';
+            JustBaddoUI.toast(msg, 'error');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Sign In to Account';
+            }
+          }
         });
       }
     });

@@ -175,3 +175,33 @@ Expose lightweight Django REST Framework endpoints for dynamic interaction:
 ### 6. Verified Logical Backup and Disaster Recovery Strategy
 - Confirmed custom PostgreSQL archive format (`pg_dump -Fc`) as the standard backup artifact, offering compression and fine-grained selective restore capabilities via `pg_restore`.
 - Executed and validated a full backup and restore cycle on an isolated PostgreSQL test database (`justbaddo_db_restore_test`), confirming 100% record match and zero data loss.
+
+---
+
+## 8. Testing & Frontend-to-Backend Integration Decisions (Phase 4)
+
+### 1. Unified API Client Singleton (`api-client.js`)
+- Rather than scattering raw `fetch()` calls across 20+ vanilla JavaScript modules, centralized all HTTP communications into `window.JustBaddoApi`.
+- **Automatic CSRF Token Extraction:** Parses `csrftoken` from `document.cookie` and injects `X-CSRFToken` header on all non-safe HTTP methods (`POST`, `PUT`, `PATCH`, `DELETE`).
+- **Standardized Credentials:** Uses `credentials: 'include'` on every request to ensure Django session cookies (`sessionid`) are reliably passed across same-origin and configured CORS endpoints.
+- **Envelope Unwrapping:** Standardizes unwrap of DRF's `{status, data, message, meta}` envelope while providing predictable error objects to callers.
+
+### 2. Hybrid Graceful Degradation & Fallback Strategy
+- To protect user experience during network outages, unseeded database environments, or local static inspections, frontend view controllers implement a graceful degradation pattern:
+  - Controllers attempt live REST API fetch first.
+  - If the server responds with an error or is unreachable, the UI falls back smoothly to local cached/demonstration records (`ALBUMS_DATA`, `TIMELINE_DATA`, `STORIES_DATA`).
+  - This ensures that UI components never break or render blank states even during transitional development or server maintenance.
+
+### 3. Audio Telemetry & Session Logging Strategy
+- To maintain accurate listening counts and audit records without overloading the database:
+  - Playback session initiation (`POST /api/v1/playback/session/`) checks track rights and issues a verified session record before the player activates audio synthesis.
+  - Listening history telemetry is logged via `POST /api/v1/playback/log/` only when a track completes or reaches threshold listen time, updating `ListeningHistory` in PostgreSQL asynchronously without blocking the client playback loop.
+
+### 4. Mutation Hardening & Anti-Spoofing Architecture
+- During integration testing, security reviews revealed that several creation endpoints previously accepted client-supplied author usernames or permitted anonymous mutations.
+- Hardened all write views (`PostListCreateView`, `PlaylistListCreateView`, `ModerationActionApplyView`, `CurrentUserProfileView`) to strictly verify `request.user.is_authenticated`.
+- Author attribution is derived strictly from `request.user`, preventing impersonation and ensuring referential integrity in PostgreSQL.
+
+### 5. PostgreSQL Constraint Propagation to Frontend Feedback
+- Database-level unique constraints (e.g. `unique_together` on votes and likes) are mapped through DRF serializers to return clean HTTP 400 responses with descriptive messages (`"You have already voted in this poll"`).
+- Frontend UI modules catch these constraint errors and display user-friendly toast messages, preventing unhandled promise rejections or ambiguous generic errors.

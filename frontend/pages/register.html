@@ -81,6 +81,7 @@
     © 2024–2026 JustBaddo. Frontend Demonstration Prototype.
   </footer>
 
+  <script src="../static/js/core/api-client.js"></script>
   <script src="../static/js/core/storage.js"></script>
   <script src="../static/js/core/state.js"></script>
   <script src="../static/js/core/ui.js"></script>
@@ -88,13 +89,50 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('jb-register-form');
+      const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
       if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
           e.preventDefault();
-          JustBaddoUI.toast('Account created! Welcome to JustBaddo.', 'success');
-          setTimeout(() => {
-            window.location.href = 'dashboard.html';
-          }, 800);
+          const username = document.getElementById('jb-reg-username').value.trim();
+          const email = document.getElementById('jb-reg-email').value.trim();
+          const password = document.getElementById('jb-reg-password').value;
+          const agreeTerms = document.getElementById('jb-reg-terms').checked;
+
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="animate-pulse">Creating Account...</span>';
+          }
+
+          try {
+            await JustBaddoApi.auth.register({
+              username: username,
+              email: email,
+              password: password,
+              agree_terms: agreeTerms
+            });
+            JustBaddoUI.toast('Account created! Welcome to JustBaddo.', 'success');
+            setTimeout(() => {
+              window.location.href = 'login.html';
+            }, 800);
+          } catch (err) {
+            console.error('[Registration Error]', err);
+            let msg = 'Registration failed. Please check your information.';
+            if (err.data && err.data.errors) {
+              const errs = err.data.errors;
+              const firstKey = Object.keys(errs)[0];
+              if (firstKey && Array.isArray(errs[firstKey])) {
+                msg = `${firstKey}: ${errs[firstKey][0]}`;
+              }
+            } else if (err.message) {
+              msg = err.message;
+            }
+            JustBaddoUI.toast(msg, 'error');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = 'Create Fan Account';
+            }
+          }
         });
       }
     });

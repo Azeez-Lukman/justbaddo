@@ -16,6 +16,10 @@ class CommunityApiTests(JustBaddoTestCase):
             self.assertEqual(p['category'], 'Discography')
 
     def test_create_post(self):
+        from django.contrib.auth.models import User
+        user = User.objects.get(username='baddofan99')
+        self.client.force_login(user)
+
         payload = {
             'title': 'Is YBNL the greatest African hip-hop movement?',
             'category': 'General Fan Chat',

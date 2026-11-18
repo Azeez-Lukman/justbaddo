@@ -96,6 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         renderStories();
         JustBaddoUI.closeModal('jb-submit-story-modal');
+
+        if (window.JustBaddoApi) {
+          window.JustBaddoApi.stories.submit({
+            title: titleInput.value.trim(),
+            content: textInput.value.trim(),
+            tags: ['Community Submission']
+          }).catch(err => console.warn('[Story Submit Sync]', err.message));
+        }
+
         titleInput.value = '';
         textInput.value = '';
         JustBaddoUI.toast('Your story was submitted for community publication!', 'success');
@@ -103,5 +112,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  async function loadFromBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const res = await window.JustBaddoApi.stories.list();
+      if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
+        res.data.forEach(s => {
+          const exists = JUSTBADDO_STORIES.find(st => st.id === s.id);
+          if (!exists) {
+            JUSTBADDO_STORIES.unshift({
+              id: s.id,
+              title: s.title,
+              author: s.author?.display_name || s.author?.username || 'Community Fan',
+              authorRole: 'Community Writer',
+              authorAvatar: s.author?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+              date: s.created_at || 'Recently',
+              readTime: s.read_time || '4 min read',
+              coverImage: s.cover_image_url || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+              excerpt: (s.content || '').substring(0, 150) + '...',
+              content: `<p class="mb-4 text-zinc-300 leading-relaxed">${s.content}</p>`,
+              likes: s.likes_count || 0,
+              tags: s.tags || ['Fan Reflection']
+            });
+          }
+        });
+        renderStories();
+      }
+    } catch (e) {
+      // Keep demo fallback
+    }
+  }
+
   renderStories();
+  loadFromBackend();
 });

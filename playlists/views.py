@@ -30,6 +30,8 @@ class PlaylistListCreateView(APIView):
         return api_success(data=serializer.data, meta={'count': len(playlists)})
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            return api_error(message="Authentication required to create a playlist.", code="UNAUTHORIZED", status_code=status.HTTP_401_UNAUTHORIZED)
         serializer = PlaylistCreateSerializer(data=request.data)
         if not serializer.is_valid():
             return api_error(message="Invalid playlist payload.", code="VALIDATION_ERROR", errors=serializer.errors)

@@ -13,6 +13,54 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set Page Title
   document.title = `${album.title} — Album Discography — JUSTBADDO`;
 
+  async function loadFromBackend() {
+    if (!window.JustBaddoApi) return;
+    try {
+      const res = await window.JustBaddoApi.music.getAlbum(slug);
+      if (res && res.data) {
+        const liveAlbum = res.data;
+        if (titleEl) titleEl.textContent = liveAlbum.title;
+        if (descEl && liveAlbum.description) descEl.textContent = liveAlbum.description;
+        if (coverImg && liveAlbum.cover_image_url) coverImg.src = liveAlbum.cover_image_url;
+        if (typeEl) typeEl.textContent = `${liveAlbum.release_year} • ${liveAlbum.album_type || 'Studio Album'}`;
+        
+        if (tracklistContainer && liveAlbum.tracks && liveAlbum.tracks.length > 0) {
+          tracklistContainer.innerHTML = liveAlbum.tracks.map((track, idx) => {
+            const isPlayable = track.is_playable || track.playback_status !== 'RESTRICTED';
+            const statusKey = track.playback_status || 'JUSTBADDO_STREAMING';
+            const statusObj = JUSTBADDO_CATALOGUE.playbackStatuses[statusKey] || JUSTBADDO_CATALOGUE.playbackStatuses.JUSTBADDO_STREAMING;
+            return `
+              <div class="flex items-center justify-between p-3.5 rounded-xl border border-zinc-800/60 bg-zinc-900/40 hover:bg-zinc-850 hover:border-zinc-700/80 transition-all group">
+                <div class="flex items-center gap-3.5 min-w-0">
+                  <span class="w-6 text-center text-xs font-mono text-zinc-500 group-hover:hidden">${idx + 1}</span>
+                  <button class="w-6 h-6 rounded-md bg-amber-500/10 text-amber-400 group-hover:flex hidden items-center justify-center transition-colors" data-play-track-id="${track.id}" title="Play Track">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                  </button>
+                  <div class="min-w-0">
+                    <a href="track.html?id=${track.id}" class="text-sm font-semibold text-zinc-200 group-hover:text-amber-400 transition-colors truncate block">${track.title}</a>
+                    <span class="text-xs text-zinc-500 truncate block">${track.featured_artists || track.primary_artist_name || 'Olamide'} • Prod: ${track.producer || 'YBNL'}</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4 text-xs">
+                  <span class="text-[10px] uppercase font-semibold px-2 py-0.5 rounded-full border ${statusObj.badgeClass}">${statusObj.label}</span>
+                  <span class="text-zinc-500 font-mono">${track.duration_seconds ? `${Math.floor(track.duration_seconds/60)}:${(track.duration_seconds%60).toString().padStart(2, '0')}` : '3:00'}</span>
+                  <button class="text-zinc-500 hover:text-amber-400 p-1" data-action-add-to-playlist="${track.id}">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+          JustBaddoUI.refreshIcons();
+        }
+      }
+    } catch (e) {
+      // Keep local catalogue fallback
+    }
+  }
+
+  loadFromBackend();
+
   // Render Header Details
   const coverImg = document.getElementById('jb-album-cover');
   if (coverImg) {

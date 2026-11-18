@@ -42,7 +42,11 @@ class PollVoteView(APIView):
         if not serializer.is_valid():
             return api_error(message="Invalid vote option.", code="VALIDATION_ERROR", errors=serializer.errors)
 
-        updated_polls, msg = ArenaService.vote_poll(poll_id, serializer.validated_data['option_id'])
+        updated_polls, msg = ArenaService.vote_poll(
+            poll_id=poll_id,
+            option_id=serializer.validated_data['option_id'],
+            user=request.user if request.user.is_authenticated else None
+        )
         if not updated_polls:
             return api_error(message=msg, code="BAD_REQUEST", status_code=status.HTTP_400_BAD_REQUEST)
 
@@ -72,7 +76,11 @@ class SongBattleVoteView(APIView):
         if not serializer.is_valid():
             return api_error(message="Invalid battle choice.", code="VALIDATION_ERROR", errors=serializer.errors)
 
-        updated_battles, msg = ArenaService.vote_battle(battle_id, serializer.validated_data['selected_song'])
+        updated_battles, msg = ArenaService.vote_battle(
+            battle_id=battle_id,
+            selected_song=serializer.validated_data['selected_song'],
+            user=request.user if request.user.is_authenticated else None
+        )
         if not updated_battles:
             return api_error(message=msg, code="BAD_REQUEST", status_code=status.HTTP_400_BAD_REQUEST)
 

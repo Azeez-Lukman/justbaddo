@@ -100,19 +100,22 @@ Update the checklist as work progresses.
 
 ---
 
-## 6. Testing, Integration & Security Hardening (Phase 4 — Upcoming)
+## 6. Testing & Integration (Phase 4 — Complete)
 
-- [ ] Connect existing Phase 1 frontend JavaScript modules to live Django REST APIs (replacing demo mock adapters).
-- [ ] Implement session-based and token-based authentication handshakes between frontend UI and Django backend.
-- [ ] End-to-end integration testing of player queue, playback telemetry logging, and listening history with PostgreSQL.
-- [ ] Full interactive testing of Community comments, post creation, and like reactions against live database.
-- [ ] Fan Arena live voting, single elimination song battles, and trivia challenge score recording integration.
-- [ ] Frontend integration of Fan Stories publishing, notification badges, and settings management.
-- [ ] Security hardening (rate limiting, strict CORS/CSRF headers, query optimization, indexing audit).
+- [x] Connect existing Phase 1 frontend JavaScript modules to live Django REST APIs via unified `JustBaddoApi` client.
+- [x] Implement session-based authentication handshakes (`login`, `register`, `logout`, `settings`, `profile`) between frontend UI and Django backend with CSRF token extraction.
+- [x] End-to-end integration of music player with backend playback sessions and listen history telemetry logging (`/api/v1/playback/log/`).
+- [x] Interactive integration of Community feed, post discussions, threaded comments, and like reactions against live PostgreSQL database.
+- [x] Fan Arena live voting, single-elimination song battles, and trivia challenge score recording integration.
+- [x] Frontend integration of Fan Stories publishing, playlist management, and user settings synchronization.
+- [x] Security and permission hardening across all mutation endpoints (authentication verification, CSRF defense, role enforcement).
+- [x] Route resolution and static asset serving verification across all 23 frontend page templates.
+- [x] Comprehensive end-to-end integration test suite (`core/tests_integration.py`) with 54/54 automated tests passing on PostgreSQL.
+- [x] Author comprehensive testing documentation suite (`TESTING_README.md`, `TEST_CASES.md`, `BUG_TRACKER.md`, `INTEGRATION_REPORT.md`).
 
 ---
 
-## 7. Provider Investigation (Phase 5)
+## 7. Authorised Streaming Provider Integration (Phase 5 — Upcoming)
 
 - [ ] Research SoundCloud commercial integration permissions.
 - [ ] Investigate YouTube embedding requirements.
