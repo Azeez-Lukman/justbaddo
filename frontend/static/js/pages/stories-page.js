@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <article class="group p-6 rounded-3xl bg-zinc-900/60 border border-zinc-800 hover:border-zinc-700 transition-all flex flex-col justify-between">
         <div>
           <div class="aspect-video rounded-2xl overflow-hidden mb-5 bg-zinc-950">
-            <img src="${story.coverImage}" alt="${story.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <img src="${story.coverImage}" alt="${story.title}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
           </div>
           <div class="flex items-center gap-2 mb-3">
             <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">${story.tags[0] || 'Fan Reflection'}</span>
@@ -57,7 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (authorEl) authorEl.textContent = `${story.author} (${story.authorRole})`;
     if (dateEl) dateEl.textContent = `${story.date} • ${story.readTime}`;
     if (contentEl) contentEl.innerHTML = story.content;
-    if (coverEl) coverEl.src = story.coverImage;
+    if (coverEl) {
+      coverEl.onerror = () => { coverEl.src = 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80'; };
+      coverEl.src = story.coverImage;
+    }
 
     JustBaddoUI.openModal('jb-story-reader-modal');
   }

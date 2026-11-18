@@ -67,6 +67,7 @@ window.JustBaddoPlayer = {
     document.querySelectorAll('.jb-player-album').forEach(el => el.textContent = track.albumTitle || 'Catalogue Track');
     document.querySelectorAll('.jb-player-cover').forEach(el => {
       if (el.tagName === 'IMG') {
+        el.onerror = () => { el.src = 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80'; };
         el.src = track.coverArt || track.albumCover || 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=300&q=80';
       }
     });

@@ -30,7 +30,7 @@ window.JUSTBADDO_STORIES = [
     authorAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80',
     date: 'November 2, 2023',
     readTime: '4 min read',
-    coverImage: 'https://images.unsplash.com/photo-1445985543470-41fdd6ce388d?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
     excerpt: 'Following the untimely passing of Dagrin in 2010, the future of Yoruba hip-hop hung in balance until a relentless young voice emerged from Bariga.',
     content: `
       <p class="mb-4 text-zinc-300 leading-relaxed">The grief that gripped Nigerian youth after April 2010 was palpable. For months, radio airwaves searched for who would carry the baton of street poetry without mimicking western cadences.</p>

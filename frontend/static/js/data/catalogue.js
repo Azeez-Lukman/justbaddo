@@ -286,7 +286,7 @@ window.JUSTBADDO_CATALOGUE = {
       releaseDate: 'March 14, 2011',
       trackCount: 16,
       duration: '58:24',
-      coverArt: 'https://images.unsplash.com/photo-1445985543470-41fdd6ce388d?auto=format&fit=crop&w=600&q=80',
+      coverArt: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80',
       label: 'Coded Tunes / NotJustOk',
       distributor: 'Coded Tunes',
       description: 'The iconic debut album that introduced Olamide Adedeji from Bariga to the world. Anchored by the groundbreaking breakout single "Eni Duro" and featuring Wizkid on "Omo To Shan".',

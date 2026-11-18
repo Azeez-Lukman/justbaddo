@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       albumsContainer.innerHTML = albums.map(album => `
         <div class="group relative rounded-2xl bg-zinc-900/70 border border-zinc-800/80 hover:border-zinc-700 p-4 transition-all duration-300 flex flex-col justify-between">
           <div class="relative aspect-square rounded-xl overflow-hidden mb-4 bg-zinc-950">
-            <img src="${album.coverArt}" alt="${album.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <img src="${album.coverArt}" alt="${album.title}" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
               <button class="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center shadow-lg transition-transform transform hover:scale-110 ml-auto" data-play-album-id="${album.id}" title="Play Album">
                 <i data-lucide="play" class="w-4 h-4 fill-current"></i>
