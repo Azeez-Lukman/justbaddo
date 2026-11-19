@@ -26,12 +26,21 @@ if not SECRET_KEY or SECRET_KEY.startswith('django-insecure-'):
 ALLOWED_HOSTS_RAW = os.environ.get('DJANGO_ALLOWED_HOSTS', '')
 ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS_RAW.split(',') if h.strip()]
 if not ALLOWED_HOSTS:
-    # Fallback to single domain if space-delimited
     ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS_RAW.split() if h.strip()]
+
+# Render deployment automatic host detection
+render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if render_hostname and render_hostname not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(render_hostname)
+
 if not ALLOWED_HOSTS:
-    raise ImproperlyConfigured(
-        "DJANGO_ALLOWED_HOSTS must be set with valid production hostnames (e.g. justbaddo.com, www.justbaddo.com)."
-    )
+    # Allow .onrender.com wildcard if deployed on Render without explicit hosts
+    if os.environ.get('RENDER'):
+        ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
+    else:
+        raise ImproperlyConfigured(
+            "DJANGO_ALLOWED_HOSTS must be set with valid production hostnames (e.g. justbaddo.com, .onrender.com)."
+        )
 
 # 4. HTTPS, SSL and Reverse Proxy Headers
 SECURE_SSL_REDIRECT = os.environ.get('DJANGO_SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 'yes')

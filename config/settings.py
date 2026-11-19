@@ -102,7 +102,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database Configuration (Environment-driven for PostgreSQL / SQLite Dev Fallback)
 # In Phase 2, supports SQLite development fallback while preparing full PostgreSQL specs for Phase 3.
 DB_ENGINE = os.environ.get('DJANGO_DB_ENGINE', '')
-if DB_ENGINE == 'postgresql' or 'POSTGRES_DB' in os.environ:
+if os.environ.get('DATABASE_URL'):
+    import urllib.parse
+    db_url = urllib.parse.urlparse(os.environ['DATABASE_URL'])
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': db_url.path.lstrip('/'),
+            'USER': db_url.username or 'postgres',
+            'PASSWORD': urllib.parse.unquote(db_url.password or ''),
+            'HOST': db_url.hostname or 'localhost',
+            'PORT': db_url.port or 5432,
+            'CONN_MAX_AGE': 600,
+        }
+    }
+elif DB_ENGINE == 'postgresql' or 'POSTGRES_DB' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
