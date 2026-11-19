@@ -140,3 +140,26 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .pb-player-safe {
   padding-bottom: 7.5rem;
 }
+
+/* ========================================================
+   PERSISTENT BOTTOM PLAYER & HEADER MOBILE RESPONSIVENESS
+   ======================================================== */
+
+/* Prevent status badge from overflowing and colliding with player controls on tablets and mobile */
+@media (max-width: 1023px) {
+  #jb-persistent-player .jb-player-status-badge {
+    display: none !important;
+  }
+}
+
+/* On mobile phones (<640px), declutter mini player controls to guarantee zero overlapping */
+@media (max-width: 639px) {
+  #jb-persistent-player .jb-player-shuffle-btn,
+  #jb-persistent-player .jb-player-repeat-btn {
+    display: none !important;
+  }
+  
+  #jb-persistent-player .jb-player-like-btn {
+    display: none !important;
+  }
+}

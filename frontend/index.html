@@ -93,9 +93,9 @@
         </div>
 
         <!-- User Menu -->
-        <div class="relative">
-          <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Baddo Citizen" class="w-8 h-8 rounded-full object-cover">
+        <div class="relative shrink-0">
+          <button class="shrink-0 flex items-center p-0.5 sm:p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
+            <img src="/static/images/defaults/default-avatar.svg" alt="Baddo Citizen" onerror="this.onerror=null;this.src='/static/images/defaults/default-avatar.svg'" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
           </button>
 
           <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
@@ -782,7 +782,7 @@
         <p>© 2024–2026 JustBaddo. Built for music fans and cultural preservation.</p>
         <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>Phase 1 Frontend Prototype • Zero Copyrighted Streams Distributed</span>
+          <span>Phase 6 &bull; Authorised Music &amp; Fan Community Platform &bull; Zero Copyrighted Streams Distributed</span>
         </div>
       </div>
     </div>
@@ -790,58 +790,58 @@
 
   <!-- ================= PERSISTENT BOTTOM MUSIC PLAYER ================= -->
   <div id="jb-persistent-player" class="fixed bottom-0 inset-x-0 z-40 bg-zinc-950/95 border-t border-zinc-800/80 backdrop-blur-xl transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-20 flex items-center justify-between gap-2 sm:gap-4">
       
       <!-- Left: Track Metadata -->
-      <div class="flex items-center gap-3.5 min-w-0 w-1/4 sm:w-1/3">
-        <div class="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 bg-zinc-900 border border-zinc-800 cursor-pointer jb-player-expand-btn group">
-          <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=150&q=80" alt="Current Track" class="jb-player-cover w-full h-full object-cover group-hover:scale-105 transition-transform">
+      <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1 max-w-[45%] sm:max-w-none sm:w-1/3">
+        <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl overflow-hidden shrink-0 bg-zinc-900 border border-zinc-800 cursor-pointer jb-player-expand-btn group">
+          <img src="/static/images/defaults/default-album-cover.svg" alt="Current Track" class="jb-player-cover w-full h-full object-cover group-hover:scale-105 transition-transform">
           <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
             <i data-lucide="maximize-2" class="w-4 h-4 text-white"></i>
           </div>
         </div>
-        <div class="min-w-0">
+        <div class="min-w-0 flex-1">
           <div class="flex items-center gap-2">
-            <h4 class="jb-player-title text-sm font-bold text-zinc-100 truncate cursor-pointer hover:text-amber-400 transition-colors jb-player-expand-btn">Uptown Disco</h4>
-            <span class="jb-player-status-badge hidden lg:inline-block text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.5 rounded-full border bg-amber-950 text-amber-400 border-amber-800">Preview</span>
+            <h4 class="jb-player-title text-xs sm:text-sm font-bold text-zinc-100 truncate cursor-pointer hover:text-amber-400 transition-colors jb-player-expand-btn">Uptown Disco</h4>
+            <span class="jb-player-status-badge hidden lg:inline-block text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.5 rounded-full border bg-amber-950 text-amber-400 border-amber-800 shrink-0">Preview</span>
           </div>
-          <p class="jb-player-artist text-xs text-zinc-400 truncate">Olamide ft. Fireboy DML & Asake</p>
+          <p class="jb-player-artist text-[11px] sm:text-xs text-zinc-400 truncate">Olamide ft. Fireboy DML & Asake</p>
         </div>
       </div>
 
       <!-- Center: Playback Controls & Progress Bar -->
-      <div class="flex flex-col items-center max-w-lg w-full flex-1">
-        <div class="flex items-center gap-5 sm:gap-6 mb-1.5">
-          <button class="jb-player-shuffle-btn text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Shuffle" aria-label="Toggle Shuffle">
+      <div class="flex flex-col items-center justify-center shrink-0 sm:flex-1 sm:max-w-lg">
+        <div class="flex items-center gap-2.5 sm:gap-6 mb-1 sm:mb-1.5">
+          <button class="jb-player-shuffle-btn hidden sm:inline-flex text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Shuffle" aria-label="Toggle Shuffle">
             <i data-lucide="shuffle" class="w-4 h-4"></i>
           </button>
           <button class="jb-player-prev-btn text-zinc-300 hover:text-white transition-colors p-1" title="Previous Track" aria-label="Previous Track">
             <i data-lucide="skip-back" class="w-4 h-4"></i>
           </button>
-          <button class="jb-play-pause-btn w-9 h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-all transform hover:scale-105 shadow-md shadow-amber-500/20" title="Play/Pause" aria-label="Play">
+          <button class="jb-play-pause-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-all transform hover:scale-105 shadow-md shadow-amber-500/20 shrink-0" title="Play/Pause" aria-label="Play">
             <i data-lucide="play" class="jb-play-pause-icon w-4 h-4 fill-current"></i>
           </button>
           <button class="jb-player-next-btn text-zinc-300 hover:text-white transition-colors p-1" title="Next Track" aria-label="Next Track">
             <i data-lucide="skip-forward" class="w-4 h-4"></i>
           </button>
-          <button class="jb-player-repeat-btn relative text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Repeat" aria-label="Toggle Repeat">
+          <button class="jb-player-repeat-btn hidden sm:inline-flex relative text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Repeat" aria-label="Toggle Repeat">
             <i data-lucide="repeat" class="w-4 h-4"></i>
             <span class="jb-repeat-badge hidden absolute -top-1 -right-1 text-[8px] font-bold text-amber-400"></span>
           </button>
         </div>
 
-        <div class="w-full flex items-center gap-3 text-[11px] font-mono text-zinc-400">
-          <span class="jb-player-current-time w-8 text-right">0:00</span>
-          <div class="relative flex-1 flex items-center">
+        <div class="w-full flex items-center gap-1.5 sm:gap-3 text-[10px] sm:text-[11px] font-mono text-zinc-400">
+          <span class="jb-player-current-time w-7 sm:w-8 text-right shrink-0">0:00</span>
+          <div class="relative flex-1 flex items-center min-w-[50px]">
             <input type="range" min="0" max="100" value="0" step="0.1" class="jb-progress-slider w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Track Progress">
           </div>
-          <span class="jb-player-duration w-8">3:15</span>
+          <span class="jb-player-duration w-7 sm:w-8 shrink-0">3:15</span>
         </div>
       </div>
 
       <!-- Right: Utility Controls (Volume, Queue, Expand) -->
-      <div class="flex items-center justify-end gap-3 sm:gap-4 w-1/4 sm:w-1/3">
-        <button class="jb-player-like-btn text-zinc-400 hover:text-rose-500 transition-colors p-1.5" title="Save Track" aria-label="Save Track">
+      <div class="flex items-center justify-end gap-1.5 sm:gap-4 shrink-0 sm:w-1/3">
+        <button class="jb-player-like-btn hidden sm:inline-flex text-zinc-400 hover:text-rose-500 transition-colors p-1.5" title="Save Track" aria-label="Save Track">
           <i data-lucide="heart" class="w-4 h-4"></i>
         </button>
 
@@ -852,12 +852,12 @@
           <input type="range" min="0" max="1" step="0.01" value="0.7" class="jb-volume-slider w-16 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Volume">
         </div>
 
-        <button class="jb-player-queue-btn relative text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800" title="Play Queue" aria-label="View Queue">
+        <button class="jb-player-queue-btn relative text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800 shrink-0" title="Play Queue" aria-label="View Queue">
           <i data-lucide="list-music" class="w-4 h-4"></i>
           <span class="jb-queue-count absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-black text-[9px] font-bold flex items-center justify-center">1</span>
         </button>
 
-        <button class="jb-player-expand-btn text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800" title="Expand Player" aria-label="Expand Player">
+        <button class="jb-player-expand-btn text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800 shrink-0" title="Expand Player" aria-label="Expand Player">
           <i data-lucide="maximize-2" class="w-4 h-4"></i>
         </button>
       </div>

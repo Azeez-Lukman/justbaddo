@@ -85,7 +85,9 @@ window.JustBaddoPlayer = {
 
     if (badgeLabel) {
       document.querySelectorAll('.jb-player-status-badge').forEach(el => {
-        el.className = `jb-player-status-badge text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border ${badgeClass || 'border-zinc-700 bg-zinc-800 text-zinc-300'}`;
+        const isBottomBar = el.closest('#jb-persistent-player');
+        const responsiveClass = isBottomBar ? 'hidden lg:inline-block' : 'inline-block';
+        el.className = `jb-player-status-badge ${responsiveClass} text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border ${badgeClass || 'border-zinc-700 bg-zinc-800 text-zinc-300'}`;
         el.textContent = badgeLabel;
       });
     }
