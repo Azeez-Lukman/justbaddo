@@ -20,43 +20,71 @@ window.JustBaddoUI = {
       const userToggle = document.querySelector('[data-dropdown-toggle="jb-user-menu"]');
       if (!userMenu) return;
 
+      const headerDiv = userMenu.querySelector('div.px-3') || userMenu.firstElementChild;
+      const footerDiv = userMenu.querySelector('div.pt-1') || userMenu.lastElementChild;
+
       if (user) {
         // Authenticated State
-        const nameEl = userMenu.querySelector('h5');
-        const badgeEl = userMenu.querySelector('span.text-amber-500');
-        const avatarEl = userToggle ? userToggle.querySelector('img') : null;
+        if (headerDiv) {
+          headerDiv.innerHTML = `
+            <h5 class="text-xs font-bold text-zinc-100">${user.display_name || user.username || 'Baddo Citizen'}</h5>
+            <span class="text-[11px] text-amber-500">${user.badge || 'Bariga Club Member'}</span>
+          `;
+        }
 
-        if (nameEl) nameEl.textContent = user.display_name || user.username || 'Baddo Citizen';
-        if (badgeEl) badgeEl.textContent = user.badge || 'Bariga Club Member';
+        const avatarEl = userToggle ? userToggle.querySelector('img') : null;
         if (avatarEl && user.avatar_url) avatarEl.src = user.avatar_url;
 
-        // Ensure Sign Out button calls logout API
-        const signoutLink = userMenu.querySelector('a[href*="login.html"]');
-        if (signoutLink) {
-          signoutLink.id = 'jb-auth-signout-btn';
-          signoutLink.addEventListener('click', async (e) => {
-            e.preventDefault();
-            await JustBaddoState.logout();
-            JustBaddoUI.toast('Signed out successfully.', 'info');
-            setTimeout(() => { window.location.reload(); }, 600);
-          });
+        if (footerDiv) {
+          footerDiv.innerHTML = `
+            <a href="/pages/login.html" id="jb-auth-signout-btn" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-rose-400 hover:bg-zinc-800 transition-colors">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+              <span>Sign Out</span>
+            </a>
+          `;
+          const signoutBtn = footerDiv.querySelector('#jb-auth-signout-btn');
+          if (signoutBtn) {
+            signoutBtn.addEventListener('click', async (e) => {
+              e.preventDefault();
+              await JustBaddoState.logout();
+              JustBaddoUI.toast('Signed out successfully.', 'info');
+              setTimeout(() => { window.location.reload(); }, 600);
+            });
+          }
         }
       } else {
         // Guest State
-        const nameEl = userMenu.querySelector('h5');
-        const badgeEl = userMenu.querySelector('span.text-amber-500');
-        if (nameEl) nameEl.textContent = 'Guest Visitor';
-        if (badgeEl) badgeEl.textContent = 'Sign In to Participate';
+        if (headerDiv) {
+          headerDiv.innerHTML = `
+            <h5 class="text-xs font-bold text-zinc-100">Guest Visitor</h5>
+            <a href="/pages/login.html" class="inline-flex items-center gap-1 text-[11px] text-amber-500 hover:text-amber-400 font-semibold transition-colors">
+              <span>Sign In to Participate</span>
+              <i data-lucide="arrow-right" class="w-3 h-3"></i>
+            </a>
+          `;
+        }
+
+        const avatarEl = userToggle ? userToggle.querySelector('img') : null;
+        if (avatarEl) avatarEl.src = '/static/images/defaults/default-avatar.svg';
+
+        if (footerDiv) {
+          footerDiv.innerHTML = `
+            <a href="/pages/login.html" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
+              <i data-lucide="log-in" class="w-4 h-4"></i>
+              <span>Sign In / Register</span>
+            </a>
+          `;
+        }
       }
+
+      JustBaddoUI.refreshIcons();
     };
 
     JustBaddoState.on('auth-changed', (user) => {
       renderAuthElements(user);
     });
 
-    if (JustBaddoState.state.currentUser) {
-      renderAuthElements(JustBaddoState.state.currentUser);
-    }
+    renderAuthElements(JustBaddoState.state.currentUser);
   },
 
   refreshIcons() {
