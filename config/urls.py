@@ -26,7 +26,7 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 
 from core.views import HealthCheckView, PlatformMetadataView
-from core.frontend_views import IndexView, render_page
+from core.frontend_views import IndexView, render_page, members_view
 from music.views import AlbumListView, AlbumDetailView, TrackDetailView
 from community.views import PostListCreateView, PostDetailView
 from accounts.views import CurrentUserProfileView, PublicUserProfileView
@@ -73,6 +73,8 @@ urlpatterns = [
     # Frontend Template Rendering (Modular integration with Phase 1 templates)
     path('', IndexView.as_view(), name='frontend-index'),
     path('index.html', IndexView.as_view(), name='frontend-index-html'),
+    path('members/', members_view, name='frontend-members'),
+    path('members', members_view, name='frontend-members-slashless'),
     path('pages/<str:page_name>', render_page, name='frontend-page'),
 ]
 

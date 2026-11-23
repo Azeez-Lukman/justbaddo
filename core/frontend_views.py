@@ -38,3 +38,9 @@ def render_page(request, page_name):
     })
     response['Cache-Control'] = 'no-cache, must-revalidate'
     return response
+
+def members_view(request):
+    """
+    Renders the public JustBaddo Member Directory page directly at /members/.
+    """
+    return render_page(request, 'members.html')
