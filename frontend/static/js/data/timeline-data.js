@@ -102,5 +102,12 @@ window.JUSTBADDO_TIMELINE = [
     category: 'EP Release',
     description: 'In June 2024, Olamide released the 7-track EP Ikigai, featuring "Metaverse", "Uptown Disco" with Fireboy DML & Asake, and "Hello Habibi", reaffirming his creative longevity and cultural stewardship.',
     source: 'The Native / YBNL / EMPIRE'
+  },
+  {
+    year: '2026',
+    title: 'Eleventh Studio Album: "Time and Space"',
+    category: 'Studio Album',
+    description: 'On November 16, 2026, Olamide released his landmark eleventh studio album, Time and Space, via YBNL Nation and EMPIRE. Featuring 10 tracks including "Elohim", "Skoskola", "Say Less", "Burukutu", "Alujon", and "Jaiye" (featuring FOLA), inaugurating a transcendent new era in Afrobeats history.',
+    source: 'YBNL Nation / EMPIRE Official Release'
   }
 ];

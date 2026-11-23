@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let events = JUSTBADDO_TIMELINE;
 
     if (activeCategory === 'RELEASES') {
-      events = events.filter(e => e.category.toLowerCase().includes('album') || e.category.toLowerCase().includes('breakthrough') || e.category.toLowerCase().includes('single'));
+      events = events.filter(e => e.category.toLowerCase().includes('album') || e.category.toLowerCase().includes('breakthrough') || e.category.toLowerCase().includes('single') || e.category.toLowerCase().includes('ep'));
     } else if (activeCategory === 'INDUSTRY') {
-      events = events.filter(e => e.category.toLowerCase().includes('label') || e.category.toLowerCase().includes('partnership') || e.category.toLowerCase().includes('concert'));
+      events = events.filter(e => e.category.toLowerCase().includes('label') || e.category.toLowerCase().includes('partnership') || e.category.toLowerCase().includes('concert') || e.category.toLowerCase().includes('expansion'));
     }
 
     container.innerHTML = events.map((item, idx) => `
@@ -65,11 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await window.JustBaddoApi.music.getTimeline();
       if (res && res.data && Array.isArray(res.data) && res.data.length > 0) {
         JUSTBADDO_TIMELINE = res.data.map(m => ({
-          year: m.year,
+          year: String(m.year),
           title: m.title,
           category: m.category,
           description: m.description,
-          source: m.source_reference || 'Headies / Industry Archive'
+          source: m.citation || m.source_reference || m.source || 'Industry Archive'
         }));
         renderTimeline();
       }
