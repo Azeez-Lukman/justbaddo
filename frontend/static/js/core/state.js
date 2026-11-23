@@ -150,14 +150,23 @@ window.JustBaddoState = {
   },
 
   async logout() {
-    if (!window.JustBaddoApi) return;
-    try {
-      await window.JustBaddoApi.auth.logout();
-    } catch (e) {
-      // Continue client cleanup
+    if (window.JustBaddoApi) {
+      try {
+        await window.JustBaddoApi.auth.logout();
+      } catch (e) {
+        // Continue client cleanup even if server error
+      }
     }
+    // Invalidate client-side state
     this.state.currentUser = null;
     this.state.isAuthenticated = false;
+
+    // Clear private cached profile and storage
+    if (window.JustBaddoStorage) {
+      JustBaddoStorage.remove('user_profile');
+      JustBaddoStorage.remove('user_settings');
+    }
+
     this.emit('auth-changed', null);
   },
 

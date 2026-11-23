@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <radialGradient id="tsBg" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#2a1805"/>
+      <stop offset="35%" stop-color="#18120b"/>
+      <stop offset="70%" stop-color="#0c0d10"/>
+      <stop offset="100%" stop-color="#050607"/>
+    </radialGradient>
+    <linearGradient id="tsAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="40%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="tsRing" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#d97706" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#78350f" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="800" height="800" fill="url(#tsBg)"/>
+  
+  <!-- Outer Frame -->
+  <rect x="40" y="40" width="720" height="720" rx="20" fill="none" stroke="url(#tsAmber)" stroke-width="2.5" opacity="0.4"/>
+  
+  <!-- Orbital Rings / Time and Space Motifs -->
+  <circle cx="400" cy="400" r="280" fill="none" stroke="url(#tsRing)" stroke-width="2" stroke-dasharray="8 12"/>
+  <ellipse cx="400" cy="400" rx="330" ry="140" transform="rotate(-25 400 400)" fill="none" stroke="url(#tsRing)" stroke-width="1.5" stroke-dasharray="14 10"/>
+  <circle cx="400" cy="400" r="48" fill="#f59e0b" fill-opacity="0.12" stroke="url(#tsAmber)" stroke-width="2"/>
+  <circle cx="400" cy="400" r="16" fill="#f59e0b"/>
+  
+  <!-- Star Points -->
+  <circle cx="210" cy="220" r="2.5" fill="#fef3c7" opacity="0.8"/>
+  <circle cx="620" cy="260" r="3" fill="#fef3c7" opacity="0.6"/>
+  <circle cx="180" cy="560" r="2" fill="#fef3c7" opacity="0.7"/>
+  <circle cx="590" cy="580" r="2.5" fill="#fef3c7" opacity="0.75"/>
+  <circle cx="400" cy="160" r="1.5" fill="#fef3c7" opacity="0.5"/>
+
+  <!-- Typography -->
+  <text x="400" y="210" text-anchor="middle" font-family="'Syne', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="38" letter-spacing="14" fill="#ffffff">OLAMIDE</text>
+  
+  <text x="400" y="470" text-anchor="middle" font-family="'Syne', 'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="72" letter-spacing="10" fill="url(#tsAmber)">TIME &amp; SPACE</text>
+  
+  <text x="400" y="535" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="600" font-size="14" letter-spacing="5" fill="#cbd5e1">ELOHIM • SKOSKOLA • SAY LESS • JAIYE FT. FOLA • JOGOR</text>
+  
+  <text x="400" y="705" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-weight="700" font-size="12" letter-spacing="4" fill="#f59e0b">ELEVENTH STUDIO ALBUM • NOVEMBER 16, 2026 • YBNL / EMPIRE</text>
+</svg>

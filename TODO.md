@@ -42,7 +42,10 @@ Update the checklist as work progresses.
 - [x] Implement Member Profile (`pages/profile.html`) with public tabs (discussions, playlists, badges).
 - [x] Implement Notification Center (`pages/notifications.html`) with mark-as-read interaction.
 - [x] Implement Account & Preferences (`pages/settings.html`) with audio, privacy, and profile configuration.
-- [x] Implement Authentication screens (`pages/login.html`, `pages/register.html`, `pages/forgot-password.html`).
+- [x] Implement Dedicated Authentication suite (`pages/login.html`, `pages/register.html`, `pages/forgot-password.html`, `pages/reset-password.html`, `pages/verify-email.html`, `pages/welcome.html`).
+- [x] Implement Avatar-based member navigation with initials fallback, keyboard dismissal (Escape), and guest protection.
+- [x] Implement Context-Aware sign-in with safe internal redirect validation (`url_has_allowed_host_and_scheme`).
+- [x] Implement Instant POST-only sign-out with CSRF defense, session invalidation, client cache clearing, and toast alerts.
 - [x] Implement Supporting & Legal pages (`pages/about.html`, `pages/contact.html`, `pages/community-guidelines.html`, `pages/privacy.html`, `pages/terms.html`, `pages/404.html`).
 - [x] Implement Web Audio API zero-copyright demonstration audio synthesizer (`static/js/music/mock-provider.js`).
 - [x] Maintain persistent player state (track, progress, volume, queue) across page navigation via `localStorage`.
@@ -51,9 +54,11 @@ Update the checklist as work progresses.
 
 ## 3. Music Catalogue Research & Data
 
-- [x] Record studio albums (Rapsodi, YBNL, BGEL, Street OT, Eyan Mayweather, The Glory, Lagos Nawa, Carpe Diem, UY Scuti, Unruly).
+- [x] Record studio albums (Rapsodi, YBNL, BGEL, Street OT, Eyan Mayweather, The Glory, Lagos Nawa, Carpe Diem, UY Scuti, Unruly, Time and Space).
+- [x] Integrate Olamide's 11th studio album: *Time and Space* (Released Nov 16, 2026; 10 tracks; FOLA featured on *Jaiye* ONLY).
 - [x] Record EPs (Ikigai / 生き甲斐, Vol. 1).
 - [x] Record singles and collaborations (Motigbana, Science Student, Kana, Poverty Die, Woske, Oil & Gas, Pawon, Omo Ologo).
+- [x] Reconcile catalogue track counts: 6 albums (36 tracks) + 4 singles = 40 tracks total.
 - [x] Verify tracklists and positions.
 - [x] Verify release dates and years.
 - [x] Verify producers (ID Cabasa, Pheelz, Young Jonn, P.Priime, Eskeez, Semzi, BBM, Magicsticks).
@@ -150,7 +155,25 @@ Update the checklist as work progresses.
 
 ---
 
-## 9. Direct Streaming Infrastructure & Master Licensing (Phase 7 — Ready to Start)
+## 9. Open Access, Member Onboarding & Community Expansion (COMPLETED)
+
+- [x] Implement Open Visitor Access policy across catalogue, timeline, stories, arena previews, and public discussions.
+- [x] Implement contextual guest action interception modal (`showAuthPromptModal`) preventing jarring immediate redirects.
+- [x] Implement single unified JustBaddo member account across platform & community with zero secondary registration.
+- [x] Implement Community Guidelines acceptance modal and enforcement gate on posting, commenting, and story submissions.
+- [x] Extend `UserProfile` with country, favorite album, favorite track, public profile toggle, guidelines acceptance flag, and reputation score.
+- [x] Implement public member profiles (`/pages/profile.html?user=<username>`) with private account masking and privacy protection.
+- [x] Implement `Badge` and `BadgeAward` models with 5 initial fan badges seeded in PostgreSQL.
+- [x] Implement `ReputationEvent` model and `ReputationService` with daily cap (100 pts) and automatic moderation penalty deductions.
+- [x] Implement public Member Directory (`/members/` / `frontend/pages/members.html`) with search, tier, badge filtering, and pagination.
+- [x] Integrate Olamide's 11th studio album: *Time and Space* (Released Nov 16, 2026, 10 tracks, FOLA featured on *Jaiye* ONLY).
+- [x] Create branded vector artwork `frontend/static/images/albums/time-and-space.svg`.
+- [x] Update frontend hero banner, discography grid, editorial story, arena poll, and trivia challenge for *Time and Space*.
+- [x] Expand automated test suite to 90 passing tests across all applications with 100% pass rate.
+
+---
+
+## 10. Direct Streaming Infrastructure & Master Licensing (Phase 7 — Ready to Start)
 
 - [ ] Execute master and composition rights licensing outreach to YBNL Nation, EMPIRE Distribution, and Coded Tunes rightsholders.
 - [ ] Implement self-hosted private media delivery infrastructure (HLS transcoding, encrypted chunks, signed CloudFront/CDN URLs).

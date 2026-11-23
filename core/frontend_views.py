@@ -12,9 +12,16 @@ from django.conf import settings
 class IndexView(TemplateView):
     template_name = 'index.html'
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['user'] = self.request.user
+        ctx['is_authenticated'] = self.request.user.is_authenticated
+        return ctx
+
 def render_page(request, page_name):
     """
     Renders any frontend page template from frontend/pages/<page_name>.html.
+    Provides authentication context and ensures cache-control prevents stale history.
     """
     clean_name = os.path.basename(page_name)
     if not clean_name.endswith('.html'):
@@ -24,4 +31,10 @@ def render_page(request, page_name):
     if not os.path.exists(page_path):
         raise Http404(f"Page '{clean_name}' not found.")
 
-    return render(request, f"pages/{clean_name}", {'page_name': clean_name})
+    response = render(request, f"pages/{clean_name}", {
+        'page_name': clean_name,
+        'user': request.user,
+        'is_authenticated': request.user.is_authenticated
+    })
+    response['Cache-Control'] = 'no-cache, must-revalidate'
+    return response

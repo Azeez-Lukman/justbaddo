@@ -5,6 +5,24 @@
 
 window.JUSTBADDO_STORIES = [
   {
+    id: 'story-time-and-space',
+    title: 'Time and Space: Olamide Opens a New Chapter',
+    author: 'Folake Adeleke',
+    authorRole: 'Music Critic & Cultural Essayist',
+    authorAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
+    date: 'November 18, 2026',
+    readTime: '5 min read',
+    coverImage: '/static/images/albums/time-and-space.svg',
+    excerpt: 'With ten tracks and only one featured artist (FOLA on "Jaiye"), Time and Space represents Olamide at his most confident, self-contained, and forward-looking.',
+    content: `
+      <p class="mb-4 text-zinc-300 leading-relaxed">Released in November 2026 through YBNL Nation and EMPIRE, Time and Space is a testament to longevity in African popular music. Rejecting bloated tracklists and chasing ephemeral algorithm trends, Olamide crafted a concise, cohesive body of work with ten immaculate tracks.</p>
+      <p class="mb-4 text-zinc-300 leading-relaxed">The sole collaboration on the album — "Jaiye" featuring breakout talent FOLA — stands as a brilliant moment of sonic chemistry, proving once again Baddo's instinct for lifting authentic voices.</p>
+      <p class="mb-4 text-zinc-300 leading-relaxed">From the celestial opening of "Elohim" through the infectious bounce of "Skoskola" to the reflective closer "Jogor", Time and Space cements Olamide's transition from street king to timeless global architect.</p>
+    `,
+    likes: 512,
+    tags: ['Time and Space', 'Album Review', 'YBNL', 'New Music']
+  },
+  {
     id: 'story-01',
     title: 'The Night OLIC 1 Shook Eko Hotel: December 2014',
     author: 'Kehinde Balogun',

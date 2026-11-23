@@ -393,6 +393,7 @@ window.JustBaddoArena = {
       // Vote in Poll
       const pollVoteBtn = e.target.closest('[data-action-vote-poll]');
       if (pollVoteBtn) {
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('vote in community polls')) return;
         const pollId = pollVoteBtn.getAttribute('data-action-vote-poll');
         const optId = pollVoteBtn.getAttribute('data-option-id');
         const poll = JUSTBADDO_ARENA.polls.find(p => p.id === pollId);
@@ -420,6 +421,7 @@ window.JustBaddoArena = {
       // Vote in Song Battle
       const battleVoteBtn = e.target.closest('[data-action-vote-battle]');
       if (battleVoteBtn) {
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('vote in song battles')) return;
         const battleId = battleVoteBtn.getAttribute('data-action-vote-battle');
         const trackTarget = battleVoteBtn.getAttribute('data-track-target');
         const battle = JUSTBADDO_ARENA.battles.find(b => b.id === battleId);
@@ -448,6 +450,7 @@ window.JustBaddoArena = {
 
       // Start Quiz button
       if (e.target.closest('#jb-start-quiz-btn')) {
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('participate in trivia challenges')) return;
         this.startQuiz();
         return;
       }

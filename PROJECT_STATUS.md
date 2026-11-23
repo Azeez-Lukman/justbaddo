@@ -20,6 +20,8 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 | **Phase 4** | Testing, Frontend-to-Backend Integration | **COMPLETED** |
 | **Phase 5** | Deployment and Launch Preparation | **COMPLETED** |
 | **Phase 6** | Authorised Music Streaming & Player Activation | **COMPLETED** |
+| **Auth & Sessions** | Dedicated Auth Experience & Session Management | **COMPLETED** |
+| **Community & Onboarding** | Open Access, Member Onboarding & Community Expansion (Time & Space) | **COMPLETED** |
 | **Phase 7** | Self-Hosted Direct Streaming Infrastructure & Master Licensing | **READY TO START** |
 | **Phase 8** | Production Launch & Optimization | Pending |
 
@@ -119,8 +121,36 @@ Purpose: Custom music discovery, discography archiving, and fan community experi
 ## Verification & Automated Testing
 
 - **Django System Check:** Passed (`0 issues identified`).
-- **Automated Test Suite:** 62 test cases executing across all 11 applications + Phase 6 playback integration suite against PostgreSQL with 100% pass rate.
+- **Automated Test Suite:** 90 test cases executing across all 11 applications + Phase 6 playback integration suite + open access/community expansion against PostgreSQL with 100% pass rate.
 - **Static Assets Compilation:** 196 static assets collected and compressed via WhiteNoise manifest storage.
-- **Frontend-Backend Integration:** 23/23 page templates verified returning HTTP 200 OK; dynamic endpoints bound to live database.
+- **Frontend-Backend Integration:** 24/24 page templates verified returning HTTP 200 OK; dynamic endpoints bound to live database.
 - **Security Audit:** Zero unauthorized data mutations allowed; CSRF defense, rate-limiting, session authentication, and privacy guards verified.
 - **Disaster Recovery:** Validated restore of dump file into isolated database with 100% row match.
+
+---
+
+## Completed Open Access, Member Onboarding & Community Expansion
+
+1. **Access Strategy (`open`)**:
+   - Guests freely explore artist catalogue, album tracklists, timeline milestones, public discussions, stories, polls, and public member profiles.
+   - Interactive and personal actions (following, voting, commenting, saving tracks, creating playlists, submitting stories) gated by contextual auth modal (`showAuthPromptModal`).
+2. **Integrated Community & Onboarding**:
+   - Single unified member account across JustBaddo and Community; zero separate registration steps.
+   - Community guidelines modal and verification gate (`accepted_community_guidelines`) enforced before posting, commenting, or story submission.
+3. **Public Profiles & Privacy Controls**:
+   - Member public profiles at `/pages/profile.html?user=<username>`.
+   - `is_profile_public` toggle protecting private accounts; email addresses and private listening/playlist metrics are never exposed to other members or guests.
+4. **Fan Badges System**:
+   - `Badge` and `BadgeAward` relational models in `accounts`.
+   - 5 standard badges seeded: `First Spin` (Bronze), `Community Voice` (Silver), `Trivia Master` (Gold), `Archivist` (Platinum), and `OG Fan` (Diamond).
+5. **Reputation Engine**:
+   - `ReputationEvent` model tracking member points for quality contributions (post publication, upvotes, poll participation, trivia completion) with a configurable daily cap (`100` points).
+   - Confirmed moderation actions (`REMOVE_CONTENT`, `WARN_USER`, `SUSPEND_USER`, `BAN_USER`) automatically deduct penalty points (`-20` to `-100`).
+6. **Public Member Directory**:
+   - Interactive directory page at `/members/` (`frontend/pages/members.html`) supporting live search, membership tier filtering, badge filtering, reputation ordering, and pagination.
+7. **Olamide Album Integration: Time and Space (2026)**:
+   - Full 11th studio album integrated into PostgreSQL database and frontend catalogue data.
+   - Exactly 10 tracks in verified order: 1. Elohim, 2. Skoskola, 3. Say Less, 4. Burukutu, 5. Alujon, 6. Mbiri, 7. Jaiye (feat. FOLA), 8. Oshey, 9. Ring, 10. Jogor. FOLA credited on *Jaiye* ONLY.
+   - Branded vector SVG artwork (`time-and-space.svg`) created and linked.
+   - Editorial story, community poll, and trivia question wired.
+   - Total catalogue reconciled: 6 studio albums (36 tracks) + 4 standalone singles = 40 tracks total.

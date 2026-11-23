@@ -385,6 +385,7 @@ window.JustBaddoPlayer = {
       // Like current track
       if (e.target.closest('.jb-player-like-btn')) {
         e.preventDefault();
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('save tracks to your library')) return;
         const currentTrack = JustBaddoState.state.player.currentTrack;
         if (currentTrack) {
           const isSaved = JustBaddoState.toggleSaveTrack(currentTrack.id);

@@ -239,6 +239,7 @@ window.JustBaddoCommunity = {
       const commentForm = e.target.closest('[data-submit-comment]');
       if (commentForm) {
         e.preventDefault();
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('post a reply')) return;
         const postId = commentForm.getAttribute('data-submit-comment');
         const input = commentForm.querySelector('input');
         const text = input ? input.value.trim() : '';
@@ -273,6 +274,7 @@ window.JustBaddoCommunity = {
       const createPostForm = e.target.closest('#jb-create-post-form');
       if (createPostForm) {
         e.preventDefault();
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('start a discussion')) return;
         const titleInput = document.getElementById('jb-post-title');
         const contentInput = document.getElementById('jb-post-content');
         const categorySelect = document.getElementById('jb-post-category');

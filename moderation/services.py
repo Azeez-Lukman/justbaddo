@@ -1,6 +1,7 @@
 """
 Moderation service layer for JustBaddo.
 Manages user reporting, safety reviews, and sanctions using PostgreSQL.
+Integrates reputation penalties and event reversals on confirmed sanctions.
 """
 
 from moderation.models import Report, ModerationAction, UserRestriction
@@ -71,6 +72,33 @@ class ModerationService:
 
         report.status = 'RESOLVED'
         report.save()
+
+        # If action is REMOVE_CONTENT, WARN_USER, SUSPEND_USER, or BAN_USER, penalize reputation
+        from accounts.services import ReputationService
+        if action in ['REMOVE_CONTENT', 'WARN_USER', 'SUSPEND_USER', 'BAN_USER']:
+            target_author = None
+            if report.target_type == 'post':
+                from community.models import Post
+                p = Post.objects.filter(post_id=report.target_id).first()
+                if p:
+                    target_author = p.author
+            elif report.target_type == 'comment':
+                from community.models import Comment
+                c = Comment.objects.filter(comment_id=report.target_id).first()
+                if c:
+                    target_author = c.author
+            elif report.target_type == 'user':
+                target_author = User.objects.filter(username=report.target_id).first()
+
+            if target_author:
+                ReputationService.record_event(
+                    user=target_author,
+                    event_type='SPAM_PENALTY',
+                    source_type=report.target_type,
+                    source_id=report.target_id,
+                    reason=f"Moderation sanction ({action}): {notes or report.reason}",
+                    actor=moderator
+                )
 
         return True, f"Moderation action '{action}' applied successfully."
 

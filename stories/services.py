@@ -55,10 +55,18 @@ class StoriesService:
         }
 
     @classmethod
-    def submit_story(cls, title, content, author_name, author_role, author_avatar, read_time='5 min read', cover_image=None, tags='', user=None):
-        tag_list = [t.strip() for t in tags.split(',') if t.strip()] if tags else ['Fan Reflection']
+    def submit_story(cls, title, content, author_name, author_role, author_avatar, read_time='5 min read', cover_image=None, tags='', user=None, excerpt=None, author_user=None, **kwargs):
+        if not user and author_user:
+            user = author_user
+        if isinstance(tags, list):
+            tag_list = tags if tags else ['Fan Reflection']
+        elif isinstance(tags, str) and tags:
+            tag_list = [t.strip() for t in tags.split(',') if t.strip()]
+        else:
+            tag_list = ['Fan Reflection']
         story_id = f"story-{uuid.uuid4().hex[:6]}"
-        excerpt = content[:200] + ('...' if len(content) > 200 else '')
+        if not excerpt:
+            excerpt = content[:200] + ('...' if len(content) > 200 else '')
 
         s = Story.objects.create(
             story_id=story_id,

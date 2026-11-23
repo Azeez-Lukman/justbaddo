@@ -43,3 +43,32 @@ class MusicApiTests(JustBaddoTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.json()
         self.assertGreaterEqual(len(data['data']), 5)
+
+    def test_time_and_space_catalogue_integration(self):
+        # 1. Album detail
+        res = self.client.get('/api/v1/music/albums/time-and-space/')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        album = res.json()['data']
+        self.assertEqual(album['title'], 'Time and Space')
+        self.assertEqual(album['releaseYear'], 2026)
+        self.assertEqual(album['label'], 'YBNL Nation / EMPIRE')
+
+        # 2. Verify exactly 10 tracks
+        tracks = album['tracks']
+        self.assertEqual(len(tracks), 10)
+
+        expected_titles = [
+            'Elohim', 'Skoskola', 'Say Less', 'Burukutu', 'Alujon',
+            'Mbiri', 'Jaiye', 'Oshey', 'Ring', 'Jogor'
+        ]
+        for idx, expected in enumerate(expected_titles):
+            self.assertEqual(tracks[idx]['number'], idx + 1)
+            self.assertEqual(tracks[idx]['title'], expected)
+
+        # 3. Verify FOLA is featured on track 7 (Jaiye) ONLY
+        self.assertEqual(tracks[6]['title'], 'Jaiye')
+        self.assertIn('FOLA', tracks[6]['featured'])
+        for idx, trk in enumerate(tracks):
+            if idx != 6:
+                self.assertNotIn('FOLA', trk.get('featured', ''))
+

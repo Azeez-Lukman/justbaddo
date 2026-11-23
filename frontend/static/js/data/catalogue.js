@@ -16,6 +16,34 @@ window.JUSTBADDO_CATALOGUE = {
 
   albums: [
     {
+      id: 'time-and-space',
+      title: 'Time and Space',
+      slug: 'time-and-space',
+      type: 'Studio Album',
+      releaseYear: 2026,
+      releaseDate: 'November 16, 2026',
+      trackCount: 10,
+      duration: '28:45',
+      coverArt: '/static/images/albums/time-and-space.svg',
+      label: 'YBNL Nation / EMPIRE',
+      distributor: 'EMPIRE',
+      description: 'Eleventh studio album by Olamide. A cohesive ten-track sonic tour de force traversing legacy, temporal perspective, and future-forward Afro-fusion, featuring rising star FOLA on the standout moment "Jaiye".',
+      featuredArtists: ['FOLA'],
+      producers: ['P.Priime', 'Eskeez', 'Magicsticks', 'Pheelz', 'Semzi'],
+      tracks: [
+        { id: 'ts-01', number: 1, title: 'Elohim', duration: '2:45', featured: '', producer: 'P.Priime', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 106, key: 'C#m' },
+        { id: 'ts-02', number: 2, title: 'Skoskola', duration: '2:52', featured: '', producer: 'Eskeez', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 114, key: 'F#m' },
+        { id: 'ts-03', number: 3, title: 'Say Less', duration: '3:08', featured: '', producer: 'Magicsticks', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 112, key: 'Am' },
+        { id: 'ts-04', number: 4, title: 'Burukutu', duration: '2:39', featured: '', producer: 'Semzi', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 118, key: 'Gm' },
+        { id: 'ts-05', number: 5, title: 'Alujon', duration: '3:14', featured: '', producer: 'P.Priime', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 108, key: 'Dm' },
+        { id: 'ts-06', number: 6, title: 'Mbiri', duration: '2:48', featured: '', producer: 'Eskeez', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 110, key: 'Em' },
+        { id: 'ts-07', number: 7, title: 'Jaiye', duration: '3:22', featured: 'FOLA', producer: 'Pheelz', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 115, key: 'Bm' },
+        { id: 'ts-08', number: 8, title: 'Oshey', duration: '2:55', featured: '', producer: 'Magicsticks', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 112, key: 'C' },
+        { id: 'ts-09', number: 9, title: 'Ring', duration: '3:02', featured: '', producer: 'Semzi', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 104, key: 'F' },
+        { id: 'ts-10', number: 10, title: 'Jogor', duration: '2:40', featured: '', producer: 'Eskeez', status: 'AUTHORISED_PROVIDER', isPlayable: true, bpm: 120, key: 'Am' }
+      ]
+    },
+    {
       id: 'ikigai-vol-1',
       title: 'Ikigai / 生き甲斐, Vol. 1',
       slug: 'ikigai-vol-1',

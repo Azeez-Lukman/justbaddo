@@ -98,10 +98,21 @@
       login: (credentials) => this.request('accounts/login/', { method: 'POST', body: credentials }),
       logout: () => this.request('accounts/logout/', { method: 'POST' }),
       getProfile: () => this.request('accounts/profile/'),
-      getPublicProfile: (username) => this.request(`accounts/profile/${encodeURIComponent(username)}/`),
+      updateProfile: (profileData) => this.request('accounts/profile/', { method: 'PATCH', body: profileData }),
+      getPublicProfile: (username) => this.request(`accounts/users/${encodeURIComponent(username)}/`),
+      getMembers: (params) => {
+        const qs = params ? '?' + new URLSearchParams(params).toString() : '';
+        return this.request(`accounts/members/${qs}`);
+      },
+      getBadges: () => this.request('accounts/badges/'),
+      acceptGuidelines: () => this.request('accounts/guidelines/accept/', { method: 'POST', body: { accepted: true } }),
+      deleteAccount: (payload) => this.request('accounts/delete/', { method: 'POST', body: payload }),
       getSettings: () => this.request('accounts/settings/'),
       updateSettings: (settingsData) => this.request('accounts/settings/', { method: 'PUT', body: settingsData }),
-      requestPasswordReset: (email) => this.request('accounts/password-reset/', { method: 'POST', body: { email } })
+      requestPasswordReset: (email) => this.request('accounts/password-reset/', { method: 'POST', body: { email } }),
+      resetPasswordConfirm: (data) => this.request('accounts/password-reset/confirm/', { method: 'POST', body: data }),
+      verifyEmail: (data) => this.request('accounts/verify-email/', { method: 'POST', body: data }),
+      verifyEmailGet: (uid, token) => this.request(`accounts/verify-email/?uid=${encodeURIComponent(uid)}&token=${encodeURIComponent(token)}`)
     };
 
     /* Music Discovery & Catalogue */

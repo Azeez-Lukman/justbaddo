@@ -14,6 +14,7 @@ app_name = 'community'
 
 urlpatterns = [
     path('posts/', PostListCreateView.as_view(), name='post-list-create'),
+    path('feed/', PostListCreateView.as_view(), name='post-feed'),
     path('posts/<str:post_id>/', PostDetailView.as_view(), name='post-detail'),
     path('posts/<str:post_id>/comments/', PostCommentCreateView.as_view(), name='post-comment-create'),
     path('posts/<str:post_id>/like/', PostLikeToggleView.as_view(), name='post-like-toggle'),

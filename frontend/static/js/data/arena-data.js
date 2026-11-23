@@ -7,6 +7,20 @@
 window.JUSTBADDO_ARENA = {
   polls: [
     {
+      id: 'poll-time-and-space',
+      question: 'Which track on Time and Space (2026) defines this new era for you?',
+      description: 'Ten tracks, zero filler. Vote on your standout track from Olamide 11th studio album.',
+      totalVotes: 1140,
+      hasVoted: false,
+      userVotedOption: null,
+      options: [
+        { id: 'opt-ts-1', text: 'Elohim (Opening Statement)', votes: 285, percentage: 25 },
+        { id: 'opt-ts-2', text: 'Jaiye (feat. FOLA)', votes: 513, percentage: 45 },
+        { id: 'opt-ts-3', text: 'Say Less', votes: 194, percentage: 17 },
+        { id: 'opt-ts-4', text: 'Jogor (Closing Statement)', votes: 148, percentage: 13 }
+      ]
+    },
+    {
       id: 'poll-01',
       question: 'Which Olamide release era represents his peak cultural impact?',
       description: 'Vote on the period that most profoundly transformed Nigerian popular culture.',
@@ -105,7 +119,7 @@ window.JUSTBADDO_ARENA = {
       title: 'The Baddo Discography Master Quiz',
       subtitle: 'Test your knowledge on verified releases, producers and historic milestones.',
       difficulty: 'Intermediate',
-      pointsReward: 150,
+      pointsReward: 300,
       questions: [
         {
           id: 'q1',
@@ -141,6 +155,13 @@ window.JUSTBADDO_ARENA = {
           options: ['Sony Music', 'Universal Music Group', 'EMPIRE', 'Warner Music'],
           correctIndex: 2,
           explanation: 'In early 2020, Olamide announced a historic joint venture deal between YBNL Nation and EMPIRE.'
+        },
+        {
+          id: 'q6',
+          question: 'On Olamide\'s 2026 album "Time and Space", which rising artist is the sole featured guest on "Jaiye"?',
+          options: ['Asake', 'FOLA', 'Fireboy DML', 'CKay'],
+          correctIndex: 1,
+          explanation: 'FOLA is the sole featured guest artist on Time and Space, appearing on track 7 "Jaiye".'
         }
       ]
     }

@@ -23,65 +23,85 @@
       <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
       <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
     </a>
-    <a href="../index.html" class="text-xs text-zinc-400 hover:text-white transition-colors">
-      ← Back to Home
+    <a href="../index.html" class="text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      <span>Back to Home</span>
     </a>
   </header>
 
   <main class="flex-1 flex items-center justify-center p-4">
-    <div class="w-full max-w-md p-8 rounded-3xl bg-zinc-900/70 border border-zinc-800 shadow-2xl backdrop-blur-xl">
+    <div class="w-full max-w-md p-8 rounded-3xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-xl">
       
-      <div class="text-center mb-8">
-        <h1 class="font-display text-2xl sm:text-3xl font-black text-white mb-2">Join the Community</h1>
-        <p class="text-xs text-zinc-400">Create your account to curate playlists, participate in the Fan Arena, and engage in discussions.</p>
+      <div class="text-center mb-6">
+        <h1 class="font-display text-2xl sm:text-3xl font-black text-white mb-2">Join JustBaddo</h1>
+        <p class="text-xs text-zinc-400">Create one member account to curate personal playlists, vote in the Fan Arena, and contribute to cultural preservation.</p>
       </div>
 
-      <form id="jb-register-form" class="space-y-4">
+      <!-- General Error Alert -->
+      <div id="jb-reg-alert" class="hidden mb-5 p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2.5 animate-fadeIn">
+        <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
+        <div id="jb-reg-alert-msg" class="flex-1"></div>
+      </div>
+
+      <form id="jb-register-form" class="space-y-4" novalidate>
         <div>
-          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Full Name</label>
-          <input type="text" id="jb-reg-name" placeholder="e.g. Babatunde Lawal" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" required>
+          <label for="jb-reg-name" class="block text-xs font-semibold text-zinc-300 mb-1.5">Display Name</label>
+          <input type="text" id="jb-reg-name" placeholder="e.g. Babatunde Lawal" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition-colors" required>
+          <p id="jb-reg-name-error" class="hidden mt-1 text-[11px] text-rose-400"></p>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Community Username</label>
+          <label for="jb-reg-username" class="block text-xs font-semibold text-zinc-300 mb-1.5">Username</label>
           <div class="relative">
             <span class="text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 text-xs">@</span>
-            <input type="text" id="jb-reg-username" placeholder="baddofan99" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl pl-8 pr-3 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" required>
+            <input type="text" id="jb-reg-username" autocomplete="username" placeholder="baddofan99" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl pl-8 pr-3 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition-colors" required>
           </div>
+          <p id="jb-reg-username-error" class="hidden mt-1 text-[11px] text-rose-400"></p>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Email Address</label>
-          <input type="email" id="jb-reg-email" placeholder="you@domain.com" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" required>
+          <label for="jb-reg-email" class="block text-xs font-semibold text-zinc-300 mb-1.5">Email Address</label>
+          <input type="email" id="jb-reg-email" autocomplete="email" placeholder="you@domain.com" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition-colors" required>
+          <p id="jb-reg-email-error" class="hidden mt-1 text-[11px] text-rose-400"></p>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Password</label>
-          <input type="password" id="jb-reg-password" placeholder="At least 8 characters" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none" minlength="8" required>
+          <label for="jb-reg-password" class="block text-xs font-semibold text-zinc-300 mb-1.5">Password</label>
+          <div class="relative">
+            <input type="password" id="jb-reg-password" autocomplete="new-password" placeholder="At least 8 characters (letters & numbers)" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl pl-3.5 pr-10 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition-colors" minlength="8" required>
+            <button type="button" id="jb-toggle-reg-password" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 p-0.5 rounded transition-colors" aria-label="Toggle password visibility">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+          <p id="jb-reg-password-error" class="hidden mt-1 text-[11px] text-rose-400"></p>
         </div>
 
-        <div class="flex items-start gap-2.5 text-xs text-zinc-400 pt-1">
-          <input type="checkbox" id="jb-reg-terms" class="w-4 h-4 mt-0.5 accent-amber-500 rounded cursor-pointer" required>
-          <label for="jb-reg-terms" class="cursor-pointer">
-            I agree to the <a href="terms.html" class="text-amber-500 hover:underline">Terms of Service</a> and <a href="community-guidelines.html" class="text-amber-500 hover:underline">Community Guidelines</a>.
+        <div class="pt-1">
+          <label class="flex items-start gap-2.5 text-xs text-zinc-400 cursor-pointer select-none">
+            <input type="checkbox" id="jb-reg-terms" class="w-4 h-4 mt-0.5 accent-amber-500 rounded cursor-pointer" required>
+            <span>
+              I agree to the <a href="terms.html" target="_blank" class="text-amber-500 hover:underline">Terms of Service</a> and <a href="privacy.html" target="_blank" class="text-amber-500 hover:underline">Privacy Policy</a>.
+            </span>
           </label>
+          <p id="jb-reg-terms-error" class="hidden mt-1 text-[11px] text-rose-400"></p>
         </div>
 
-        <button type="submit" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors shadow-lg shadow-amber-500/20 mt-2">
-          Create Fan Account
+        <button type="submit" id="jb-reg-submit" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-black font-bold text-xs transition-all shadow-lg shadow-amber-500/20 mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+          <span>Create Member Account</span>
         </button>
       </form>
 
       <div class="mt-6 pt-6 border-t border-zinc-800/80 text-center text-xs text-zinc-400">
-        Already have an account? 
-        <a href="login.html" class="text-amber-400 font-semibold hover:underline">Sign In</a>
+        Already a member? 
+        <a id="jb-login-link" href="login.html" class="text-amber-400 font-semibold hover:underline">Sign In</a>
       </div>
 
     </div>
   </main>
 
   <footer class="p-6 text-center text-xs text-zinc-500">
-    © 2026 JustBaddo. Frontend Demonstration Prototype.
+    © 2026 JustBaddo. Built for music fans and cultural preservation.
   </footer>
 
   <script src="../static/js/core/api-client.js"></script>
@@ -91,49 +111,169 @@
   <script src="../static/js/core/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const nextParam = urlParams.get('next');
+
+      if (nextParam) {
+        const loginLink = document.getElementById('jb-login-link');
+        if (loginLink) loginLink.href = `login.html?next=${encodeURIComponent(nextParam)}`;
+      }
+
+      // Password visibility toggle
+      const toggleBtn = document.getElementById('jb-toggle-reg-password');
+      const passInput = document.getElementById('jb-reg-password');
+      if (toggleBtn && passInput) {
+        toggleBtn.addEventListener('click', () => {
+          const isPass = passInput.type === 'password';
+          passInput.type = isPass ? 'text' : 'password';
+          toggleBtn.innerHTML = `<i data-lucide="${isPass ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>`;
+          JustBaddoUI.refreshIcons();
+        });
+      }
+
       const form = document.getElementById('jb-register-form');
-      const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+      const submitBtn = document.getElementById('jb-reg-submit');
+      const alertBox = document.getElementById('jb-reg-alert');
+      const alertMsg = document.getElementById('jb-reg-alert-msg');
+      const nameInput = document.getElementById('jb-reg-name');
+      const usernameInput = document.getElementById('jb-reg-username');
+      const emailInput = document.getElementById('jb-reg-email');
+      const termsInput = document.getElementById('jb-reg-terms');
+
+      const nameError = document.getElementById('jb-reg-name-error');
+      const usernameError = document.getElementById('jb-reg-username-error');
+      const emailError = document.getElementById('jb-reg-email-error');
+      const passError = document.getElementById('jb-reg-password-error');
+      const termsError = document.getElementById('jb-reg-terms-error');
+
+      function clearErrors() {
+        if (alertBox) alertBox.classList.add('hidden');
+        [nameError, usernameError, emailError, passError, termsError].forEach(el => el?.classList.add('hidden'));
+        [nameInput, usernameInput, emailInput, passInput].forEach(el => el?.classList.remove('border-rose-500'));
+      }
 
       if (form) {
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
-          const username = document.getElementById('jb-reg-username').value.trim();
-          const email = document.getElementById('jb-reg-email').value.trim();
-          const password = document.getElementById('jb-reg-password').value;
-          const agreeTerms = document.getElementById('jb-reg-terms').checked;
+          clearErrors();
 
+          const displayName = nameInput.value.trim();
+          const username = usernameInput.value.trim();
+          const email = emailInput.value.trim();
+          const password = passInput.value;
+          const agreeTerms = termsInput.checked;
+
+          let hasError = false;
+          if (!username) {
+            usernameError.textContent = 'Please choose a username.';
+            usernameError.classList.remove('hidden');
+            usernameInput.classList.add('border-rose-500');
+            hasError = true;
+          } else if (!/^[a-zA-Z0-9_]{3,30}$/.test(username)) {
+            usernameError.textContent = 'Username must be 3-30 characters (letters, numbers, underscores only).';
+            usernameError.classList.remove('hidden');
+            usernameInput.classList.add('border-rose-500');
+            hasError = true;
+          }
+
+          if (!email) {
+            emailError.textContent = 'Please enter a valid email address.';
+            emailError.classList.remove('hidden');
+            emailInput.classList.add('border-rose-500');
+            hasError = true;
+          }
+
+          if (!password || password.length < 8) {
+            passError.textContent = 'Password must be at least 8 characters.';
+            passError.classList.remove('hidden');
+            passInput.classList.add('border-rose-500');
+            hasError = true;
+          }
+
+          if (!agreeTerms) {
+            termsError.textContent = 'You must accept the Terms and Privacy Policy to continue.';
+            termsError.classList.remove('hidden');
+            hasError = true;
+          }
+
+          if (hasError) return;
+
+          // Loading state
           if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="animate-pulse">Creating Account...</span>';
+            submitBtn.innerHTML = `
+              <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-black" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+              </svg>
+              <span>Creating Account...</span>
+            `;
           }
 
           try {
-            await JustBaddoApi.auth.register({
+            const resp = await JustBaddoApi.auth.register({
               username: username,
+              display_name: displayName,
               email: email,
               password: password,
               agree_terms: agreeTerms
             });
-            JustBaddoUI.toast('Account created! Welcome to JustBaddo.', 'success');
+
+            JustBaddoUI.toast('Account registered! Welcome to JustBaddo.', 'success');
+            
+            // Auto login or forward to welcome state
+            const targetWelcome = nextParam 
+              ? `welcome.html?username=${encodeURIComponent(username)}&next=${encodeURIComponent(nextParam)}`
+              : `welcome.html?username=${encodeURIComponent(username)}`;
+
             setTimeout(() => {
-              window.location.href = 'login.html';
-            }, 800);
+              window.location.href = targetWelcome;
+            }, 600);
+
           } catch (err) {
             console.error('[Registration Error]', err);
-            let msg = 'Registration failed. Please check your information.';
+            let message = 'Registration failed. Please check your information.';
             if (err.data && err.data.errors) {
               const errs = err.data.errors;
+              if (errs.username) {
+                usernameError.textContent = Array.isArray(errs.username) ? errs.username[0] : errs.username;
+                usernameError.classList.remove('hidden');
+                usernameInput.classList.add('border-rose-500');
+              }
+              if (errs.email) {
+                emailError.textContent = Array.isArray(errs.email) ? errs.email[0] : errs.email;
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-rose-500');
+              }
+              if (errs.password) {
+                passError.textContent = Array.isArray(errs.password) ? errs.password[0] : errs.password;
+                passError.classList.remove('hidden');
+                passInput.classList.add('border-rose-500');
+              }
               const firstKey = Object.keys(errs)[0];
               if (firstKey && Array.isArray(errs[firstKey])) {
-                msg = `${firstKey}: ${errs[firstKey][0]}`;
+                message = `${firstKey}: ${errs[firstKey][0]}`;
               }
+            } else if (err.data?.message) {
+              message = err.data.message;
             } else if (err.message) {
-              msg = err.message;
+              message = err.message;
             }
-            JustBaddoUI.toast(msg, 'error');
+
+            if (alertBox && alertMsg) {
+              alertMsg.textContent = message;
+              alertBox.classList.remove('hidden');
+              JustBaddoUI.refreshIcons();
+            }
+            JustBaddoUI.toast(message, 'error');
+
             if (submitBtn) {
               submitBtn.disabled = false;
-              submitBtn.textContent = 'Create Fan Account';
+              submitBtn.innerHTML = `
+                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                <span>Create Member Account</span>
+              `;
+              JustBaddoUI.refreshIcons();
             }
           }
         });

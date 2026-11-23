@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile — JUSTBADDO</title>
+  <title>Fan Profile — JUSTBADDO</title>
+  <meta name="description" content="Fan profile, earned badges, reputation ranking, and public playlists on JustBaddo.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,480 +22,508 @@
   <!-- ================= TOP NAVIGATION ================= -->
   <header class="sticky top-0 z-30 bg-[#070809]/90 border-b border-zinc-800/80 backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-      <!-- Right Header Actions (Search, Notifications, Profile, Mobile Menu) -->
-      <div class="flex items-center gap-2 sm:gap-4">
-        
-        <!-- Search Bar (Desktop) -->
+      <div class="flex items-center gap-8">
+        <a href="../index.html" class="flex items-center gap-2 group">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+          <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="../index.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Home</a>
+          <a href="music.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Music</a>
+          <a href="members.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Members</a>
+          <a href="community.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Community</a>
+          <a href="fan-arena.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Fan Arena</a>
+          <a href="stories.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Stories</a>
+          <a href="timeline.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Timeline</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
         <form class="jb-search-form hidden lg:flex items-center relative" action="/pages/search.html" method="GET">
           <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none"></i>
-          <input type="search" name="q" placeholder="Search albums, tracks, lyrics..." class="jb-global-search-input w-56 xl:w-72 bg-zinc-900 border border-zinc-800 focus:border-amber-500/80 rounded-xl pl-9 pr-8 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none transition-all">
+          <input type="search" name="q" placeholder="Search members, catalogue..." class="jb-global-search-input w-56 xl:w-72 bg-zinc-900 border border-zinc-800 focus:border-amber-500/80 rounded-xl pl-9 pr-8 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none transition-all">
           <span class="absolute right-2.5 px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 text-[10px] font-mono text-zinc-400 pointer-events-none">/</span>
         </form>
 
-        <!-- Search Icon (Mobile / Tablet) -->
-        <a href="/pages/search.html" class="lg:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Search">
+        <a href="search.html" class="lg:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Search">
           <i data-lucide="search" class="w-5 h-5"></i>
         </a>
 
-        <!-- Notifications -->
-        <div class="relative">
-          <button class="p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors relative" data-dropdown-toggle="jb-notifications-menu" aria-label="Notifications">
-            <i data-lucide="bell" class="w-5 h-5"></i>
-            <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500"></span>
-          </button>
-          
-          <div id="jb-notifications-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-80 sm:w-96 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-4 z-50 animate-fadeIn">
-            <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
-              <h4 class="text-sm font-bold text-zinc-100">Notifications</h4>
-              <span class="text-[11px] text-amber-500 font-medium">3 unread</span>
-            </div>
-            <div class="space-y-2.5 max-h-72 overflow-y-auto">
-              <div class="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex items-start gap-3">
-                <span class="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
-                <div>
-                  <p class="text-xs font-semibold text-zinc-200">Verified Discography Updated</p>
-                  <p class="text-[11px] text-zinc-400 mt-0.5">7 verified tracks added to Ikigai, Vol. 1 catalogue register.</p>
-                  <span class="text-[10px] text-zinc-500 mt-1 block">1d ago</span>
-                </div>
-              </div>
-            </div>
-            <div class="pt-3 border-t border-zinc-800 mt-3 text-center">
-              <a href="/pages/notifications.html" class="text-xs text-zinc-400 hover:text-amber-400 font-medium transition-colors">View All Notifications</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- User Profile Menu -->
+        <!-- User Menu -->
         <div class="relative shrink-0">
           <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors shrink-0" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
-            <img src="/static/images/defaults/default-avatar.svg" alt="Baddo Citizen" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
+            <img src="/static/images/defaults/default-avatar.svg" alt="Citizen" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
           </button>
-
-          <!-- User Dropdown Menu -->
           <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
-            <div class="px-3 py-2.5 border-b border-zinc-800 mb-1">
+            <div class="px-3 py-2.5 border-b border-zinc-800 mb-2">
               <h5 class="text-xs font-bold text-zinc-100">Guest Visitor</h5>
-            <a href="/pages/login.html" class="inline-flex items-center gap-1 text-[11px] text-amber-500 hover:text-amber-400 font-semibold transition-colors">
-              <span>Sign In to Participate</span>
-              <i data-lucide="arrow-right" class="w-3 h-3"></i>
-            </a>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Explore freely or sign in to participate in the community.</p>
             </div>
-            <a href="/pages/dashboard.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
-              <i data-lucide="layout-dashboard" class="w-4 h-4 text-zinc-400"></i>
-              <span>Dashboard</span>
-            </a>
-            <a href="/pages/profile.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
-              <i data-lucide="user" class="w-4 h-4 text-zinc-400"></i>
-              <span>My Profile</span>
-            </a>
-            <a href="/pages/playlists.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
-              <i data-lucide="library" class="w-4 h-4 text-zinc-400"></i>
-              <span>Saved & Playlists</span>
-            </a>
-            <a href="/pages/settings.html" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
-              <i data-lucide="settings" class="w-4 h-4 text-zinc-400"></i>
-              <span>Account Settings</span>
-            </a>
-            <div class="pt-1 mt-1 border-t border-zinc-800">
-              <a href="/pages/login.html" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
-              <i data-lucide="log-in" class="w-4 h-4"></i>
-              <span>Sign In / Register</span>
-            </a>
+            <div class="p-1 space-y-2">
+              <a href="/pages/login.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
+                <i data-lucide="log-in" class="w-4 h-4"></i>
+                <span>Sign In</span>
+              </a>
+              <a href="/pages/register.html" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors border border-zinc-700">
+                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                <span>Join JustBaddo</span>
+              </a>
             </div>
           </div>
         </div>
 
-        <!-- Mobile Hamburger Button -->
         <button id="jb-mobile-menu-btn" class="md:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors shrink-0" aria-label="Open menu">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-
       </div>
     </div>
   </header>
 
-  <!-- ==========================================
-       MOBILE NAVIGATION DRAWER OVERLAY
-       ========================================== -->
+  <!-- ================= MOBILE DRAWER ================= -->
   <div id="jb-mobile-drawer" class="jb-modal hidden fixed inset-0 z-50">
     <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
-    
     <div class="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col justify-between z-10 animate-fadeIn">
       <div>
         <div class="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
-          <a href="/index.html" class="flex items-center gap-2">
+          <a href="../index.html" class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
             <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
           </a>
-          <button id="jb-mobile-drawer-close" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Close menu">
+          <button id="jb-mobile-drawer-close" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
-
-        <!-- Mobile Nav Links -->
-        <nav class="space-y-1.5 text-base font-medium">
-          <a href="/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
-            <i data-lucide="home" class="w-5 h-5 text-zinc-400"></i>
-            <span>Home</span>
-          </a>
-          <a href="/pages/music.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
-            <i data-lucide="disc" class="w-5 h-5 text-zinc-400"></i>
-            <span>Music Catalogue</span>
-          </a>
-          <a href="/pages/community.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
-            <i data-lucide="users" class="w-5 h-5 text-zinc-400"></i>
-            <span>Community Feed</span>
-          </a>
-          <a href="/pages/fan-arena.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
-            <i data-lucide="swords" class="w-5 h-5 text-zinc-400"></i>
-            <span>Fan Arena</span>
-          </a>
-          <a href="/pages/stories.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
-            <i data-lucide="book-open" class="w-5 h-5 text-zinc-400"></i>
-            <span>Fan Stories</span>
-          </a>
-          <a href="/pages/timeline.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
-            <i data-lucide="calendar" class="w-5 h-5 text-zinc-400"></i>
-            <span>Career Timeline</span>
-          </a>
-          <a href="/pages/search.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
-            <i data-lucide="search" class="w-5 h-5 text-zinc-400"></i>
-            <span>Search & Filter</span>
-          </a>
+        <nav class="space-y-3">
+          <a href="../index.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Home</a>
+          <a href="music.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Music</a>
+          <a href="members.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Members</a>
+          <a href="community.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Community</a>
+          <a href="fan-arena.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Fan Arena</a>
+          <a href="stories.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Stories</a>
+          <a href="timeline.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Timeline</a>
         </nav>
       </div>
-
-      <!-- Mobile Drawer Bottom Profile / Join -->
-      <div class="pt-6 border-t border-zinc-800 space-y-3">
-        <a href="/pages/dashboard.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-sm font-semibold transition-colors">
-          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-          <span>Member Dashboard</span>
-        </a>
-        <a href="/pages/register.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors">
-          <span>Join Community</span>
-        </a>
-      </div>
+      <div class="jb-mobile-auth-area"></div>
     </div>
   </div>
-
 
   <!-- ================= MAIN CONTENT ================= -->
   <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-10 w-full">
     
+    <!-- Private Profile Notice (Hidden by default) -->
+    <div id="jb-profile-private-notice" class="hidden rounded-3xl border border-zinc-800 bg-zinc-900/60 p-8 sm:p-12 text-center max-w-xl mx-auto mb-10">
+      <div class="w-16 h-16 rounded-full bg-zinc-800 text-zinc-400 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="lock" class="w-8 h-8 text-amber-500"></i>
+      </div>
+      <h2 class="text-xl font-bold text-white mb-2">This Profile is Private</h2>
+      <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed mb-6">
+        This JustBaddo member has configured their profile visibility to private. Only approved details and public contributions are visible.
+      </p>
+      <a href="members.html" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors inline-flex items-center gap-2">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span>Back to Member Directory</span>
+      </a>
+    </div>
+
     <!-- Profile Banner & Header -->
-    <div class="rounded-3xl border border-zinc-800 bg-zinc-900/60 overflow-hidden mb-10">
+    <div id="jb-profile-header-card" class="rounded-3xl border border-zinc-800 bg-zinc-900/60 overflow-hidden mb-10">
       <div class="h-44 sm:h-56 bg-gradient-to-r from-amber-950 via-zinc-900 to-zinc-950 relative"></div>
       
       <div class="px-6 sm:px-8 pb-8 pt-0 relative">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-16 sm:-mt-20 mb-6">
           <div class="flex items-end gap-4">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Baddo Citizen" class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl object-cover border-4 border-zinc-900 shadow-2xl">
+            <div id="jb-profile-avatar-container" class="shrink-0">
+              <img id="jb-profile-avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80" alt="Avatar" class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl object-cover border-4 border-zinc-900 shadow-2xl">
+            </div>
             <div class="mb-2">
-              <div class="flex items-center gap-2">
-                <h1 class="text-xl sm:text-2xl font-bold text-white">Baddo Citizen</h1>
-                <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">Bariga Club</span>
+              <div class="flex items-center gap-2 flex-wrap">
+                <h1 id="jb-profile-name" class="text-xl sm:text-2xl font-bold text-white">Tunde Baddo</h1>
+                <span id="jb-profile-tier" class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">Day One Disciple</span>
+                <span id="jb-profile-reputation" class="inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700 font-bold" title="Reputation Score">
+                  <i data-lucide="shield" class="w-3 h-3 text-amber-500"></i>
+                  <span id="jb-reputation-num">1850</span>
+                </span>
               </div>
-              <p class="text-xs text-zinc-400">@BaddoCitizen</p>
+              <p id="jb-profile-username" class="text-xs text-zinc-400 mt-0.5">@baddofan99</p>
             </div>
           </div>
 
-          <div class="flex items-center gap-3">
-            <button class="px-5 py-2.5 rounded-xl border border-zinc-700 hover:border-zinc-500 bg-zinc-800 text-xs font-semibold text-zinc-200 transition-colors" onclick="JustBaddoUI.toast('Profile link copied', 'info')">
-              Share Profile
+          <div id="jb-profile-actions" class="flex items-center gap-3">
+            <button class="px-5 py-2.5 rounded-xl border border-zinc-700 hover:border-zinc-500 bg-zinc-800 text-xs font-semibold text-zinc-200 transition-colors flex items-center gap-1.5" onclick="navigator.clipboard.writeText(window.location.href); JustBaddoUI.toast('Profile link copied to clipboard', 'info');">
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+              <span>Share</span>
             </button>
-            <a href="settings.html" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors">
-              Edit Profile
-            </a>
+            <button id="jb-edit-profile-btn" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors flex items-center gap-1.5">
+              <i data-lucide="edit-3" class="w-4 h-4"></i>
+              <span>Edit Profile</span>
+            </button>
           </div>
         </div>
 
-        <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-2xl mb-6">
-          Music enthusiast, collector of YBNL vinyls and live concert veteran. Bariga to the world. Currently exploring the discography from Rapsodi through Ikigai.
+        <p id="jb-profile-bio" class="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-2xl mb-6">
+          Music enthusiast, collector of YBNL vinyls and live concert veteran. Bariga to the world. Currently exploring the discography from Rapsodi through Time and Space.
         </p>
+
+        <!-- Profile Favorites & Metadata -->
+        <div id="jb-profile-favorites" class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-2xl bg-zinc-950/60 border border-zinc-850 text-xs mb-6">
+          <div>
+            <span class="text-[10px] text-zinc-500 uppercase font-semibold block">Origin / City</span>
+            <span id="jb-meta-city" class="font-semibold text-zinc-200">Bariga, Lagos</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-zinc-500 uppercase font-semibold block">Favorite Era</span>
+            <span id="jb-meta-era" class="font-semibold text-zinc-200">Street OT (2014)</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-zinc-500 uppercase font-semibold block">Favorite Album</span>
+            <span id="jb-meta-album" class="font-semibold text-amber-400">Time and Space (2026)</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-zinc-500 uppercase font-semibold block">Favorite Track</span>
+            <span id="jb-meta-track" class="font-semibold text-zinc-200">Jaiye (feat. FOLA)</span>
+          </div>
+        </div>
 
         <!-- Profile Counters -->
         <div class="flex items-center gap-6 text-xs text-zinc-400 font-medium pt-4 border-t border-zinc-800/80">
-          <div><span class="font-bold text-zinc-100">142</span> Following</div>
-          <div><span class="font-bold text-zinc-100">389</span> Followers</div>
-          <div><span class="font-bold text-zinc-100">46</span> Saved Tracks</div>
-          <div><span class="font-bold text-amber-400">1,450</span> Arena Points</div>
+          <div><span id="jb-cnt-following" class="font-bold text-zinc-100">0</span> Following</div>
+          <div><span id="jb-cnt-followers" class="font-bold text-zinc-100">0</span> Followers</div>
+          <div><span id="jb-cnt-points" class="font-bold text-amber-400">150</span> Arena Points</div>
+          <div><span id="jb-cnt-joined" class="text-zinc-500">Joined Jan 2023</span></div>
         </div>
       </div>
     </div>
 
-    <!-- Tabs: Community Posts, Playlists, Badges -->
-    <div class="jb-tabs-container">
+    <!-- Tabs: Badges, Discussions, Playlists -->
+    <div id="jb-profile-tabs-section" class="jb-tabs-container">
       <div class="flex items-center gap-6 border-b border-zinc-800 mb-6 text-sm font-medium">
-        <button class="pb-3 border-b-2 border-amber-500 text-amber-400 font-semibold active transition-colors" data-tab-target="#tab-discussions">
-          Community Posts (3)
+        <button class="pb-3 border-b-2 border-amber-500 text-amber-400 font-semibold active transition-colors" data-tab-target="#tab-badges">
+          Badges & Achievements
+        </button>
+        <button class="pb-3 border-b-2 border-transparent text-zinc-400 hover:text-zinc-200 transition-colors" data-tab-target="#tab-discussions">
+          Community Discussions
         </button>
         <button class="pb-3 border-b-2 border-transparent text-zinc-400 hover:text-zinc-200 transition-colors" data-tab-target="#tab-playlists">
-          Playlists (2)
-        </button>
-        <button class="pb-3 border-b-2 border-transparent text-zinc-400 hover:text-zinc-200 transition-colors" data-tab-target="#tab-badges">
-          Badges & Achievements
+          Playlists
         </button>
       </div>
 
-      <!-- Tab 1: Discussions -->
-      <div id="tab-discussions" class="jb-tab-pane space-y-4">
+      <!-- Tab 1: Badges -->
+      <div id="tab-badges" class="jb-tab-pane">
+        <div id="jb-badges-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Tab 2: Discussions -->
+      <div id="tab-discussions" class="jb-tab-pane hidden space-y-4">
         <div class="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800">
           <div class="flex items-center justify-between text-xs text-zinc-400 mb-2">
             <span class="text-amber-500 font-semibold">Album Analysis</span>
-            <span>2 days ago</span>
+            <span>Recent</span>
           </div>
-          <h4 class="text-sm font-bold text-zinc-100 mb-1">Why "Voice of the Street" remains the greatest intro in Nigerian rap</h4>
-          <p class="text-xs text-zinc-300 leading-relaxed">The vocal conviction, Tyrone's thunderous boom-bap drums, and the Bariga imagery created an indelible imprint on the culture.</p>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800">
-          <div class="flex items-center justify-between text-xs text-zinc-400 mb-2">
-            <span class="text-amber-500 font-semibold">Discussion</span>
-            <span>1 week ago</span>
-          </div>
-          <h4 class="text-sm font-bold text-zinc-100 mb-1">Unruly album review: A mature victory lap</h4>
-          <p class="text-xs text-zinc-300 leading-relaxed">The balance between dancehall bounce and street lyrics shows an artist completely at peace with his legendary status.</p>
+          <h4 class="text-sm font-bold text-zinc-100 mb-1">Time and Space: How Olamide stripped away clutter for a 10-track masterclass</h4>
+          <p class="text-xs text-zinc-300 leading-relaxed">The sonic coherence between P.Priime, Eskeez, and Semzi creates an unhurried, timeless listening arc with FOLA as the singular guest.</p>
         </div>
       </div>
 
-      <!-- Tab 2: Playlists -->
+      <!-- Tab 3: Playlists -->
       <div id="tab-playlists" class="jb-tab-pane hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 flex items-center gap-3">
-          <div class="w-12 h-12 rounded-lg bg-zinc-800 flex items-center justify-center font-bold text-amber-500 text-xs">MB</div>
+          <div class="w-12 h-12 rounded-lg bg-zinc-800 flex items-center justify-center font-bold text-amber-500 text-xs">TS</div>
           <div>
-            <h5 class="text-xs font-bold text-zinc-200">My Bariga Classics</h5>
-            <span class="text-[11px] text-zinc-500">3 tracks • Personal Collection</span>
-          </div>
-        </div>
-        <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 flex items-center gap-3">
-          <div class="w-12 h-12 rounded-lg bg-zinc-800 flex items-center justify-center font-bold text-amber-500 text-xs">AF</div>
-          <div>
-            <h5 class="text-xs font-bold text-zinc-200">Afro-Fusion Chill</h5>
-            <span class="text-[11px] text-zinc-500">3 tracks • Personal Collection</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tab 3: Badges -->
-      <div id="tab-badges" class="jb-tab-pane hidden grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-sm">
-            <i data-lucide="award" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h5 class="text-xs font-bold text-zinc-100">Bariga Pioneer</h5>
-            <span class="text-[10px] text-zinc-500">Completed 5 verified quizzes</span>
-          </div>
-        </div>
-        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-sm">
-            <i data-lucide="music" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h5 class="text-xs font-bold text-zinc-100">Discography Archivist</h5>
-            <span class="text-[10px] text-zinc-500">Explored 10+ album tracklists</span>
-          </div>
-        </div>
-        <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-sm">
-            <i data-lucide="zap" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h5 class="text-xs font-bold text-zinc-100">Arena Voter</h5>
-            <span class="text-[10px] text-zinc-500">Voted in 10 song battles</span>
+            <h5 class="text-xs font-bold text-zinc-200">Time and Space Highlights</h5>
+            <span class="text-[11px] text-zinc-500">Public Playlist • 5 tracks</span>
           </div>
         </div>
       </div>
     </div>
 
   </main>
-  <!-- ================= FOOTER ================= -->
-  <footer class="bg-zinc-950 border-t border-zinc-800/80 py-12 px-4 sm:px-6 mt-16 text-xs text-zinc-500">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-        <span class="font-display font-bold text-zinc-200">JUSTBADDO</span>
-        <span class="text-zinc-600">|</span>
-        <span>Independent Olamide Baddo Archival & Fan Community Platform</span>
-      </div>
-      <div class="flex flex-wrap items-center gap-6 text-zinc-400">
-        <a href="/pages/about.html" class="hover:text-amber-400 transition-colors">About</a>
-        <a href="/pages/community-guidelines.html" class="hover:text-amber-400 transition-colors">Guidelines</a>
-        <a href="/pages/privacy.html" class="hover:text-amber-400 transition-colors">Privacy</a>
-        <a href="/pages/terms.html" class="hover:text-amber-400 transition-colors">Terms</a>
-        <a href="/pages/contact.html" class="hover:text-amber-400 transition-colors">Contact</a>
-      </div>
-      <p class="text-zinc-600">&copy; 2026 JustBaddo. Built for music fans and cultural preservation.</p>
-    </div>
-  </footer>
 
-
-  <!-- Persistent Player -->
-    <!-- ================= PERSISTENT BOTTOM PLAYER ================= -->
-  <div id="jb-persistent-player" class="fixed bottom-0 inset-x-0 z-40 bg-zinc-950/95 border-t border-zinc-800/80 backdrop-blur-xl transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-20 flex items-center justify-between gap-2 sm:gap-4">
-      
-      <!-- Left: Track Metadata -->
-      <div class="flex items-center gap-2.5 sm:gap-3.5 min-w-0 flex-1 max-w-[45%] sm:max-w-none sm:w-1/3">
-        <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl overflow-hidden shrink-0 bg-zinc-900 border border-zinc-800 cursor-pointer jb-player-expand-btn group">
-          <img src="/static/images/defaults/default-album-cover.svg" alt="Current Track" class="jb-player-cover w-full h-full object-cover group-hover:scale-105 transition-transform">
-          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-            <i data-lucide="maximize-2" class="w-4 h-4 text-white"></i>
-          </div>
-        </div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center gap-2">
-            <h4 class="jb-player-title text-xs sm:text-sm font-bold text-zinc-100 truncate cursor-pointer hover:text-amber-400 transition-colors jb-player-expand-btn">Metaverse</h4>
-            <span class="jb-player-status-badge hidden lg:inline-block text-[9px] uppercase tracking-wider font-semibold px-1.5 py-0.5 rounded-full border bg-amber-950 text-amber-400 border-amber-800 shrink-0">Preview</span>
-          </div>
-          <p class="jb-player-artist text-[11px] sm:text-xs text-zinc-400 truncate">Olamide</p>
-        </div>
-      </div>
-
-      <!-- Center: Playback Controls & Progress Bar -->
-      <div class="flex flex-col items-center justify-center shrink-0 sm:flex-1 sm:max-w-lg">
-        <div class="flex items-center gap-2.5 sm:gap-6 mb-1 sm:mb-1.5">
-          <button class="jb-player-shuffle-btn hidden sm:inline-flex text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Shuffle" aria-label="Toggle Shuffle">
-            <i data-lucide="shuffle" class="w-4 h-4"></i>
-          </button>
-          <button class="jb-player-prev-btn text-zinc-300 hover:text-white transition-colors p-1" title="Previous Track" aria-label="Previous Track">
-            <i data-lucide="skip-back" class="w-4 h-4"></i>
-          </button>
-          <button class="jb-play-pause-btn w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-all transform hover:scale-105 shadow-md shadow-amber-500/20 shrink-0" title="Play/Pause" aria-label="Play">
-            <i data-lucide="play" class="jb-play-pause-icon w-4 h-4 fill-current"></i>
-          </button>
-          <button class="jb-player-next-btn text-zinc-300 hover:text-white transition-colors p-1" title="Next Track" aria-label="Next Track">
-            <i data-lucide="skip-forward" class="w-4 h-4"></i>
-          </button>
-          <button class="jb-player-repeat-btn hidden sm:inline-flex relative text-zinc-400 hover:text-amber-400 transition-colors p-1" title="Repeat" aria-label="Toggle Repeat">
-            <i data-lucide="repeat" class="w-4 h-4"></i>
-            <span class="jb-repeat-badge hidden absolute -top-1 -right-1 text-[8px] font-bold text-amber-400"></span>
-          </button>
-        </div>
-
-        <div class="w-full flex items-center gap-1.5 sm:gap-3 text-[10px] sm:text-[11px] font-mono text-zinc-400">
-          <span class="jb-player-current-time w-7 sm:w-8 text-right shrink-0">0:00</span>
-          <div class="relative flex-1 flex items-center min-w-[50px]">
-            <input type="range" min="0" max="100" value="0" step="0.1" class="jb-progress-slider w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Track Progress">
-          </div>
-          <span class="jb-player-duration w-7 sm:w-8 shrink-0">2:47</span>
-        </div>
-      </div>
-
-      <!-- Right: Utility Controls (Volume, Queue, Expand) -->
-      <div class="flex items-center justify-end gap-1.5 sm:gap-4 shrink-0 sm:w-1/3">
-        <button class="jb-player-like-btn hidden sm:inline-flex text-zinc-400 hover:text-rose-500 transition-colors p-1.5" title="Save Track" aria-label="Save Track">
-          <i data-lucide="heart" class="w-4 h-4"></i>
-        </button>
-
-        <div class="hidden md:flex items-center gap-2 group">
-          <button class="jb-volume-btn text-zinc-400 hover:text-white transition-colors" title="Mute/Unmute" aria-label="Mute">
-            <i data-lucide="volume-2" class="jb-volume-icon w-4 h-4"></i>
-          </button>
-          <input type="range" min="0" max="1" step="0.01" value="0.7" class="jb-volume-slider w-16 h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Volume">
-        </div>
-
-        <button class="jb-player-queue-btn relative text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800 shrink-0" title="Play Queue" aria-label="View Queue">
-          <i data-lucide="list-music" class="w-4 h-4"></i>
-          <span class="jb-queue-count absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-black text-[9px] font-bold flex items-center justify-center">1</span>
-        </button>
-
-        <button class="jb-player-expand-btn text-zinc-400 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-zinc-800 shrink-0" title="Expand Player" aria-label="Expand Player">
-          <i data-lucide="maximize-2" class="w-4 h-4"></i>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ================= EXPANDED PLAYER MODAL ================= -->
-  <div id="jb-expanded-player-modal" class="jb-modal hidden fixed inset-0 z-50 overflow-y-auto">
+  <!-- ================= EDIT PROFILE MODAL ================= -->
+  <div id="jb-edit-profile-modal" class="jb-modal hidden fixed inset-0 z-50 overflow-y-auto">
     <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
-    <div class="relative min-h-screen flex items-center justify-center p-4 sm:p-6">
-      <div class="relative w-full max-w-xl bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden">
-        <div class="flex items-center justify-between mb-8">
-          <div class="flex items-center gap-2">
-            <span class="text-xs uppercase tracking-wider font-bold text-amber-500">JustBaddo Player</span>
-            <span class="jb-player-status-badge text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border bg-amber-950 text-amber-400 border-amber-800">Preview</span>
+    <div class="relative min-h-screen flex items-center justify-center p-4">
+      <div class="relative w-full max-w-lg bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-zinc-800">
+          <div>
+            <h3 class="text-lg font-bold text-white">Edit Profile</h3>
+            <p class="text-xs text-zinc-400 mt-0.5">Customise your fan profile and privacy preferences.</p>
           </div>
-          <button class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors" data-modal-close aria-label="Close expanded player">
+          <button id="jb-edit-modal-close" class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-800 transition-colors">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
-        <div class="w-64 h-64 sm:w-72 sm:h-72 mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-black/80 border border-zinc-800 mb-8 bg-zinc-950">
-          <img src="/static/images/defaults/default-album-cover.svg" alt="Album Cover" class="jb-player-cover w-full h-full object-cover">
-        </div>
-        <div class="text-center mb-6">
-          <h2 class="jb-player-title text-2xl font-bold text-zinc-100 mb-1">Metaverse</h2>
-          <p class="jb-player-artist text-base text-zinc-400 mb-1">Olamide</p>
-          <p class="jb-player-album text-xs text-amber-500/90 font-medium">Ikigai / 生き甲斐, Vol. 1</p>
-        </div>
-        <div class="mb-6">
-          <div class="relative flex items-center mb-2">
-            <input type="range" min="0" max="100" value="0" step="0.1" class="jb-progress-slider w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer" aria-label="Track progress slider">
+
+        <form id="jb-profile-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Display Name</label>
+            <input type="text" id="edit-display-name" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-zinc-200 focus:outline-none">
           </div>
-          <div class="flex justify-between text-xs font-mono text-zinc-400">
-            <span class="jb-player-current-time">0:00</span>
-            <span class="jb-player-duration">2:47</span>
+
+          <div>
+            <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Bio</label>
+            <textarea id="edit-bio" rows="3" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-zinc-200 focus:outline-none"></textarea>
           </div>
-        </div>
-        <div class="flex items-center justify-center gap-6 mb-8">
-          <button class="jb-player-shuffle-btn text-zinc-400 hover:text-amber-400 transition-colors p-2" aria-label="Toggle Shuffle"><i data-lucide="shuffle" class="w-5 h-5"></i></button>
-          <button class="jb-player-prev-btn text-zinc-300 hover:text-white transition-colors p-2" aria-label="Previous track"><i data-lucide="skip-back" class="w-6 h-6"></i></button>
-          <button class="jb-play-pause-btn w-14 h-14 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-all transform hover:scale-105 shadow-xl shadow-amber-500/25" aria-label="Play or pause"><i data-lucide="play" class="jb-play-pause-icon w-6 h-6 fill-current"></i></button>
-          <button class="jb-player-next-btn text-zinc-300 hover:text-white transition-colors p-2" aria-label="Next track"><i data-lucide="skip-forward" class="w-6 h-6"></i></button>
-          <button class="jb-player-repeat-btn relative text-zinc-400 hover:text-amber-400 transition-colors p-2" aria-label="Toggle Repeat"><i data-lucide="repeat" class="w-5 h-5"></i></button>
-        </div>
-        <div class="flex items-center justify-between pt-6 border-t border-zinc-800 text-sm">
-          <button class="jb-player-like-btn flex items-center gap-2 text-zinc-400 hover:text-rose-500 transition-colors">
-            <i data-lucide="heart" class="w-4 h-4"></i>
-            <span>Save to Library</span>
-          </button>
-          <button class="flex items-center gap-2 text-zinc-400 hover:text-amber-400 transition-colors" onclick="JustBaddoPlaylists.openAddToPlaylistModal(JustBaddoState.state.player.currentTrack?.id)">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i>
-            <span>Add to Playlist</span>
-          </button>
-        </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-zinc-300 mb-1.5">City</label>
+              <input type="text" id="edit-city" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-200 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Country</label>
+              <input type="text" id="edit-country" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-200 focus:outline-none">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Favorite Album</label>
+              <input type="text" id="edit-album" placeholder="e.g. Time and Space" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-200 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-zinc-300 mb-1.5">Favorite Track</label>
+              <input type="text" id="edit-track" placeholder="e.g. Jaiye (feat. FOLA)" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-200 focus:outline-none">
+            </div>
+          </div>
+
+          <!-- Privacy Toggle -->
+          <div class="p-3.5 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex items-center justify-between">
+            <div>
+              <h5 class="text-xs font-bold text-zinc-200">Public Profile Visibility</h5>
+              <p class="text-[11px] text-zinc-400 mt-0.5">When disabled, only your username is shown and your profile is hidden from the public directory.</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer ml-4">
+              <input type="checkbox" id="edit-is-public" class="sr-only peer" checked>
+              <div class="w-11 h-6 bg-zinc-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+            </label>
+          </div>
+
+          <div class="pt-4 flex items-center justify-end gap-3">
+            <button type="button" id="jb-cancel-edit-btn" class="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-zinc-300 transition-colors">
+              Cancel
+            </button>
+            <button type="submit" id="jb-save-profile-btn" class="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors">
+              Save Changes
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
-  <div id="jb-queue-drawer" class="jb-modal hidden fixed inset-0 z-50 overflow-hidden">
-    <div class="jb-modal-backdrop fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
-    <div class="fixed inset-y-0 right-0 max-w-md w-full bg-zinc-900 border-l border-zinc-800 shadow-2xl flex flex-col z-10 animate-fadeIn">
-      <div class="p-6 border-b border-zinc-800 flex items-center justify-between">
-        <h3 class="text-lg font-bold text-zinc-100">Playback Queue</h3>
-        <button class="text-zinc-400 hover:text-white" data-modal-close><i data-lucide="x" class="w-5 h-5"></i></button>
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-zinc-950 border-t border-zinc-900 pt-12 pb-24 text-zinc-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 JustBaddo. Built for music fans and cultural preservation.</p>
+      <div class="flex items-center gap-4 text-zinc-500">
+        <a href="community-guidelines.html" class="hover:text-amber-400 transition-colors">Guidelines</a>
+        <span>•</span>
+        <a href="terms.html" class="hover:text-amber-400 transition-colors">Terms</a>
+        <span>•</span>
+        <a href="privacy.html" class="hover:text-amber-400 transition-colors">Privacy</a>
       </div>
-      <div id="jb-queue-list" class="flex-1 overflow-y-auto p-4 space-y-2"></div>
     </div>
-  </div>
+  </footer>
 
-  <script src="../static/js/data/catalogue.js"></script>
-  <script src="../static/js/data/community-data.js"></script>
-  <script src="../static/js/data/arena-data.js"></script>
-  <script src="../static/js/data/stories-data.js"></script>
-  <script src="../static/js/data/timeline-data.js"></script>
-  
+  <!-- Scripts -->
   <script src="../static/js/core/api-client.js"></script>
   <script src="../static/js/core/storage.js"></script>
   <script src="../static/js/core/state.js"></script>
   <script src="../static/js/core/ui.js"></script>
-  
-  <script src="../static/js/music/provider-interface.js"></script>
-  <script src="../static/js/music/mock-provider.js"></script>
-  <script src="../static/js/music/soundcloud-provider.js"></script>
-  <script src="../static/js/music/youtube-provider.js"></script>
-  <script src="../static/js/music/self-hosted-provider.js"></script>
-  <script src="../static/js/music/provider-manager.js"></script>
-  <script src="../static/js/music/player.js"></script>
-  <script src="../static/js/music/queue.js"></script>
-  <script src="../static/js/music/playlists.js"></script>
-  
-  <script src="../static/js/core/app.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
       JustBaddoUI.setupTabs('.jb-tabs-container');
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryUser = urlParams.get('user');
+
+      let profileData = null;
+      let isOwner = false;
+
+      // Modal elements
+      const editModal = document.getElementById('jb-edit-profile-modal');
+      const editBtn = document.getElementById('jb-edit-profile-btn');
+      const closeBtn = document.getElementById('jb-edit-modal-close');
+      const cancelBtn = document.getElementById('jb-cancel-edit-btn');
+      const profileForm = document.getElementById('jb-profile-form');
+
+      // Fetch profile data
+      try {
+        if (queryUser) {
+          const res = await window.JustBaddoApi.auth.getPublicProfile(queryUser);
+          if (res && res.data) {
+            profileData = res.data;
+            const currentUser = window.JustBaddoState?.state?.currentUser;
+            if (currentUser && currentUser.username.toLowerCase() === queryUser.toLowerCase()) {
+              isOwner = true;
+            }
+          }
+        } else {
+          // Current user profile
+          const res = await window.JustBaddoApi.auth.getProfile();
+          if (res && res.data) {
+            profileData = res.data;
+            isOwner = true;
+          }
+        }
+      } catch (err) {
+        // Fallback or unauthenticated
+      }
+
+      if (!profileData) {
+        // Fallback for demonstration
+        profileData = {
+          username: queryUser || 'baddofan99',
+          display_name: queryUser ? queryUser.capitalize() : 'Tunde Baddo',
+          bio: 'Music enthusiast, collector of YBNL vinyls and live concert veteran. Bariga to the world. Currently exploring the discography from Rapsodi through Time and Space.',
+          avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=300&q=80',
+          city: 'Bariga, Lagos',
+          country: 'Nigeria',
+          favorite_era: 'Street OT (2014)',
+          favorite_album: 'Time and Space (2026)',
+          favorite_track: 'Jaiye (feat. FOLA)',
+          fan_tier: 'Day One Disciple',
+          reputation_score: 1850,
+          points: 1450,
+          is_profile_public: true,
+          badges: [
+            { name: 'First Steps', icon: 'award', category: 'community', description: 'Joined the platform and accepted community guidelines' },
+            { name: 'Conversation Starter', icon: 'message-circle', category: 'community', description: 'Started a community discussion thread' },
+            { name: 'Album Explorer', icon: 'disc', category: 'music', description: 'Explored complete studio discography' }
+          ]
+        };
+        isOwner = !queryUser;
+      }
+
+      // Check private state
+      if (profileData.is_private) {
+        document.getElementById('jb-profile-header-card').classList.add('hidden');
+        document.getElementById('jb-profile-tabs-section').classList.add('hidden');
+        document.getElementById('jb-profile-private-notice').classList.remove('hidden');
+        JustBaddoUI.refreshIcons();
+        return;
+      }
+
+      // Populate profile data
+      document.title = `${profileData.display_name} (@${profileData.username}) — Profile — JUSTBADDO`;
+      document.getElementById('jb-profile-name').textContent = profileData.display_name;
+      document.getElementById('jb-profile-username').textContent = `@${profileData.username}`;
+      document.getElementById('jb-profile-tier').textContent = profileData.fan_tier || 'Day One Disciple';
+      document.getElementById('jb-reputation-num').textContent = profileData.reputation_score || 0;
+      document.getElementById('jb-profile-bio').textContent = profileData.bio || 'Member of the JustBaddo fan community.';
+      
+      document.getElementById('jb-meta-city').textContent = profileData.city || 'Lagos, Nigeria';
+      document.getElementById('jb-meta-era').textContent = profileData.favorite_era || 'Carpe Diem (2020)';
+      document.getElementById('jb-meta-album').textContent = profileData.favorite_album || 'Time and Space (2026)';
+      document.getElementById('jb-meta-track').textContent = profileData.favorite_track || 'Jaiye (feat. FOLA)';
+
+      document.getElementById('jb-cnt-followers').textContent = profileData.follower_count || 0;
+      document.getElementById('jb-cnt-following').textContent = profileData.following_count || 0;
+      document.getElementById('jb-cnt-points').textContent = profileData.points || 0;
+      if (profileData.date_joined) {
+        document.getElementById('jb-cnt-joined').textContent = `Joined ${profileData.date_joined}`;
+      }
+
+      const avatarEl = document.getElementById('jb-profile-avatar');
+      if (profileData.avatar_url) {
+        avatarEl.src = profileData.avatar_url;
+      } else {
+        const container = document.getElementById('jb-profile-avatar-container');
+        container.innerHTML = `<div class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-tr from-amber-600 to-amber-400 text-black font-extrabold text-2xl flex items-center justify-center border-4 border-zinc-900 shadow-2xl">${JustBaddoUI.getInitials(profileData.display_name)}</div>`;
+      }
+
+      // Hide Edit Profile if not owner
+      if (!isOwner) {
+        editBtn.classList.add('hidden');
+      }
+
+      // Populate Badges
+      const badgesContainer = document.getElementById('jb-badges-grid');
+      const badges = profileData.badges || [];
+      if (badges.length === 0) {
+        badgesContainer.innerHTML = `
+          <div class="col-span-full py-12 text-center text-zinc-500">
+            <i data-lucide="award" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
+            <p class="text-sm">No badges earned yet. Participate in discussions and the Fan Arena to unlock badges!</p>
+          </div>
+        `;
+      } else {
+        badgesContainer.innerHTML = badges.map(b => `
+          <div class="p-4 rounded-2xl bg-zinc-900/60 border border-zinc-800 flex items-start gap-3.5 hover:border-zinc-700 transition-colors">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-sm shrink-0 border border-amber-500/20">
+              <i data-lucide="${b.icon || 'award'}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h5 class="text-xs font-bold text-zinc-100">${b.name}</h5>
+                <span class="text-[9px] uppercase font-mono px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-400">${b.category || 'badge'}</span>
+              </div>
+              <p class="text-[11px] text-zinc-400 mt-1 leading-relaxed">${b.description || ''}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // Modal open/close
+      function openModal() {
+        document.getElementById('edit-display-name').value = profileData.display_name || '';
+        document.getElementById('edit-bio').value = profileData.bio || '';
+        document.getElementById('edit-city').value = profileData.city || '';
+        document.getElementById('edit-country').value = profileData.country || 'Nigeria';
+        document.getElementById('edit-album').value = profileData.favorite_album || '';
+        document.getElementById('edit-track').value = profileData.favorite_track || '';
+        document.getElementById('edit-is-public').checked = profileData.is_profile_public !== false;
+        editModal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        editModal.classList.add('hidden');
+      }
+
+      if (editBtn) editBtn.addEventListener('click', openModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+
+      // Handle profile update submit
+      if (profileForm) {
+        profileForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const submitBtn = document.getElementById('jb-save-profile-btn');
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Saving...';
+
+          const updatePayload = {
+            display_name: document.getElementById('edit-display-name').value.trim(),
+            bio: document.getElementById('edit-bio').value.trim(),
+            city: document.getElementById('edit-city').value.trim(),
+            country: document.getElementById('edit-country').value.trim(),
+            favorite_album: document.getElementById('edit-album').value.trim(),
+            favorite_track: document.getElementById('edit-track').value.trim(),
+            is_profile_public: document.getElementById('edit-is-public').checked
+          };
+
+          try {
+            const res = await window.JustBaddoApi.auth.updateProfile(updatePayload);
+            if (res && res.data) {
+              JustBaddoUI.toast('Profile updated successfully!', 'success');
+              closeModal();
+              setTimeout(() => window.location.reload(), 400);
+            } else {
+              JustBaddoUI.toast(res?.message || 'Failed to update profile.', 'error');
+            }
+          } catch (err) {
+            JustBaddoUI.toast('Profile update failed. Please check your inputs.', 'error');
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Save Changes';
+          }
+        });
+      }
+
+      JustBaddoUI.refreshIcons();
     });
   </script>
 </body>

@@ -16,6 +16,7 @@ window.JustBaddoPlaylists = {
   },
 
   openAddToPlaylistModal(trackId) {
+    if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('create playlists and save tracks')) return;
     this.pendingTrackId = trackId;
     this.renderAddPlaylistModalList();
     JustBaddoUI.openModal('jb-add-to-playlist-modal');
@@ -62,6 +63,7 @@ window.JustBaddoPlaylists = {
       const addToPlaylistBtn = e.target.closest('[data-action-add-to-playlist]');
       if (addToPlaylistBtn) {
         e.preventDefault();
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('add tracks to a playlist')) return;
         const trackId = addToPlaylistBtn.getAttribute('data-action-add-to-playlist');
         this.openAddToPlaylistModal(trackId);
         return;
@@ -87,6 +89,7 @@ window.JustBaddoPlaylists = {
       const createPlBtn = e.target.closest('#jb-create-playlist-btn');
       if (createPlBtn) {
         e.preventDefault();
+        if (window.JustBaddoUI && !window.JustBaddoUI.requireAuth('create a custom playlist')) return;
         const input = document.getElementById('jb-new-playlist-title');
         const descInput = document.getElementById('jb-new-playlist-desc');
         const title = input ? input.value.trim() : '';

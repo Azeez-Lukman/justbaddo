@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to JustBaddo — JUSTBADDO</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+  <link rel="alternate icon" href="/static/images/favicon.ico">
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col justify-between antialiased selection:bg-amber-500 selection:text-black">
+
+  <header class="p-6 max-w-7xl mx-auto w-full flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-2 group">
+      <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+      <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+    </a>
+    <a href="../index.html" class="text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      <span>Back to Home</span>
+    </a>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-lg p-8 sm:p-10 rounded-3xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-xl text-center">
+      
+      <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center mx-auto mb-6">
+        <i data-lucide="sparkles" class="w-8 h-8"></i>
+      </div>
+
+      <h1 class="font-display text-3xl font-black text-white mb-2">
+        Welcome to the Family, <span id="jb-welcome-username" class="text-amber-500">Disciple</span>!
+      </h1>
+      <p class="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto mb-8">
+        Your JustBaddo member account has been registered. You're now ready to curate playlists, participate in fan debates, and explore 15+ years of verified musical milestones.
+      </p>
+
+      <!-- Context Next Banner -->
+      <div id="jb-welcome-context-banner" class="hidden mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs text-left flex items-start gap-3">
+        <i data-lucide="compass" class="w-5 h-5 shrink-0 mt-0.5 text-amber-400"></i>
+        <div>
+          <span class="font-bold block text-white mb-0.5">Ready to return?</span>
+          <span>We've preserved your destination. Sign in to seamlessly complete your action.</span>
+        </div>
+      </div>
+
+      <!-- Action Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
+        <a href="music.html" class="p-3.5 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 hover:border-amber-500/50 transition-colors group">
+          <div class="flex items-center gap-2.5 mb-1 text-zinc-200 group-hover:text-amber-400 font-semibold text-xs">
+            <i data-lucide="disc-3" class="w-4 h-4 text-amber-500"></i>
+            <span>Verified Discography</span>
+          </div>
+          <p class="text-[11px] text-zinc-500">Explore complete albums, singles, lyrics, and authorised streaming previews.</p>
+        </a>
+
+        <a href="fan-arena.html" class="p-3.5 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 hover:border-amber-500/50 transition-colors group">
+          <div class="flex items-center gap-2.5 mb-1 text-zinc-200 group-hover:text-amber-400 font-semibold text-xs">
+            <i data-lucide="swords" class="w-4 h-4 text-amber-500"></i>
+            <span>Fan Arena Polls</span>
+          </div>
+          <p class="text-[11px] text-zinc-500">Vote in community song battles, era debates, and lyric trivia challenges.</p>
+        </a>
+      </div>
+
+      <!-- Primary Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center gap-3">
+        <a id="jb-welcome-signin-btn" href="login.html" class="w-full sm:flex-1 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Sign In to Account</span>
+        </a>
+        <a href="../index.html" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs transition-colors">
+          Explore as Guest
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="p-6 text-center text-xs text-zinc-500">
+    © 2026 JustBaddo. Built for music fans and cultural preservation.
+  </footer>
+
+  <script src="../static/js/core/api-client.js"></script>
+  <script src="../static/js/core/storage.js"></script>
+  <script src="../static/js/core/state.js"></script>
+  <script src="../static/js/core/ui.js"></script>
+  <script src="../static/js/core/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const username = urlParams.get('username');
+      const nextParam = urlParams.get('next');
+
+      if (username) {
+        const userEl = document.getElementById('jb-welcome-username');
+        if (userEl) userEl.textContent = `@${username}`;
+      }
+
+      if (nextParam) {
+        const banner = document.getElementById('jb-welcome-context-banner');
+        if (banner) banner.classList.remove('hidden');
+
+        const signinBtn = document.getElementById('jb-welcome-signin-btn');
+        if (signinBtn) signinBtn.href = `login.html?next=${encodeURIComponent(nextParam)}`;
+      }
+
+      JustBaddoUI.refreshIcons();
+    });
+  </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 """
 API views for polls, song battles, trivia challenge runner, and fan leaderboard.
+Enforces authenticated voting and scoring for registered members while preserving public guest viewing.
 """
 
 from rest_framework.views import APIView
@@ -33,11 +34,19 @@ class PollListView(APIView):
 class PollVoteView(APIView):
     """
     Cast vote on a community poll option.
+    Requires authentication.
     POST /api/v1/arena/polls/<id>/vote/
     """
     permission_classes = [AllowAny]
 
     def post(self, request, poll_id):
+        if not request.user.is_authenticated:
+            return api_error(
+                message="Authentication required to vote in polls.",
+                code="UNAUTHORIZED",
+                status_code=status.HTTP_401_UNAUTHORIZED
+            )
+
         serializer = VoteRequestSerializer(data=request.data)
         if not serializer.is_valid():
             return api_error(message="Invalid vote option.", code="VALIDATION_ERROR", errors=serializer.errors)
@@ -45,7 +54,7 @@ class PollVoteView(APIView):
         updated_polls, msg = ArenaService.vote_poll(
             poll_id=poll_id,
             option_id=serializer.validated_data['option_id'],
-            user=request.user if request.user.is_authenticated else None
+            user=request.user
         )
         if not updated_polls:
             return api_error(message=msg, code="BAD_REQUEST", status_code=status.HTTP_400_BAD_REQUEST)
@@ -67,11 +76,19 @@ class SongBattleListView(APIView):
 class SongBattleVoteView(APIView):
     """
     Vote for song_a or song_b in a song clash.
+    Requires authentication.
     POST /api/v1/arena/battles/<id>/vote/
     """
     permission_classes = [AllowAny]
 
     def post(self, request, battle_id):
+        if not request.user.is_authenticated:
+            return api_error(
+                message="Authentication required to vote in song battles.",
+                code="UNAUTHORIZED",
+                status_code=status.HTTP_401_UNAUTHORIZED
+            )
+
         serializer = BattleVoteSerializer(data=request.data)
         if not serializer.is_valid():
             return api_error(message="Invalid battle choice.", code="VALIDATION_ERROR", errors=serializer.errors)
@@ -79,7 +96,7 @@ class SongBattleVoteView(APIView):
         updated_battles, msg = ArenaService.vote_battle(
             battle_id=battle_id,
             selected_song=serializer.validated_data['selected_song'],
-            user=request.user if request.user.is_authenticated else None
+            user=request.user
         )
         if not updated_battles:
             return api_error(message=msg, code="BAD_REQUEST", status_code=status.HTTP_400_BAD_REQUEST)
@@ -101,16 +118,24 @@ class TriviaQuestionsView(APIView):
 class TriviaSubmitView(APIView):
     """
     Submit trivia answer sheet, receive scoring, breakdown, and award fan points.
+    Requires authentication.
     POST /api/v1/arena/trivia/submit/
     """
     permission_classes = [AllowAny]
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            return api_error(
+                message="Authentication required to submit trivia answers.",
+                code="UNAUTHORIZED",
+                status_code=status.HTTP_401_UNAUTHORIZED
+            )
+
         serializer = TriviaSubmissionSerializer(data=request.data)
         if not serializer.is_valid():
             return api_error(message="Invalid answers map.", code="VALIDATION_ERROR", errors=serializer.errors)
 
-        result = ArenaService.evaluate_trivia(serializer.validated_data['answers'])
+        result = ArenaService.evaluate_trivia(serializer.validated_data['answers'], user=request.user)
         return api_success(data=result, message=f"Trivia challenge scored! You earned {result['points_awarded']} points.")
 
 class LeaderboardView(APIView):

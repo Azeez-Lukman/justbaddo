@@ -23,7 +23,8 @@ class StoryDetailSerializer(StorySummarySerializer):
 
 class StorySubmissionSerializer(serializers.Serializer):
     title = serializers.CharField(min_length=5, max_length=150)
-    read_time = serializers.CharField(default='5 min read')
+    excerpt = serializers.CharField(required=False, allow_blank=True, default='')
+    read_time = serializers.CharField(default='5 min read', required=False)
     cover_image = serializers.URLField(required=False, allow_blank=True)
     tags = serializers.CharField(required=False, allow_blank=True)
     content = serializers.CharField(min_length=50, max_length=10000)

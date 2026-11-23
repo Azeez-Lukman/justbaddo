@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Members — JUSTBADDO</title>
+  <meta name="description" content="Explore and connect with fellow Olamide fans, badges, and reputation rankings on JustBaddo.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+  <link rel="alternate icon" href="/static/images/favicon.ico">
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black pb-player-safe">
+
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="sticky top-0 z-30 bg-[#070809]/90 border-b border-zinc-800/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-8">
+        <a href="../index.html" class="flex items-center gap-2 group">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+          <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          <a href="../index.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Home</a>
+          <a href="music.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Music</a>
+          <a href="members.html" class="jb-nav-link text-amber-400 font-semibold transition-colors">Members</a>
+          <a href="community.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Community</a>
+          <a href="fan-arena.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Fan Arena</a>
+          <a href="stories.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Stories</a>
+          <a href="timeline.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Timeline</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-3 sm:gap-4">
+        <form class="jb-search-form hidden lg:flex items-center relative">
+          <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none"></i>
+          <input type="search" placeholder="Search members, catalogue..." class="jb-global-search-input w-56 xl:w-72 bg-zinc-900 border border-zinc-800 focus:border-amber-500/80 rounded-xl pl-9 pr-8 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none transition-all">
+          <span class="absolute right-2.5 px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 text-[10px] font-mono text-zinc-400 pointer-events-none">/</span>
+        </form>
+
+        <a href="search.html" class="lg:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Search">
+          <i data-lucide="search" class="w-5 h-5"></i>
+        </a>
+
+        <!-- User Menu -->
+        <div class="relative shrink-0">
+          <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors shrink-0" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
+            <img src="/static/images/defaults/default-avatar.svg" alt="Citizen" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
+          </button>
+          <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
+            <div class="px-3 py-2.5 border-b border-zinc-800 mb-2">
+              <h5 class="text-xs font-bold text-zinc-100">Guest Visitor</h5>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Explore freely or sign in to participate in the community.</p>
+            </div>
+            <div class="p-1 space-y-2">
+              <a href="/pages/login.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
+                <i data-lucide="log-in" class="w-4 h-4"></i>
+                <span>Sign In</span>
+              </a>
+              <a href="/pages/register.html" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors border border-zinc-700">
+                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                <span>Join JustBaddo</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <button id="jb-mobile-menu-btn" class="md:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors shrink-0" aria-label="Open menu">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MOBILE DRAWER ================= -->
+  <div id="jb-mobile-drawer" class="jb-modal hidden fixed inset-0 z-50">
+    <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+    <div class="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col justify-between z-10 animate-fadeIn">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
+          <a href="../index.html" class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
+            <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+          </a>
+          <button id="jb-mobile-drawer-close" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+        <nav class="space-y-3">
+          <a href="../index.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Home</a>
+          <a href="music.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Music</a>
+          <a href="members.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-amber-400 bg-amber-500/10 transition-colors">Members</a>
+          <a href="community.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Community</a>
+          <a href="fan-arena.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Fan Arena</a>
+          <a href="stories.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Stories</a>
+          <a href="timeline.html" class="block px-3 py-2 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors">Timeline</a>
+        </nav>
+      </div>
+      <div class="jb-mobile-auth-area"></div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 py-10 w-full">
+    
+    <!-- Hero Banner -->
+    <div class="relative rounded-3xl border border-zinc-800 bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-6 sm:p-10 mb-8 overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-amber-500/10 blur-3xl pointer-events-none"></div>
+      
+      <div class="relative z-10 max-w-2xl">
+        <span class="text-xs uppercase tracking-widest font-bold text-amber-500 mb-2 block">Integrated Community</span>
+        <h1 class="font-display font-black text-3xl sm:text-4xl text-white tracking-tight mb-3">
+          JustBaddo Member Directory
+        </h1>
+        <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+          Discover and connect with fellow Olamide fans, discography scholars, and community contributors across Nigeria and the global diaspora.
+        </p>
+      </div>
+    </div>
+
+    <!-- Filter & Search Toolbar -->
+    <div class="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 mb-8 backdrop-blur-md">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <!-- Search -->
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 top-3.5 pointer-events-none"></i>
+          <input type="text" id="jb-member-search" placeholder="Search members by name or city..." class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl pl-9 pr-3 py-2.5 text-xs sm:text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none transition-colors">
+        </div>
+
+        <!-- Tier Filter -->
+        <div>
+          <select id="jb-member-tier" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-zinc-200 focus:outline-none transition-colors">
+            <option value="">All Fan Tiers</option>
+            <option value="Day One Disciple">Day One Disciple</option>
+            <option value="Street Veteran">Street Veteran</option>
+            <option value="OLIC Veteran">OLIC Veteran</option>
+            <option value="Discography Scholar">Discography Scholar</option>
+          </select>
+        </div>
+
+        <!-- Badge Filter -->
+        <div>
+          <select id="jb-member-badge" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-zinc-200 focus:outline-none transition-colors">
+            <option value="">All Badges</option>
+            <option value="first-steps">First Steps</option>
+            <option value="conversation-starter">Conversation Starter</option>
+            <option value="good-contributor">Good Contributor</option>
+            <option value="album-explorer">Album Explorer</option>
+            <option value="community-regular">Community Regular</option>
+          </select>
+        </div>
+
+        <!-- Sort By -->
+        <div>
+          <select id="jb-member-sort" class="w-full bg-zinc-950 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-zinc-200 focus:outline-none transition-colors">
+            <option value="-reputation_score">Highest Reputation</option>
+            <option value="-created_at">Newest Members</option>
+            <option value="display_name">Name (A–Z)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Members Cards Grid -->
+    <div id="jb-members-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+      <div class="col-span-full py-16 text-center text-zinc-500">
+        <i data-lucide="loader" class="w-8 h-8 animate-spin mx-auto mb-3 text-amber-500"></i>
+        <p class="text-sm">Loading member directory...</p>
+      </div>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div id="jb-pagination-container" class="flex items-center justify-between border-t border-zinc-800 pt-6">
+      <button id="jb-prev-page" class="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 disabled:opacity-40 disabled:pointer-events-none transition-colors flex items-center gap-1.5">
+        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        <span>Previous</span>
+      </button>
+
+      <span id="jb-page-indicator" class="text-xs text-zinc-400 font-mono">Page 1</span>
+
+      <button id="jb-next-page" class="px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-300 hover:text-white hover:border-zinc-700 disabled:opacity-40 disabled:pointer-events-none transition-colors flex items-center gap-1.5">
+        <span>Next</span>
+        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-zinc-950 border-t border-zinc-900 pt-12 pb-24 text-zinc-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 JustBaddo. Built for music fans and cultural preservation.</p>
+      <div class="flex items-center gap-4 text-zinc-500">
+        <a href="community-guidelines.html" class="hover:text-amber-400 transition-colors">Guidelines</a>
+        <span>•</span>
+        <a href="terms.html" class="hover:text-amber-400 transition-colors">Terms</a>
+        <span>•</span>
+        <a href="privacy.html" class="hover:text-amber-400 transition-colors">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../static/js/core/api-client.js"></script>
+  <script src="../static/js/core/storage.js"></script>
+  <script src="../static/js/core/state.js"></script>
+  <script src="../static/js/core/ui.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentPage = 1;
+      const searchInput = document.getElementById('jb-member-search');
+      const tierSelect = document.getElementById('jb-member-tier');
+      const badgeSelect = document.getElementById('jb-member-badge');
+      const sortSelect = document.getElementById('jb-member-sort');
+      const membersGrid = document.getElementById('jb-members-grid');
+      const prevBtn = document.getElementById('jb-prev-page');
+      const nextBtn = document.getElementById('jb-next-page');
+      const pageIndicator = document.getElementById('jb-page-indicator');
+
+      async function fetchMembers(page = 1) {
+        currentPage = page;
+        membersGrid.innerHTML = `
+          <div class="col-span-full py-16 text-center text-zinc-500">
+            <i data-lucide="loader" class="w-8 h-8 animate-spin mx-auto mb-3 text-amber-500"></i>
+            <p class="text-sm">Loading members...</p>
+          </div>
+        `;
+        JustBaddoUI.refreshIcons();
+
+        const params = {
+          page,
+          page_size: 12,
+          ordering: sortSelect.value
+        };
+        if (searchInput.value.trim()) params.q = searchInput.value.trim();
+        if (tierSelect.value) params.tier = tierSelect.value;
+        if (badgeSelect.value) params.badge = badgeSelect.value;
+
+        try {
+          const res = await window.JustBaddoApi.auth.getMembers(params);
+          if (res && res.data) {
+            renderMembers(res.data, res.meta);
+          } else {
+            renderFallbackMembers();
+          }
+        } catch (e) {
+          renderFallbackMembers();
+        }
+      }
+
+      function renderMembers(members, meta) {
+        if (!members || members.length === 0) {
+          membersGrid.innerHTML = `
+            <div class="col-span-full py-16 text-center text-zinc-500">
+              <i data-lucide="users" class="w-10 h-10 mx-auto mb-3 opacity-40"></i>
+              <p class="text-sm font-semibold text-zinc-400">No members found</p>
+              <p class="text-xs text-zinc-500 mt-1">Try clearing filters or search terms.</p>
+            </div>
+          `;
+          JustBaddoUI.refreshIcons();
+          if (meta) updatePagination(meta);
+          return;
+        }
+
+        membersGrid.innerHTML = members.map(m => {
+          const avatarHtml = m.avatar_url
+            ? `<img src="${m.avatar_url}" alt="${m.display_name}" class="w-12 h-12 rounded-full object-cover shrink-0 border border-zinc-700">`
+            : `<div class="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-black font-extrabold text-sm flex items-center justify-center shrink-0">${JustBaddoUI.getInitials(m.display_name)}</div>`;
+
+          const badgesHtml = (m.badges && m.badges.length > 0)
+            ? m.badges.map(b => `
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-semibold" title="${b.name}">
+                  <i data-lucide="${b.icon || 'award'}" class="w-3 h-3"></i>
+                  <span>${b.name}</span>
+                </span>
+              `).join('')
+            : '<span class="text-[11px] text-zinc-500 italic">No badges yet</span>';
+
+          return `
+            <div class="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 hover:border-zinc-700 hover:bg-zinc-900/90 transition-all flex flex-col justify-between group">
+              <div>
+                <div class="flex items-start justify-between gap-3 mb-3">
+                  <div class="flex items-center gap-3">
+                    ${avatarHtml}
+                    <div>
+                      <h3 class="font-bold text-sm text-zinc-100 group-hover:text-amber-400 transition-colors line-clamp-1">${m.display_name}</h3>
+                      <p class="text-xs text-zinc-400">@${m.username}</p>
+                    </div>
+                  </div>
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-300 font-mono text-[11px] shrink-0 font-bold border border-zinc-700" title="Reputation Score">
+                    <i data-lucide="shield" class="w-3 h-3 text-amber-500"></i>
+                    <span>${m.reputation_score || 0}</span>
+                  </span>
+                </div>
+
+                <div class="mb-3">
+                  <span class="inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-zinc-800/80 text-zinc-300 border border-zinc-700/60">
+                    ${m.fan_tier || 'Day One Disciple'}
+                  </span>
+                  <span class="text-[11px] text-zinc-500 ml-2">${m.city || 'Lagos, Nigeria'}</span>
+                </div>
+
+                <p class="text-xs text-zinc-400 line-clamp-2 leading-relaxed mb-4">${m.bio || 'Passionate member of the JustBaddo fan community.'}</p>
+
+                <!-- Favorite Tracks/Albums -->
+                <div class="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-850 space-y-1 text-[11px] mb-4">
+                  <div class="flex items-center justify-between text-zinc-400">
+                    <span class="text-zinc-500">Favorite Era:</span>
+                    <span class="font-semibold text-zinc-300 truncate max-w-[140px]">${m.favorite_era || 'Carpe Diem (2020)'}</span>
+                  </div>
+                  <div class="flex items-center justify-between text-zinc-400">
+                    <span class="text-zinc-500">Favorite Album:</span>
+                    <span class="font-semibold text-amber-400 truncate max-w-[140px]">${m.favorite_album || 'Time and Space (2026)'}</span>
+                  </div>
+                </div>
+
+                <!-- Earned Badges -->
+                <div class="flex flex-wrap gap-1.5 mb-4">
+                  ${badgesHtml}
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-zinc-800/80 flex items-center justify-between">
+                <span class="text-[10px] text-zinc-500 font-mono">Joined ${m.date_joined || '2023'}</span>
+                <a href="profile.html?user=${m.username}" class="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-amber-500 hover:text-black text-zinc-200 text-xs font-semibold transition-colors flex items-center gap-1">
+                  <span>Profile</span>
+                  <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                </a>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        JustBaddoUI.refreshIcons();
+        if (meta) updatePagination(meta);
+      }
+
+      function updatePagination(meta) {
+        pageIndicator.textContent = `Page ${meta.page} of ${meta.total_pages || 1} (${meta.total_count} members)`;
+        prevBtn.disabled = !meta.has_prev;
+        nextBtn.disabled = !meta.has_next;
+      }
+
+      function renderFallbackMembers() {
+        const fallback = [
+          {
+            username: 'baddofan99',
+            display_name: 'Tunde Baddo',
+            bio: 'Archiving Olamide history from Bariga to world stages. Day One Disciple.',
+            avatar_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+            city: 'Bariga, Lagos',
+            fan_tier: 'Day One Disciple',
+            reputation_score: 1850,
+            favorite_era: 'Street OT (2014)',
+            favorite_album: 'Time and Space (2026)',
+            badges: [
+              { name: 'First Steps', icon: 'award' },
+              { name: 'Conversation Starter', icon: 'message-circle' },
+              { name: 'Album Explorer', icon: 'disc' }
+            ],
+            date_joined: '2023-01-15'
+          },
+          {
+            username: 'kehinde_b',
+            display_name: 'Kehinde Balogun',
+            bio: 'Concert archivist and live music fanatic. Attended every OLIC in history.',
+            avatar_url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80',
+            city: 'Lagos Island, Nigeria',
+            fan_tier: 'OLIC Veteran',
+            reputation_score: 2400,
+            favorite_era: 'Street OT (2014)',
+            favorite_album: 'YBNL (2012)',
+            badges: [
+              { name: 'First Steps', icon: 'award' },
+              { name: 'Community Regular', icon: 'users' },
+              { name: 'Good Contributor', icon: 'star' }
+            ],
+            date_joined: '2022-11-20'
+          },
+          {
+            username: 'folake_a',
+            display_name: 'Folake Adeleke',
+            bio: 'Music critic & cultural essayist. Analyzing the Afrobeats revolution.',
+            avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
+            city: 'Ibadan, Nigeria',
+            fan_tier: 'Day One Disciple',
+            reputation_score: 1620,
+            favorite_era: 'UY Scuti (2021)',
+            favorite_album: 'Time and Space (2026)',
+            badges: [
+              { name: 'First Steps', icon: 'award' },
+              { name: 'Good Contributor', icon: 'star' }
+            ],
+            date_joined: '2023-05-10'
+          }
+        ];
+        renderMembers(fallback, { page: 1, total_pages: 1, total_count: 3, has_prev: false, has_next: false });
+      }
+
+      // Event listeners
+      let debounceTimer = null;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => fetchMembers(1), 300);
+      });
+      tierSelect.addEventListener('change', () => fetchMembers(1));
+      badgeSelect.addEventListener('change', () => fetchMembers(1));
+      sortSelect.addEventListener('change', () => fetchMembers(1));
+
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) fetchMembers(currentPage - 1);
+      });
+      nextBtn.addEventListener('click', () => {
+        fetchMembers(currentPage + 1);
+      });
+
+      // Initial fetch
+      fetchMembers(1);
+    });
+  </script>
+</body>
+</html>

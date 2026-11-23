@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Verification — JUSTBADDO</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="../static/css/styles.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+  <link rel="alternate icon" href="/static/images/favicon.ico">
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col justify-between antialiased selection:bg-amber-500 selection:text-black">
+
+  <header class="p-6 max-w-7xl mx-auto w-full flex items-center justify-between">
+    <a href="../index.html" class="flex items-center gap-2 group">
+      <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+      <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+    </a>
+    <a href="../index.html" class="text-xs text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5">
+      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+      <span>Back to Home</span>
+    </a>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-md p-8 rounded-3xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-xl text-center">
+      
+      <!-- State 1: Verifying Spinner -->
+      <div id="jb-verify-loading" class="py-6 space-y-4">
+        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center mx-auto">
+          <svg class="animate-spin h-7 w-7 text-amber-500" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+        </div>
+        <h2 class="font-display text-2xl font-black text-white">Verifying Your Email</h2>
+        <p class="text-xs text-zinc-400">Please hold on while we confirm your account token with the JustBaddo platform...</p>
+      </div>
+
+      <!-- State 2: Verified Success -->
+      <div id="jb-verify-success" class="hidden py-6 space-y-5 animate-fadeIn">
+        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto">
+          <i data-lucide="check-check" class="w-7 h-7"></i>
+        </div>
+        <div>
+          <h2 class="font-display text-2xl font-black text-white mb-2">Email Verified!</h2>
+          <p class="text-xs text-zinc-400">Your email has been confirmed. Your account is now fully verified and activated for community interactions.</p>
+        </div>
+        <a id="jb-verify-proceed-btn" href="login.html" class="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors shadow-lg shadow-amber-500/20">
+          <span>Sign In to Continue</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+
+      <!-- State 3: Failure Alert -->
+      <div id="jb-verify-error" class="hidden py-6 space-y-5 animate-fadeIn">
+        <div class="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center mx-auto">
+          <i data-lucide="alert-triangle" class="w-7 h-7"></i>
+        </div>
+        <div>
+          <h2 class="font-display text-2xl font-black text-white mb-2">Verification Failed</h2>
+          <p id="jb-verify-error-msg" class="text-xs text-zinc-400">The verification link is invalid, incomplete, or has expired.</p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <a href="login.html" class="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs transition-colors">
+            <span>Proceed to Sign In</span>
+          </a>
+          <a href="../index.html" class="text-xs text-zinc-500 hover:text-zinc-300 transition-colors">
+            Return to Homepage
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="p-6 text-center text-xs text-zinc-500">
+    © 2026 JustBaddo. Built for music fans and cultural preservation.
+  </footer>
+
+  <script src="../static/js/core/api-client.js"></script>
+  <script src="../static/js/core/storage.js"></script>
+  <script src="../static/js/core/state.js"></script>
+  <script src="../static/js/core/ui.js"></script>
+  <script src="../static/js/core/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const uid = urlParams.get('uid');
+      const token = urlParams.get('token');
+      const nextParam = urlParams.get('next');
+
+      const loadingEl = document.getElementById('jb-verify-loading');
+      const successEl = document.getElementById('jb-verify-success');
+      const errorEl = document.getElementById('jb-verify-error');
+      const errorMsg = document.getElementById('jb-verify-error-msg');
+      const proceedBtn = document.getElementById('jb-verify-proceed-btn');
+
+      if (nextParam && proceedBtn) {
+        proceedBtn.href = `login.html?next=${encodeURIComponent(nextParam)}`;
+      }
+
+      if (!uid || !token) {
+        loadingEl.classList.add('hidden');
+        errorEl.classList.remove('hidden');
+        errorMsg.textContent = 'Missing verification token or user identifier. Please check your verification link.';
+        JustBaddoUI.refreshIcons();
+        return;
+      }
+
+      try {
+        const resp = await JustBaddoApi.auth.verifyEmail({ uid, token });
+        loadingEl.classList.add('hidden');
+        successEl.classList.remove('hidden');
+        JustBaddoUI.toast('Email verified successfully! Welcome.', 'success');
+        JustBaddoUI.refreshIcons();
+      } catch (err) {
+        console.error('[Verification Error]', err);
+        loadingEl.classList.add('hidden');
+        errorEl.classList.remove('hidden');
+        if (err.data?.message) {
+          errorMsg.textContent = err.data.message;
+        }
+        JustBaddoUI.refreshIcons();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -6,7 +6,7 @@ Olamide discography, albums, tracks, timeline milestones, and initial community 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from django.utils import timezone
-from accounts.models import UserProfile, AccountSettings
+from accounts.models import UserProfile, AccountSettings, Badge, BadgeAward, ReputationEvent
 from music.models import Artist, Genre, Album, Track, TimelineMilestone
 from playlists.models import Playlist, PlaylistTrack
 from community.models import Post, Comment
@@ -44,9 +44,15 @@ class Command(BaseCommand):
                 'bio': 'Bariga native, listening since Eni Duro 2010. YBNL for life.',
                 'avatar_url': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
                 'city': 'Bariga, Lagos',
+                'country': 'Nigeria',
                 'favorite_era': 'Carpe Diem (2020)',
+                'favorite_album': 'Time and Space (2026)',
+                'favorite_track': 'Jaiye (feat. FOLA)',
                 'fan_tier': 'Voice of the Street Ambassador',
                 'points': 4850,
+                'reputation_score': 1850,
+                'is_profile_public': True,
+                'accepted_community_guidelines': True,
                 'is_verified': True
             }
         )
@@ -65,12 +71,19 @@ class Command(BaseCommand):
                 'bio': 'Live music enthusiast and concert archivist.',
                 'avatar_url': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80',
                 'city': 'Lagos Island, Nigeria',
+                'country': 'Nigeria',
                 'favorite_era': 'Street OT (2014)',
+                'favorite_album': 'Time and Space (2026)',
+                'favorite_track': 'Say Less',
                 'fan_tier': 'OLIC Veteran',
                 'points': 6980,
+                'reputation_score': 2400,
+                'is_profile_public': True,
+                'accepted_community_guidelines': True,
                 'is_verified': True
             }
         )
+        AccountSettings.objects.get_or_create(user=user2)
 
         user3, _ = User.objects.get_or_create(
             username='folake_a',
@@ -85,11 +98,110 @@ class Command(BaseCommand):
                 'bio': 'Music writer & cultural critic.',
                 'avatar_url': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
                 'city': 'Ibadan, Nigeria',
+                'country': 'Nigeria',
                 'favorite_era': 'UY Scuti (2021)',
+                'favorite_album': 'Time and Space (2026)',
+                'favorite_track': 'Elohim',
                 'fan_tier': 'Day One Disciple',
                 'points': 4210,
+                'reputation_score': 1620,
+                'is_profile_public': True,
+                'accepted_community_guidelines': True,
                 'is_verified': True
             }
+        )
+        AccountSettings.objects.get_or_create(user=user3)
+
+        # 1.1 Badges & Reputation
+        badges_definitions = [
+            {
+                'badge_id': 'badge-first-steps',
+                'name': 'First Steps',
+                'slug': 'first-steps',
+                'description': 'Joined the JustBaddo fan community and completed registration.',
+                'icon': 'compass',
+                'category': 'community',
+                'points_required': 100,
+                'criteria_description': 'Successfully create and verify a JustBaddo member account.'
+            },
+            {
+                'badge_id': 'badge-conversation-starter',
+                'name': 'Conversation Starter',
+                'slug': 'conversation-starter',
+                'description': 'Sparked dialogue by creating your first community discussion topic.',
+                'icon': 'message-square',
+                'category': 'community',
+                'points_required': 250,
+                'criteria_description': 'Publish an original discussion topic in the community forum.'
+            },
+            {
+                'badge_id': 'badge-good-contributor',
+                'name': 'Good Contributor',
+                'slug': 'good-contributor',
+                'description': 'Recognised by fellow fans for helpful and insightful contributions.',
+                'icon': 'thumbs-up',
+                'category': 'community',
+                'points_required': 500,
+                'criteria_description': 'Receive 10 or more helpful reactions across community posts and comments.'
+            },
+            {
+                'badge_id': 'badge-album-explorer',
+                'name': 'Album Explorer',
+                'slug': 'album-explorer',
+                'description': 'Listened to complete discography projects including Time and Space.',
+                'icon': 'disc',
+                'category': 'music',
+                'points_required': 750,
+                'criteria_description': 'Explore tracks across 3 or more full album eras.'
+            },
+            {
+                'badge_id': 'badge-community-regular',
+                'name': 'Community Regular',
+                'slug': 'community-regular',
+                'description': 'Maintained a strong reputation for active, respectful participation.',
+                'icon': 'flame',
+                'category': 'reputation',
+                'points_required': 1000,
+                'criteria_description': 'Accumulate 1,000+ reputation points through positive participation.'
+            }
+        ]
+
+        badges_dict = {}
+        for b_data in badges_definitions:
+            b_obj, _ = Badge.objects.update_or_create(
+                slug=b_data['slug'],
+                defaults=b_data
+            )
+            badges_dict[b_data['slug']] = b_obj
+
+        # Assign awards idempotently
+        BadgeAward.objects.get_or_create(badge=badges_dict['first-steps'], user=user1, defaults={'reason': 'Initial account verification'})
+        BadgeAward.objects.get_or_create(badge=badges_dict['conversation-starter'], user=user1, defaults={'reason': 'Created first discography discussion'})
+        BadgeAward.objects.get_or_create(badge=badges_dict['good-contributor'], user=user1, defaults={'reason': 'Earned 10+ helpful community replies'})
+        BadgeAward.objects.get_or_create(badge=badges_dict['album-explorer'], user=user1, defaults={'reason': 'Explored Time and Space'})
+        BadgeAward.objects.get_or_create(badge=badges_dict['community-regular'], user=user1, defaults={'reason': 'Active daily participation streak'})
+
+        BadgeAward.objects.get_or_create(badge=badges_dict['first-steps'], user=user2, defaults={'reason': 'Account created'})
+        BadgeAward.objects.get_or_create(badge=badges_dict['album-explorer'], user=user2, defaults={'reason': 'Archived OLIC live sets'})
+        BadgeAward.objects.get_or_create(badge=badges_dict['community-regular'], user=user2, defaults={'reason': 'Consistent community moderation compliance'})
+
+        BadgeAward.objects.get_or_create(badge=badges_dict['first-steps'], user=user3, defaults={'reason': 'Account created'})
+        BadgeAward.objects.get_or_create(badge=badges_dict['good-contributor'], user=user3, defaults={'reason': 'Published insightful cultural review'})
+
+        # Record Initial Reputation Events
+        ReputationEvent.objects.get_or_create(
+            user=user1,
+            event_type='POST_PUBLISHED',
+            source_type='post',
+            source_id='post-01',
+            defaults={'points_delta': 25, 'reason': 'Published initial high-value discussion'}
+        )
+        ReputationEvent.objects.get_or_create(
+            user=user1,
+            event_type='REACTION_RECEIVED',
+            source_type='post',
+            source_id='post-01',
+            defaults={'points_delta': 10, 'reason': 'Received positive reactions from community members'}
         )
 
         # 2. Artist & Genres
@@ -113,6 +225,32 @@ class Command(BaseCommand):
 
         # 3. Albums & Tracks
         albums_data = [
+            {
+                'id': 'time-and-space',
+                'title': 'Time and Space',
+                'slug': 'time-and-space',
+                'type': 'Studio Album',
+                'releaseYear': 2026,
+                'releaseDate': 'November 16, 2026',
+                'coverArt': '/static/images/albums/time-and-space.svg',
+                'label': 'YBNL Nation / EMPIRE',
+                'distributor': 'EMPIRE',
+                'description': 'Eleventh studio album by Olamide. A cohesive ten-track sonic masterpiece traversing legacy, freedom, and Afrobeats evolution, featuring rising talent FOLA on the standout moment "Jaiye".',
+                'featured_artists_text': 'FOLA',
+                'producers_text': 'P.Priime, Eskeez, Magicsticks, Pheelz, Semzi',
+                'tracks': [
+                    {'id': 'ts-01', 'number': 1, 'title': 'Elohim', 'duration': '2:45', 'duration_seconds': 165, 'featured': '', 'producer': 'P.Priime', 'status': 'AUTHORISED_PROVIDER', 'bpm': 106, 'key': 'C#m'},
+                    {'id': 'ts-02', 'number': 2, 'title': 'Skoskola', 'duration': '2:52', 'duration_seconds': 172, 'featured': '', 'producer': 'Eskeez', 'status': 'AUTHORISED_PROVIDER', 'bpm': 114, 'key': 'F#m'},
+                    {'id': 'ts-03', 'number': 3, 'title': 'Say Less', 'duration': '3:08', 'duration_seconds': 188, 'featured': '', 'producer': 'Magicsticks', 'status': 'AUTHORISED_PROVIDER', 'bpm': 112, 'key': 'Am'},
+                    {'id': 'ts-04', 'number': 4, 'title': 'Burukutu', 'duration': '2:39', 'duration_seconds': 159, 'featured': '', 'producer': 'Semzi', 'status': 'AUTHORISED_PROVIDER', 'bpm': 118, 'key': 'Gm'},
+                    {'id': 'ts-05', 'number': 5, 'title': 'Alujon', 'duration': '3:14', 'duration_seconds': 194, 'featured': '', 'producer': 'P.Priime', 'status': 'AUTHORISED_PROVIDER', 'bpm': 108, 'key': 'Dm'},
+                    {'id': 'ts-06', 'number': 6, 'title': 'Mbiri', 'duration': '2:48', 'duration_seconds': 168, 'featured': '', 'producer': 'Eskeez', 'status': 'AUTHORISED_PROVIDER', 'bpm': 110, 'key': 'Em'},
+                    {'id': 'ts-07', 'number': 7, 'title': 'Jaiye', 'duration': '3:22', 'duration_seconds': 202, 'featured': 'FOLA', 'producer': 'Pheelz', 'status': 'AUTHORISED_PROVIDER', 'bpm': 115, 'key': 'Bm'},
+                    {'id': 'ts-08', 'number': 8, 'title': 'Oshey', 'duration': '2:55', 'duration_seconds': 175, 'featured': '', 'producer': 'Magicsticks', 'status': 'AUTHORISED_PROVIDER', 'bpm': 112, 'key': 'C'},
+                    {'id': 'ts-09', 'number': 9, 'title': 'Ring', 'duration': '3:02', 'duration_seconds': 182, 'featured': '', 'producer': 'Semzi', 'status': 'AUTHORISED_PROVIDER', 'bpm': 104, 'key': 'F'},
+                    {'id': 'ts-10', 'number': 10, 'title': 'Jogor', 'duration': '2:40', 'duration_seconds': 160, 'featured': '', 'producer': 'Eskeez', 'status': 'AUTHORISED_PROVIDER', 'bpm': 120, 'key': 'Am'}
+                ]
+            },
             {
                 'id': 'ikigai-vol-1',
                 'title': 'Ikigai / 生き甲斐, Vol. 1',
@@ -367,6 +505,35 @@ class Command(BaseCommand):
                 PlaylistTrack.objects.get_or_create(playlist=pl2, track=trk, defaults={'order': idx})
 
         # 7. Community Discussions
+        post_ts, _ = Post.objects.update_or_create(
+            post_id='post-time-and-space',
+            defaults={
+                'title': "Ten Tracks, One Guest: Inside Olamide's 'Time and Space' Masterpiece",
+                'category': 'Discography',
+                'content': "Released on November 16, 2026, 'Time and Space' marks Olamide's eleventh studio project. Featuring rising artist FOLA on the spellbinding track 'Jaiye', the album strips back excess to deliver ten immaculate tracks. What are your first impressions?",
+                'author': user3,
+                'likes_count': 215
+            }
+        )
+        Comment.objects.get_or_create(
+            comment_id='comm-ts-01',
+            defaults={
+                'post': post_ts,
+                'author': user1,
+                'content': 'Jaiye with FOLA is an instant modern classic. Pheelz production on that track is out of this world.',
+                'likes_count': 42
+            }
+        )
+        Comment.objects.get_or_create(
+            comment_id='comm-ts-02',
+            defaults={
+                'post': post_ts,
+                'author': user2,
+                'content': 'Elohim opening the album sets the spiritual tone right away, and Jogor closes it on high energy.',
+                'likes_count': 29
+            }
+        )
+
         post1, _ = Post.objects.update_or_create(
             post_id='post-01',
             defaults={
@@ -397,6 +564,26 @@ class Command(BaseCommand):
         )
 
         # 8. Fan Arena: Polls, Battles, Trivia
+        poll_ts, _ = Poll.objects.update_or_create(
+            poll_id='poll-time-and-space',
+            defaults={
+                'question': 'Which track defines Olamide\'s eleventh studio album "Time and Space"?',
+                'category': 'Album Highlights'
+            }
+        )
+        ts_poll_options = [
+            ('opt-ts-01', 'Elohim', 620),
+            ('opt-ts-02', 'Jaiye (feat. FOLA)', 1240),
+            ('opt-ts-03', 'Say Less', 415),
+            ('opt-ts-04', 'Jogor', 530)
+        ]
+        for opt_id, text, votes in ts_poll_options:
+            PollOption.objects.update_or_create(
+                poll=poll_ts,
+                option_id=opt_id,
+                defaults={'text': text, 'votes': votes}
+            )
+
         poll1, _ = Poll.objects.update_or_create(
             poll_id='poll-01',
             defaults={
@@ -437,7 +624,8 @@ class Command(BaseCommand):
             ('q2', 'Which artist was featured on the iconic breakthrough single "Omo To Shan" (2011)?', ['Davido', 'Wizkid', 'Reminisce', '9ice'], 1, 'Wizkid laid the melodic chorus on Omo To Shan during the Coded Tunes era.', 2),
             ('q3', 'What was the venue for the historic first edition of Olamide Live In Concert (OLIC 1) in 2014?', ['Teslim Balogun Stadium', 'Eko Hotel Convention Centre', 'National Stadium Lagos', 'TBS Lagos'], 1, 'OLIC 1 took place on December 28, 2014 at Eko Convention Centre in Victoria Island.', 3),
             ('q4', 'In which year did Olamide announce the landmark YBNL Nation joint venture with EMPIRE?', ['2018', '2019', '2020', '2021'], 2, 'The historic EMPIRE joint venture was finalized in February 2020.', 4),
-            ('q5', 'Which 2024 surprise EP features tracks like "Metaverse", "Uptown Disco", and "Morowore"?', ['999', 'Ikigai, Vol. 1', 'UY Scuti', 'Unruly'], 1, 'Ikigai / 生き甲斐, Vol. 1 was released unexpectedly on June 26, 2024.', 5)
+            ('q5', 'Which 2024 surprise EP features tracks like "Metaverse", "Uptown Disco", and "Morowore"?', ['999', 'Ikigai, Vol. 1', 'UY Scuti', 'Unruly'], 1, 'Ikigai / 生き甲斐, Vol. 1 was released unexpectedly on June 26, 2024.', 5),
+            ('q6', 'On Olamide\'s 2026 album "Time and Space", which rising artist is the sole featured guest on "Jaiye"?', ['Asake', 'FOLA', 'Fireboy DML', 'CKay'], 1, 'FOLA is the sole featured guest artist on Time and Space, appearing on track 7 "Jaiye".', 6)
         ]
         for qid, qtext, qopts, qcorrect, qexp, qord in trivia_qs:
             TriviaQuestion.objects.update_or_create(
@@ -453,6 +641,20 @@ class Command(BaseCommand):
 
         # 9. Stories
         stories_data = [
+            {
+                'id': 'story-time-and-space',
+                'title': 'Time and Space: Olamide Opens a New Chapter',
+                'author_user': user3,
+                'author_name': 'Folake Adeleke',
+                'author_role': 'Music Critic & Essayist',
+                'author_avatar': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80',
+                'read_time': '5 min read',
+                'cover_image': '/static/images/albums/time-and-space.svg',
+                'excerpt': 'With ten tracks and only one featured artist (FOLA on "Jaiye"), Time and Space represents Olamide at his most confident, self-contained, and forward-looking.',
+                'content': '<p class="mb-4 text-zinc-300 leading-relaxed">Released in November 2026 through YBNL Nation and EMPIRE, Time and Space is a testament to longevity in African popular music. Rejecting bloated tracklists and chasing ephemeral algorithm trends, Olamide crafted a concise, cohesive body of work with ten immaculate tracks.</p><p class="mb-4 text-zinc-300 leading-relaxed">The sole collaboration on the album — "Jaiye" featuring breakout talent FOLA — stands as a brilliant moment of sonic chemistry, proving once again Baddo instinct for lifting authentic voices.</p>',
+                'likes_count': 512,
+                'tags': ['Time and Space', 'Album Review', 'YBNL', 'New Music']
+            },
             {
                 'id': 'story-01',
                 'title': 'The Night OLIC 1 Shook Eko Hotel: December 2014',

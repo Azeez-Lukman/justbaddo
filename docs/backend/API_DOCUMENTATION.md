@@ -87,7 +87,34 @@ Base URL: `/api/v1/` (alias `/api/`)
 
 ### Public Profile by Username
 - **Endpoint:** `GET /api/v1/accounts/users/{username}/`
+- **Auth Required:** None (respects `is_profile_public` flag and masks private fields for unauthenticated visitors)
+
+### Members Directory
+- **Endpoint:** `GET /api/v1/accounts/members/`
+- **Auth Required:** None (public member discovery)
+- **Query Params:**
+  - `q`: Search username, display name, bio, city, country
+  - `tier`: Filter by membership tier (`Explorer`, `Gold Fan`, `Platinum VIP`, `VIP Archival Member`)
+  - `badge`: Filter by badge slug
+  - `ordering`: `reputation` (default), `date_joined`, `username`
+  - `page`: Page number (default: 1)
+  - `page_size`: Page size (default: 20, max: 100)
+
+### Badges Catalogue
+- **Endpoint:** `GET /api/v1/accounts/badges/`
 - **Auth Required:** None
+- **Response:** List of all official fan badges with slug, name, description, tier, icon name, points value, and recipient count.
+
+### Accept Community Guidelines
+- **Endpoint:** `POST /api/v1/accounts/guidelines/accept/`
+- **Auth Required:** Required
+- **Response:** HTTP 200 OK with `accepted_community_guidelines: true`.
+
+### Delete / Deactivate Account
+- **Endpoint:** `POST /api/v1/accounts/delete/`
+- **Auth Required:** Required
+- **Request Body:** `{"password": "CurrentPassword123!", "reason": "Optional reason"}`
+- **Response:** HTTP 200 OK with account deactivated and session invalidated.
 
 ### Account Settings
 - **Endpoint:** `GET /api/v1/accounts/settings/` | `PATCH /api/v1/accounts/settings/`

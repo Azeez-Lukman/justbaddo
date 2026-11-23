@@ -1,5 +1,6 @@
 """
 API views for fan editorial stories, submissions, and reader modal data.
+Allows public browsing and reading while requiring authentication for submissions.
 """
 
 from rest_framework.views import APIView
@@ -45,45 +46,63 @@ class StoryDetailView(APIView):
 class StorySubmitView(APIView):
     """
     Submit a personal fan reflection or historical essay for editorial review.
+    Requires authentication and community guidelines acceptance.
     POST /api/v1/stories/submit/
     """
     permission_classes = [AllowAny]
 
     def post(self, request):
+        if not request.user.is_authenticated:
+            return api_error(
+                message="Authentication required to submit fan stories.",
+                code="UNAUTHORIZED",
+                status_code=status.HTTP_401_UNAUTHORIZED
+            )
+
+        profile = getattr(request.user, 'profile', None)
+        if profile and not profile.accepted_community_guidelines:
+            return api_error(
+                message="You must review and accept the JustBaddo Community Guidelines before submitting stories.",
+                code="GUIDELINES_REQUIRED",
+                status_code=status.HTTP_403_FORBIDDEN
+            )
+
         serializer = StorySubmissionSerializer(data=request.data)
         if not serializer.is_valid():
             return api_error(message="Invalid submission payload.", code="VALIDATION_ERROR", errors=serializer.errors)
 
-        author_name = 'Tunde Baddo' if not request.user.is_authenticated else request.user.username.capitalize()
+        author_name = request.user.profile.display_name if hasattr(request.user, 'profile') and request.user.profile.display_name else request.user.username.capitalize()
         author_role = 'Community Member'
-        author_avatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80'
+        author_avatar = request.user.profile.avatar_url if hasattr(request.user, 'profile') and request.user.profile.avatar_url else 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80'
 
-        new_story = StoriesService.submit_story(
+        created = StoriesService.submit_story(
             title=serializer.validated_data['title'],
+            excerpt=serializer.validated_data['excerpt'],
             content=serializer.validated_data['content'],
             author_name=author_name,
             author_role=author_role,
             author_avatar=author_avatar,
-            read_time=serializer.validated_data.get('read_time', '5 min read'),
-            cover_image=serializer.validated_data.get('cover_image'),
-            tags=serializer.validated_data.get('tags', '')
+            tags=serializer.validated_data.get('tags', []),
+            author_user=request.user
         )
 
         return api_success(
-            data=new_story,
-            message="Story submitted for editorial review. Thank you for contributing to the archive!",
+            data=created,
+            message="Your fan story has been submitted for editorial review.",
             status_code=status.HTTP_201_CREATED
         )
 
 class StoryPublishView(APIView):
     """
-    Approve and publish a pending story (moderator action).
+    Publish a submitted fan story (moderator/staff only).
     POST /api/v1/stories/<id>/publish/
     """
-    permission_classes = [AllowAny]  # In Phase 2 allow dev testing; Phase 3 locks to IsAdminOrModerator
+    permission_classes = [IsAdminOrModerator]
 
     def post(self, request, story_id):
         success, msg = StoriesService.publish_story(story_id)
         if not success:
             return api_error(message=msg, code="NOT_FOUND", status_code=status.HTTP_404_NOT_FOUND)
-        return api_success(message=msg)
+
+        return api_success(message="Story published successfully.")
+

@@ -211,11 +211,18 @@ CORS_ALLOW_CREDENTIALS = True
 
 # CSRF & Security
 CSRF_COOKIE_HTTPONLY = False  # Allows frontend JavaScript to read CSRF token
+CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
     'http://localhost:3000',
 ]
+
+# Session Policies
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Email settings
 MAILERS = {
