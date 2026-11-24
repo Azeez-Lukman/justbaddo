@@ -29,7 +29,13 @@ from core.views import HealthCheckView, PlatformMetadataView
 from core.frontend_views import IndexView, render_page, members_view
 from music.views import AlbumListView, AlbumDetailView, TrackDetailView
 from community.views import PostListCreateView, PostDetailView
-from accounts.views import CurrentUserProfileView, PublicUserProfileView
+from accounts.views import (
+    CurrentUserProfileView, PublicUserProfileView,
+    AccountLoginTemplateView, AccountRegisterTemplateView,
+    AccountSignoutTemplateView, AccountForgotPasswordTemplateView,
+    AccountResetPasswordTemplateView, AccountVerifyEmailTemplateView,
+    AccountResendVerificationView, AccountWelcomeTemplateView
+)
 
 api_v1_patterns = [
     # Core & Metadata
@@ -75,6 +81,25 @@ urlpatterns = [
     path('index.html', IndexView.as_view(), name='frontend-index-html'),
     path('members/', members_view, name='frontend-members'),
     path('members', members_view, name='frontend-members-slashless'),
+
+    # Dedicated Authentication Suite
+    path('accounts/login/', AccountLoginTemplateView.as_view(), name='accounts-login'),
+    path('accounts/register/', AccountRegisterTemplateView.as_view(), name='accounts-register'),
+    path('accounts/logout/', AccountSignoutTemplateView.as_view(), name='accounts-logout'),
+    path('accounts/forgot-password/', AccountForgotPasswordTemplateView.as_view(), name='accounts-forgot-password'),
+    path('accounts/reset-password/', AccountResetPasswordTemplateView.as_view(), name='accounts-reset-password'),
+    path('accounts/verify-email/', AccountVerifyEmailTemplateView.as_view(), name='accounts-verify-email'),
+    path('accounts/resend-verification/', AccountResendVerificationView.as_view(), name='accounts-resend-verification'),
+    path('accounts/welcome/', AccountWelcomeTemplateView.as_view(), name='accounts-welcome'),
+
+    # Direct Route Aliases for legacy and frontend links
+    path('pages/login.html', AccountLoginTemplateView.as_view()),
+    path('pages/register.html', AccountRegisterTemplateView.as_view()),
+    path('pages/forgot-password.html', AccountForgotPasswordTemplateView.as_view()),
+    path('pages/reset-password.html', AccountResetPasswordTemplateView.as_view()),
+    path('pages/verify-email.html', AccountVerifyEmailTemplateView.as_view()),
+    path('pages/welcome.html', AccountWelcomeTemplateView.as_view()),
+
     path('pages/<str:page_name>', render_page, name='frontend-page'),
 ]
 

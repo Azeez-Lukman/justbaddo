@@ -378,3 +378,284 @@ class AccountsApiTests(JustBaddoTestCase):
         user.refresh_from_db()
         self.assertFalse(user.is_active)
 
+
+class AuthenticationPageAndSessionTests(JustBaddoTestCase):
+    """
+    Integration tests for dedicated authentication templates, session lifecycle,
+    server-side navigation states, and onboarding flows (Section 10).
+    """
+    def setUp(self):
+        super().setUp()
+        from django.core.cache import cache
+        cache.clear()
+
+    def test_login_page_renders_form(self):
+        response = self.client.get('/accounts/login/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Welcome Back')
+        self.assertContains(response, 'Sign In to Account')
+        self.assertContains(response, 'name="username_or_email"')
+        self.assertContains(response, 'name="password"')
+        self.assertContains(response, 'name="remember_me"')
+        self.assertContains(response, 'csrfmiddlewaretoken')
+
+    def test_login_page_post_success_with_username(self):
+        response = self.client.post('/accounts/login/', {
+            'username_or_email': 'baddofan99',
+            'password': 'DemoPassword123!',
+            'next': '/pages/music.html'
+        })
+        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(response.url, '/pages/music.html')
+        # Check user is logged in
+        self.assertIn('_auth_user_id', self.client.session)
+
+    def test_login_page_post_success_with_email(self):
+        response = self.client.post('/accounts/login/', {
+            'username_or_email': 'baddofan99@justbaddo.local',
+            'password': 'DemoPassword123!',
+            'next': '/pages/community.html'
+        })
+        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(response.url, '/pages/community.html')
+        self.assertIn('_auth_user_id', self.client.session)
+
+    def test_login_page_post_invalid_credentials_generic_error(self):
+        response = self.client.post('/accounts/login/', {
+            'username_or_email': 'baddofan99',
+            'password': 'WrongPassword123!'
+        })
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Invalid username/email or password.')
+
+    def test_login_page_post_rejects_open_redirect(self):
+        response = self.client.post('/accounts/login/', {
+            'username_or_email': 'baddofan99',
+            'password': 'DemoPassword123!',
+            'next': 'https://malicious-external-site.com/exploit'
+        })
+        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(response.url, '/')
+
+    def test_register_page_renders_fields(self):
+        response = self.client.get('/accounts/register/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Join JustBaddo')
+        self.assertContains(response, 'Create Member Account')
+        self.assertContains(response, 'name="display_name"')
+        self.assertContains(response, 'name="username"')
+        self.assertContains(response, 'name="email"')
+        self.assertContains(response, 'name="password"')
+        self.assertContains(response, 'name="terms_accepted"')
+
+    def test_register_page_post_success_redirects_to_welcome(self):
+        payload = {
+            'display_name': 'Tunde Savage',
+            'username': 'tundesavage',
+            'email': 'tunde@justbaddo.local',
+            'password': 'StrongPassword2026!',
+            'terms_accepted': 'on',
+            'next': '/pages/fan-arena.html'
+        }
+        response = self.client.post('/accounts/register/', payload)
+        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        self.assertIn('/accounts/welcome/?next=/pages/fan-arena.html', response.url)
+
+        # Confirm user created and logged in automatically
+        user = User.objects.get(username='tundesavage')
+        self.assertEqual(user.email, 'tunde@justbaddo.local')
+        self.assertEqual(user.profile.display_name, 'Tunde Savage')
+        self.assertIn('_auth_user_id', self.client.session)
+
+    def test_register_page_post_terms_required(self):
+        payload = {
+            'display_name': 'No Terms User',
+            'username': 'notermsuser2',
+            'email': 'noterms2@justbaddo.local',
+            'password': 'StrongPassword2026!'
+        }
+        response = self.client.post('/accounts/register/', payload)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'You must accept the Terms of Service and Privacy Policy to create an account.')
+
+    def test_register_page_post_duplicate_username_rejected(self):
+        payload = {
+            'display_name': 'Duplicate User',
+            'username': 'baddofan99',
+            'email': 'differentemail@justbaddo.local',
+            'password': 'StrongPassword2026!',
+            'terms_accepted': 'on'
+        }
+        response = self.client.post('/accounts/register/', payload)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'This username is already taken.')
+
+    def test_register_page_post_duplicate_email_rejected(self):
+        payload = {
+            'display_name': 'Duplicate User',
+            'username': 'uniquehandle42',
+            'email': 'baddofan99@justbaddo.local',
+            'password': 'StrongPassword2026!',
+            'terms_accepted': 'on'
+        }
+        response = self.client.post('/accounts/register/', payload)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'An account with this email address already exists.')
+
+    def test_signout_rejects_get_with_405(self):
+        """Section 5 strictly mandates: Instant POST-only sign-out with CSRF protection. Never implement logout as a GET action."""
+        response = self.client.get('/accounts/logout/')
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_signout_post_invalidates_session_and_clears_cache(self):
+        # Authenticate first
+        user = User.objects.get(username='baddofan99')
+        self.client.force_login(user)
+        self.assertIn('_auth_user_id', self.client.session)
+
+        # POST to sign-out
+        response = self.client.post('/accounts/logout/')
+        self.assertEqual(response.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(response.url, '/')
+
+        # Verify session is flushed
+        self.assertNotIn('_auth_user_id', self.client.session)
+
+        # Verify Cache-Control headers prevent browser back navigation
+        self.assertIn('no-cache', response['Cache-Control'])
+        self.assertIn('no-store', response['Cache-Control'])
+        self.assertEqual(response['Pragma'], 'no-cache')
+
+    def test_forgot_password_page_flow_and_no_enumeration(self):
+        get_resp = self.client.get('/accounts/forgot-password/')
+        self.assertEqual(get_resp.status_code, status.HTTP_200_OK)
+        self.assertContains(get_resp, 'Forgot Password')
+
+        # POST with non-existent email gives uniform confirmation
+        post_unknown = self.client.post('/accounts/forgot-password/', {'email': 'nonexistent@nowhere.com'})
+        self.assertEqual(post_unknown.status_code, status.HTTP_200_OK)
+        self.assertContains(post_unknown, 'Recovery Instructions Dispatched')
+
+        # POST with existing email gives same uniform confirmation
+        post_existing = self.client.post('/accounts/forgot-password/', {'email': 'baddofan99@justbaddo.local'})
+        self.assertEqual(post_existing.status_code, status.HTTP_200_OK)
+        self.assertContains(post_existing, 'Recovery Instructions Dispatched')
+
+    def test_reset_password_page_flow(self):
+        user = User.objects.get(username='baddofan99')
+        reset_info = AccountService.request_password_reset(user.email)
+        uid = reset_info['uid']
+        token = reset_info['token']
+
+        # GET reset password with valid token
+        get_valid = self.client.get(f'/accounts/reset-password/?uid={uid}&token={token}')
+        self.assertEqual(get_valid.status_code, status.HTTP_200_OK)
+        self.assertContains(get_valid, 'name="new_password"')
+
+        # GET reset password with invalid token
+        get_invalid = self.client.get(f'/accounts/reset-password/?uid={uid}&token=invalid-token-xyz')
+        self.assertEqual(get_invalid.status_code, status.HTTP_200_OK)
+        self.assertContains(get_invalid, 'Invalid or Expired Reset Link')
+
+        # POST reset password with matching valid password
+        post_resp = self.client.post(f'/accounts/reset-password/?uid={uid}&token={token}', {
+            'new_password': 'BrandNewPass2026!',
+            'confirm_password': 'BrandNewPass2026!'
+        })
+        self.assertEqual(post_resp.status_code, status.HTTP_200_OK)
+        self.assertContains(post_resp, 'Password Successfully Updated')
+
+        # Verify new password can authenticate
+        login_res = self.client.post('/accounts/login/', {
+            'username_or_email': 'baddofan99',
+            'password': 'BrandNewPass2026!'
+        })
+        self.assertEqual(login_res.status_code, status.HTTP_302_FOUND)
+
+    def test_verify_email_page_flow(self):
+        from django.utils.http import urlsafe_base64_encode
+        from django.utils.encoding import force_bytes
+        from django.contrib.auth.tokens import default_token_generator
+
+        # Create unverified user with profile
+        new_user = User.objects.create_user(username='unverifiedguy', email='unverified@justbaddo.local', password='Password123!')
+        UserProfile.objects.create(user=new_user, is_verified=False)
+        uid = urlsafe_base64_encode(force_bytes(new_user.pk))
+        token = default_token_generator.make_token(new_user)
+
+        # GET with valid verification token
+        verify_resp = self.client.get(f'/accounts/verify-email/?uid={uid}&token={token}')
+        self.assertEqual(verify_resp.status_code, status.HTTP_200_OK)
+        self.assertContains(verify_resp, 'Email Verified!')
+
+        new_user.profile.refresh_from_db()
+        self.assertTrue(new_user.profile.is_verified)
+
+        # GET with invalid token
+        bad_resp = self.client.get(f'/accounts/verify-email/?uid={uid}&token=wrongtoken')
+        self.assertEqual(bad_resp.status_code, status.HTTP_200_OK)
+        self.assertContains(bad_resp, 'Verification Failed')
+
+    def test_resend_verification_page_post(self):
+        resp = self.client.post('/accounts/resend-verification/', {'email': 'baddofan99@justbaddo.local'})
+        self.assertEqual(resp.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(resp.url, '/accounts/verify-email/')
+
+    def test_welcome_onboarding_save_and_skip(self):
+        user = User.objects.get(username='baddofan99')
+        self.client.force_login(user)
+
+        # GET welcome page
+        get_welcome = self.client.get('/accounts/welcome/?next=/pages/timeline.html')
+        self.assertEqual(get_welcome.status_code, status.HTTP_200_OK)
+        self.assertContains(get_welcome, 'Welcome to the Family')
+        self.assertContains(get_welcome, 'Optional Profile Personalisation')
+
+        # POST action='save' with preferences
+        post_save = self.client.post('/accounts/welcome/', {
+            'action': 'save',
+            'next': '/pages/timeline.html',
+            'country': 'Nigeria',
+            'bio': 'Day-one Olamide enthusiast from Bariga.',
+            'favorite_album': 'Time and Space (2026)',
+            'favorite_track': 'Infinity'
+        })
+        self.assertEqual(post_save.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(post_save.url, '/pages/timeline.html')
+
+        user.profile.refresh_from_db()
+        self.assertEqual(user.profile.country, 'Nigeria')
+        self.assertEqual(user.profile.favorite_album, 'Time and Space (2026)')
+        self.assertEqual(user.profile.favorite_track, 'Infinity')
+        self.assertEqual(user.profile.bio, 'Day-one Olamide enthusiast from Bariga.')
+
+        # POST action='skip'
+        post_skip = self.client.post('/accounts/welcome/', {
+            'action': 'skip',
+            'next': '/pages/community.html'
+        })
+        self.assertEqual(post_skip.status_code, status.HTTP_302_FOUND)
+        self.assertEqual(post_skip.url, '/pages/community.html')
+
+    def test_server_side_navigation_guest_vs_authenticated(self):
+        # 1. Unauthenticated guest visiting homepage
+        self.client.logout()
+        guest_home = self.client.get('/')
+        self.assertEqual(guest_home.status_code, status.HTTP_200_OK)
+        # Guest sees Sign In and Join JustBaddo links
+        self.assertContains(guest_home, '/accounts/login/')
+        self.assertContains(guest_home, '/accounts/register/')
+        # Guest does not see member monogram or sign-out form
+        self.assertNotContains(guest_home, '/accounts/logout/')
+
+        # 2. Authenticated member visiting homepage
+        user = User.objects.get(username='baddofan99')
+        self.client.force_login(user)
+        member_home = self.client.get('/')
+        self.assertEqual(member_home.status_code, status.HTTP_200_OK)
+        # Member sees their initials monogram or display name
+        self.assertContains(member_home, user.profile.initials)
+        # Member navigation includes the POST sign-out form
+        self.assertContains(member_home, '/accounts/logout/')
+
+

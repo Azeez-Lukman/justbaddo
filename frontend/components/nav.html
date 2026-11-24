@@ -77,27 +77,46 @@
 
       <!-- User Profile Menu -->
       <div class="relative shrink-0">
-        <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors shrink-0" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
-          <img src="/static/images/defaults/default-avatar.svg" alt="Baddo Citizen" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
-        </button>
+        {% if request.user.is_authenticated %}
+          <!-- Authenticated Member Button -->
+          <button class="flex items-center p-0.5 sm:p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors shrink-0" data-dropdown-toggle="jb-user-menu" aria-label="Account menu for {{ request.user.profile.display_name|default:request.user.username }}">
+            {% if request.user.profile.avatar_url %}
+              <img src="{{ request.user.profile.avatar_url }}" alt="{{ request.user.profile.display_name }}" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
+            {% else %}
+              <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-black font-extrabold text-xs flex items-center justify-center select-none shadow-sm shadow-amber-500/20">
+                {{ request.user.profile.initials|default:"MB" }}
+              </div>
+            {% endif %}
+          </button>
 
-        <!-- User Dropdown Menu -->
-        <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
-          <div class="px-3 py-2.5 border-b border-zinc-800 mb-2">
-            <h5 class="text-xs font-bold text-zinc-100">Guest Visitor</h5>
-            <p class="text-[11px] text-zinc-400 mt-0.5">Explore freely or sign in to participate in the community.</p>
+          <!-- Anchored Account Menu Dropdown -->
+          <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-64 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
+            {% include "partials/account_menu.html" %}
           </div>
-          <div class="p-1 space-y-2">
-            <a href="/pages/login.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
-              <i data-lucide="log-in" class="w-4 h-4"></i>
-              <span>Sign In</span>
-            </a>
-            <a href="/pages/register.html" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors border border-zinc-700">
-              <i data-lucide="user-plus" class="w-4 h-4"></i>
-              <span>Join JustBaddo</span>
-            </a>
+        {% else %}
+          <!-- Guest Profile Trigger & Dropdown -->
+          <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors shrink-0" data-dropdown-toggle="jb-user-menu" aria-label="User profile">
+            <img src="/static/images/defaults/default-avatar.svg" alt="Baddo Citizen" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
+          </button>
+
+          <!-- User Dropdown Menu -->
+          <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
+            <div class="px-3 py-2.5 border-b border-zinc-800 mb-2">
+              <h5 class="text-xs font-bold text-zinc-100">Guest Visitor</h5>
+              <p class="text-[11px] text-zinc-400 mt-0.5">Explore freely or sign in to participate in the community.</p>
+            </div>
+            <div class="p-1 space-y-2">
+              <a href="/accounts/login/" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
+                <i data-lucide="log-in" class="w-4 h-4"></i>
+                <span>Sign In</span>
+              </a>
+              <a href="/accounts/register/" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors border border-zinc-700">
+                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                <span>Join JustBaddo</span>
+              </a>
+            </div>
           </div>
-        </div>
+        {% endif %}
       </div>
 
       <!-- Mobile Hamburger Button -->
@@ -118,7 +137,7 @@
   <div class="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col justify-between z-10 animate-fadeIn">
     <div>
       <div class="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
-        <a href="/index.html" class="flex items-center gap-2">
+        <a href="/" class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
           <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
         </a>
@@ -127,9 +146,26 @@
         </button>
       </div>
 
+      {% if request.user.is_authenticated %}
+      <!-- Member Profile Header in Drawer -->
+      <div class="p-3 rounded-2xl bg-zinc-900/80 border border-zinc-800 mb-5 flex items-center gap-3">
+        {% if request.user.profile.avatar_url %}
+          <img src="{{ request.user.profile.avatar_url }}" alt="{{ request.user.profile.display_name }}" class="w-10 h-10 rounded-full object-cover shrink-0 border border-zinc-700">
+        {% else %}
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-black font-extrabold text-sm flex items-center justify-center shrink-0">
+            {{ request.user.profile.initials|default:"MB" }}
+          </div>
+        {% endif %}
+        <div class="min-w-0 flex-1">
+          <h4 class="text-xs font-bold text-zinc-100 truncate">{{ request.user.profile.display_name|default:request.user.username }}</h4>
+          <span class="text-[10px] text-amber-500 font-medium block truncate">@{{ request.user.username }} • {{ request.user.profile.fan_tier|default:"Day-One Fan" }}</span>
+        </div>
+      </div>
+      {% endif %}
+
       <!-- Mobile Nav Links -->
       <nav class="space-y-1.5 text-base font-medium">
-        <a href="/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+        <a href="/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
           <i data-lucide="home" class="w-5 h-5 text-zinc-400"></i>
           <span>Home</span>
         </a>
@@ -137,8 +173,12 @@
           <i data-lucide="disc" class="w-5 h-5 text-zinc-400"></i>
           <span>Music Catalogue</span>
         </a>
-        <a href="/pages/community.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+        <a href="/members/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
           <i data-lucide="users" class="w-5 h-5 text-zinc-400"></i>
+          <span>Members Directory</span>
+        </a>
+        <a href="/pages/community.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="message-square" class="w-5 h-5 text-zinc-400"></i>
           <span>Community Feed</span>
         </a>
         <a href="/pages/fan-arena.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
@@ -162,13 +202,27 @@
 
     <!-- Mobile Drawer Bottom Profile / Join -->
     <div class="pt-6 border-t border-zinc-800 space-y-3">
-      <a href="/pages/dashboard.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-sm font-semibold transition-colors">
-        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-        <span>Member Dashboard</span>
-      </a>
-      <a href="/pages/register.html" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors">
-        <span>Join Community</span>
-      </a>
+      {% if request.user.is_authenticated %}
+        <a href="/members/{{ request.user.username }}/" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-sm font-semibold transition-colors">
+          <i data-lucide="user" class="w-4 h-4"></i>
+          <span>My Profile</span>
+        </a>
+        <form action="/accounts/logout/" method="POST" class="w-full">
+          {% csrf_token %}
+          <button type="submit" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-rose-950/40 text-rose-400 hover:text-rose-300 text-xs font-semibold transition-colors border border-zinc-800 cursor-pointer">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+            <span>Sign Out</span>
+          </button>
+        </form>
+      {% else %}
+        <a href="/accounts/login/" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-sm font-semibold transition-colors">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Sign In</span>
+        </a>
+        <a href="/accounts/register/" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-sm font-bold transition-colors">
+          <span>Join JustBaddo</span>
+        </a>
+      {% endif %}
     </div>
   </div>
 </div>

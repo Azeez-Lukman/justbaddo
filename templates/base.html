@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}JUSTBADDO — The Premier Olamide Fan Community Platform{% endblock %}</title>
+  <meta name="description" content="{% block description %}Independent music discovery, discography archiving, and fan community experience dedicated to Olamide Baddo.{% endblock %}">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS v4 Browser Engine -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Global Styles & Favicon -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+  <link rel="alternate icon" href="{% static 'images/favicon.ico' %}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-[#070809] text-zinc-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-black {% block body_class %}pb-player-safe{% endblock %}">
+
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="sticky top-0 z-30 bg-[#070809]/90 border-b border-zinc-800/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      {% if request.user.is_authenticated %}
+        {% include "partials/member_navigation.html" %}
+      {% else %}
+        {% include "partials/guest_navigation.html" %}
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Flash Messages Feedback -->
+  {% include "partials/auth_messages.html" %}
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="flex-1 w-full flex flex-col {% block main_class %}{% endblock %}">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  {% block footer %}
+  <footer class="bg-zinc-950 border-t border-zinc-900 py-10 px-4 sm:px-6 text-xs text-zinc-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+        <span class="font-display font-bold text-zinc-200 tracking-wider">JUSTBADDO</span>
+        <span class="text-zinc-650">•</span>
+        <span>Independent Archival & Fan Community Platform</span>
+      </div>
+      <div class="flex items-center gap-4 text-zinc-400">
+        <a href="/pages/about.html" class="hover:text-amber-400 transition-colors">About</a>
+        <a href="/pages/community-guidelines.html" class="hover:text-amber-400 transition-colors">Guidelines</a>
+        <a href="/pages/privacy.html" class="hover:text-amber-400 transition-colors">Privacy</a>
+        <a href="/pages/terms.html" class="hover:text-amber-400 transition-colors">Terms</a>
+        <a href="/pages/contact.html" class="hover:text-amber-400 transition-colors">Contact</a>
+      </div>
+      <p class="text-zinc-600">© 2026 JustBaddo. Built for music fans and cultural preservation.</p>
+    </div>
+  </footer>
+  {% endblock %}
+
+  <!-- Accessible Toast Container -->
+  {% include "partials/toast_container.html" %}
+
+  <!-- Core Scripts -->
+  <script src="{% static 'js/core/api-client.js' %}"></script>
+  <script src="{% static 'js/core/storage.js' %}"></script>
+  <script src="{% static 'js/core/state.js' %}"></script>
+  <script src="{% static 'js/core/ui.js' %}"></script>
+  <script src="{% static 'js/core/app.js' %}"></script>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

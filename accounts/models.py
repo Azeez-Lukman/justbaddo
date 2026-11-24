@@ -28,6 +28,14 @@ class UserProfile(models.Model):
         db_table = 'accounts_user_profile'
         ordering = ['-reputation_score', '-points', '-created_at']
 
+    @property
+    def initials(self):
+        name = self.display_name or self.user.username or 'BC'
+        parts = name.strip().split()
+        if len(parts) >= 2:
+            return (parts[0][0] + parts[1][0]).upper()
+        return name[:2].upper()
+
     def __str__(self):
         return f"{self.user.username} ({self.fan_tier})"
 

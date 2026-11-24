@@ -1,0 +1,15 @@
+<!-- Reusable Authentication & System Feedback Messages -->
+{% if messages %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 w-full">
+  {% for message in messages %}
+  <div class="mb-3 p-3.5 rounded-2xl flex items-center gap-3 text-xs font-medium border animate-fadeIn
+    {% if message.tags == 'error' %}bg-rose-950/60 border-rose-500/40 text-rose-300
+    {% elif message.tags == 'success' %}bg-emerald-950/60 border-emerald-500/40 text-emerald-300
+    {% elif message.tags == 'warning' %}bg-amber-950/60 border-amber-500/40 text-amber-300
+    {% else %}bg-zinc-900/80 border-zinc-700 text-zinc-200{% endif %}">
+    <i data-lucide="{% if message.tags == 'error' %}alert-circle{% elif message.tags == 'success' %}check-circle-2{% elif message.tags == 'warning' %}alert-triangle{% else %}info{% endif %}" class="w-4 h-4 shrink-0"></i>
+    <span class="flex-1">{{ message }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

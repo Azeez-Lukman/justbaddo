@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Welcome to JustBaddo — Onboarding{% endblock %}
+{% block description %}Welcome to the JustBaddo fan community! Personalise your profile or start exploring.{% endblock %}
+
+{% block content %}
+<div class="flex-1 flex items-center justify-center p-4 py-12">
+  <div class="w-full max-w-lg p-8 sm:p-10 rounded-3xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-xl text-center">
+    
+    <div class="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center mx-auto mb-4">
+      <i data-lucide="sparkles" class="w-8 h-8"></i>
+    </div>
+
+    <h1 class="font-display text-2xl sm:text-3xl font-black text-white mb-2">
+      Welcome to the Family, <span class="text-amber-500">{{ request.user.profile.display_name|default:request.user.username }}</span>!
+    </h1>
+    <p class="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto mb-6 leading-relaxed">
+      Your JustBaddo member account is active. One account powers your playlists, fan discussions, badge awards, and reputation score across the entire platform.
+    </p>
+
+    <!-- Optional Profile Personalisation Card -->
+    <div class="p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800/80 text-left mb-6">
+      <div class="flex items-center gap-2 mb-3">
+        <i data-lucide="sliders" class="w-4 h-4 text-amber-500"></i>
+        <h3 class="font-bold text-xs text-zinc-100 uppercase tracking-wider">Optional Profile Personalisation</h3>
+      </div>
+      <p class="text-[11px] text-zinc-400 mb-4">
+        You can personalise your community fan identity now or skip and complete it anytime in Account Settings.
+      </p>
+
+      <form action="{% url 'accounts-welcome' %}" method="POST" class="space-y-3">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next_url|default:'' }}">
+
+        <div>
+          <label for="jb-pers-country" class="block text-[11px] font-semibold text-zinc-300 mb-1">Country / Region (Optional)</label>
+          <input type="text" name="country" id="jb-pers-country" value="{{ request.user.profile.country|default:'Nigeria' }}" placeholder="e.g. Nigeria, United Kingdom, United States" class="w-full bg-zinc-900 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label for="jb-pers-album" class="block text-[11px] font-semibold text-zinc-300 mb-1">Favourite Olamide Album (Optional)</label>
+          <input type="text" name="favorite_album" id="jb-pers-album" value="{{ request.user.profile.favorite_album|default:'Time and Space (2026)' }}" placeholder="e.g. Time and Space, Carpe Diem, YBNL" class="w-full bg-zinc-900 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label for="jb-pers-track" class="block text-[11px] font-semibold text-zinc-300 mb-1">Favourite Track (Optional)</label>
+          <input type="text" name="favorite_track" id="jb-pers-track" value="{{ request.user.profile.favorite_track|default:'Jaiye (feat. FOLA)' }}" placeholder="e.g. Jaiye, Infinity, Wo!!" class="w-full bg-zinc-900 border border-zinc-800 focus:border-amber-500 rounded-xl px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label for="jb-pers-bio" class="block text-[11px] font-semibold text-zinc-300 mb-1">Short Biography (Optional)</label>
+          <textarea name="bio" id="jb-pers-bio" rows="2" placeholder="Tell fellow disciples about your favourite era..." class="w-full bg-zinc-900 border border-zinc-800 focus:border-amber-500 rounded-xl p-3 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none resize-none">{{ request.user.profile.bio|default:'' }}</textarea>
+        </div>
+
+        <div class="pt-2 flex flex-col sm:flex-row gap-2">
+          <button type="submit" name="action" value="save" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition-colors shadow-sm shadow-amber-500/20 cursor-pointer">
+            Save & Continue
+          </button>
+          <button type="submit" name="action" value="skip" class="px-5 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-xs transition-colors cursor-pointer border border-zinc-700">
+            Skip for Now
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Quick Navigation Exploration Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+      <a href="/pages/music.html" class="p-3.5 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 hover:border-amber-500/50 transition-colors group">
+        <div class="flex items-center gap-2 mb-1 text-zinc-200 group-hover:text-amber-400 font-semibold text-xs">
+          <i data-lucide="disc-3" class="w-4 h-4 text-amber-500"></i>
+          <span>Verified Discography</span>
+        </div>
+        <p class="text-[11px] text-zinc-500">11 studio albums, singles, and preview player.</p>
+      </a>
+
+      <a href="/members/" class="p-3.5 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 hover:border-amber-500/50 transition-colors group">
+        <div class="flex items-center gap-2 mb-1 text-zinc-200 group-hover:text-amber-400 font-semibold text-xs">
+          <i data-lucide="users" class="w-4 h-4 text-amber-500"></i>
+          <span>Members Directory</span>
+        </div>
+        <p class="text-[11px] text-zinc-500">Connect with fellow fans, badges, and rankings.</p>
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

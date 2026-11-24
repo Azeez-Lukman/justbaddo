@@ -1,0 +1,150 @@
+<!-- ================= MEMBER TOP NAVIGATION ================= -->
+<div class="flex items-center gap-8">
+  <a href="/" class="flex items-center gap-2 group">
+    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+    <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+  </a>
+
+  <!-- Desktop Primary Nav Links -->
+  <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+    <a href="/" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Home</a>
+    <a href="/pages/music.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Music</a>
+    <a href="/members/" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Members</a>
+    <a href="/pages/community.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Community</a>
+    <a href="/pages/fan-arena.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Fan Arena</a>
+    <a href="/pages/stories.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Stories</a>
+    <a href="/pages/timeline.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Timeline</a>
+  </nav>
+</div>
+
+<!-- Right Controls & Member Avatar -->
+<div class="flex items-center gap-3 sm:gap-4">
+  <!-- Search -->
+  <form class="jb-search-form hidden lg:flex items-center relative" action="/pages/search.html" method="GET">
+    <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none"></i>
+    <input type="search" name="q" placeholder="Search albums, tracks, lyrics..." class="jb-global-search-input w-56 xl:w-72 bg-zinc-900 border border-zinc-800 focus:border-amber-500/80 rounded-xl pl-9 pr-8 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none transition-all">
+    <span class="absolute right-2.5 px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 text-[10px] font-mono text-zinc-400 pointer-events-none">/</span>
+  </form>
+
+  <a href="/pages/search.html" class="lg:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Search">
+    <i data-lucide="search" class="w-5 h-5"></i>
+  </a>
+
+  <!-- Notifications Dropdown Trigger -->
+  <div class="relative">
+    <button class="p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors relative" data-dropdown-toggle="jb-notifications-menu" aria-label="Notifications">
+      <i data-lucide="bell" class="w-5 h-5"></i>
+      <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500"></span>
+    </button>
+    <div id="jb-notifications-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-80 sm:w-96 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-4 z-50 animate-fadeIn">
+      <div class="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
+        <h4 class="text-sm font-bold text-zinc-100">Notifications</h4>
+        <span class="text-[11px] text-amber-500 font-medium">3 unread</span>
+      </div>
+      <div class="space-y-2.5 max-h-72 overflow-y-auto text-xs text-zinc-300">
+        <div class="p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex items-start gap-3">
+          <span class="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+          <div>
+            <p class="font-semibold text-zinc-200">Album Milestone</p>
+            <p class="text-[11px] text-zinc-400 mt-0.5">Time and Space (2026) discography register verified.</p>
+            <span class="text-[10px] text-zinc-500 mt-1 block">Recently</span>
+          </div>
+        </div>
+      </div>
+      <div class="pt-3 border-t border-zinc-800 mt-3 text-center">
+        <a href="/pages/notifications.html" class="text-xs text-zinc-400 hover:text-amber-400 font-medium transition-colors">View All Notifications</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authenticated Member Avatar & Dropdown -->
+  <div class="relative shrink-0">
+    <button class="flex items-center p-0.5 sm:p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors shrink-0" data-dropdown-toggle="jb-user-menu" aria-label="Account menu for {{ request.user.profile.display_name|default:request.user.username }}">
+      {% if request.user.profile.avatar_url %}
+        <img src="{{ request.user.profile.avatar_url }}" alt="{{ request.user.profile.display_name }}" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover shrink-0">
+      {% else %}
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-black font-extrabold text-xs flex items-center justify-center select-none shadow-sm shadow-amber-500/20">
+          {{ request.user.profile.initials|default:"MB" }}
+        </div>
+      {% endif %}
+    </button>
+
+    <!-- Anchored Account Menu Dropdown -->
+    <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-64 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
+      {% include "partials/account_menu.html" %}
+    </div>
+  </div>
+
+  <!-- Mobile Hamburger Button -->
+  <button id="jb-mobile-menu-btn" class="md:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Open mobile navigation">
+    <i data-lucide="menu" class="w-5 h-5"></i>
+  </button>
+</div>
+
+<!-- ================= MOBILE NAVIGATION DRAWER ================= -->
+<div id="jb-mobile-drawer" class="jb-modal hidden fixed inset-0 z-50">
+  <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+  <div class="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col justify-between z-10 animate-fadeIn">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
+        <a href="/" class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
+          <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+        </a>
+        <button id="jb-mobile-drawer-close" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Close navigation">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Member Profile Header in Drawer -->
+      <div class="p-3 rounded-2xl bg-zinc-900/80 border border-zinc-800 mb-5 flex items-center gap-3">
+        {% if request.user.profile.avatar_url %}
+          <img src="{{ request.user.profile.avatar_url }}" alt="{{ request.user.profile.display_name }}" class="w-10 h-10 rounded-full object-cover shrink-0 border border-zinc-700">
+        {% else %}
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-black font-extrabold text-sm flex items-center justify-center shrink-0">
+            {{ request.user.profile.initials|default:"MB" }}
+          </div>
+        {% endif %}
+        <div class="min-w-0 flex-1">
+          <h4 class="text-xs font-bold text-zinc-100 truncate">{{ request.user.profile.display_name|default:request.user.username }}</h4>
+          <span class="text-[10px] text-amber-500 font-medium block truncate">@{{ request.user.username }} • {{ request.user.profile.fan_tier }}</span>
+        </div>
+      </div>
+
+      <nav class="space-y-1.5 text-sm font-medium">
+        <a href="/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="home" class="w-4 h-4"></i><span>Home</span>
+        </a>
+        <a href="/pages/music.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="disc" class="w-4 h-4"></i><span>Music Catalogue</span>
+        </a>
+        <a href="/members/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="users" class="w-4 h-4"></i><span>Members Directory</span>
+        </a>
+        <a href="/pages/community.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="message-square" class="w-4 h-4"></i><span>Community Feed</span>
+        </a>
+        <a href="/pages/fan-arena.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="swords" class="w-4 h-4"></i><span>Fan Arena</span>
+        </a>
+        <a href="/pages/stories.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="book-open" class="w-4 h-4"></i><span>Fan Stories</span>
+        </a>
+        <a href="/pages/timeline.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="calendar" class="w-4 h-4"></i><span>Career Timeline</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Mobile Drawer Sign Out Form -->
+    <div class="pt-6 border-t border-zinc-800">
+      <form action="/accounts/logout/" method="POST" class="w-full">
+        {% csrf_token %}
+        <button type="submit" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-rose-950/40 text-rose-400 hover:text-rose-300 text-xs font-semibold transition-colors border border-zinc-800 cursor-pointer">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+          <span>Sign Out</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

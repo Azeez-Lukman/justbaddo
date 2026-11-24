@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign In — JUSTBADDO{% endblock %}
+{% block description %}Sign in to your JustBaddo account to access your library, playlists, and community conversations.{% endblock %}
+
+{% block content %}
+<div class="flex-1 flex items-center justify-center p-4 py-12">
+  <div class="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-xl">
+    
+    <div class="text-center mb-6">
+      <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-500 flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="log-in" class="w-6 h-6"></i>
+      </div>
+      <h1 class="font-display text-2xl sm:text-3xl font-black text-white mb-2">Welcome Back</h1>
+      <p class="text-xs text-zinc-400">Sign in to your JustBaddo account to access saved music, playlists, and fan discussions.</p>
+    </div>
+
+    <!-- Context Notice for Protected Action Destination -->
+    {% if next_url and next_url != '/' %}
+    <div class="mb-5 p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2.5">
+      <i data-lucide="compass" class="w-4 h-4 shrink-0 text-amber-400"></i>
+      <span>Sign in to complete your requested action.</span>
+    </div>
+    {% endif %}
+
+    <!-- General Error Banner -->
+    {% if form.non_field_errors %}
+    <div class="mb-5 p-3.5 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-start gap-2.5 animate-fadeIn">
+      <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
+      <div class="flex-1">
+        {% for error in form.non_field_errors %}
+          <p>{{ error }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <div id="jb-login-alert" class="hidden mb-5 p-3.5 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-start gap-2.5 animate-fadeIn">
+      <i data-lucide="alert-circle" class="w-4 h-4 shrink-0 mt-0.5"></i>
+      <div id="jb-login-alert-msg" class="flex-1"></div>
+    </div>
+
+    <form id="jb-login-form" action="{% url 'accounts-login' %}" method="POST" class="space-y-4" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next_url|default:'' }}">
+
+      <div>
+        <label for="jb-login-identifier" class="block text-xs font-semibold text-zinc-300 mb-1.5">Username or Email Address</label>
+        <div class="relative">
+          <i data-lucide="user" class="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input type="text" name="username_or_email" id="jb-login-identifier" autocomplete="username" value="{{ form.username_or_email.value|default:'' }}" placeholder="e.g. baddofan99 or fan@example.com" class="w-full bg-zinc-950 border {% if form.username_or_email.errors %}border-rose-500{% else %}border-zinc-800 focus:border-amber-500{% endif %} rounded-xl pl-10 pr-3 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition-colors" required>
+        </div>
+        {% if form.username_or_email.errors %}
+          <p class="mt-1 text-[11px] text-rose-400">{{ form.username_or_email.errors.0 }}</p>
+        {% endif %}
+        <p id="jb-login-identifier-error" class="hidden mt-1 text-[11px] text-rose-400"></p>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between mb-1.5">
+          <label for="jb-login-password" class="block text-xs font-semibold text-zinc-300">Password</label>
+          <a href="{% url 'accounts-forgot-password' %}" class="text-[11px] text-amber-500 hover:text-amber-400 hover:underline transition-colors">Forgot password?</a>
+        </div>
+        <div class="relative">
+          <i data-lucide="lock" class="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+          <input type="password" name="password" id="jb-login-password" autocomplete="current-password" placeholder="Enter your password" class="w-full bg-zinc-950 border {% if form.password.errors %}border-rose-500{% else %}border-zinc-800 focus:border-amber-500{% endif %} rounded-xl pl-10 pr-10 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition-colors" required>
+          <button type="button" id="jb-toggle-password" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 p-0.5 rounded transition-colors" aria-label="Toggle password visibility">
+            <i data-lucide="eye" class="w-4 h-4"></i>
+          </button>
+        </div>
+        {% if form.password.errors %}
+          <p class="mt-1 text-[11px] text-rose-400">{{ form.password.errors.0 }}</p>
+        {% endif %}
+        <p id="jb-login-password-error" class="hidden mt-1 text-[11px] text-rose-400"></p>
+      </div>
+
+      <div class="flex items-center justify-between text-xs pt-1">
+        <label class="flex items-center gap-2 text-zinc-400 cursor-pointer select-none">
+          <input type="checkbox" name="remember_me" id="jb-login-remember" checked class="w-3.5 h-3.5 accent-amber-500 rounded">
+          <span>Remember this device (2 weeks)</span>
+        </label>
+      </div>
+
+      <button type="submit" id="jb-login-submit" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-black font-bold text-xs transition-all shadow-lg shadow-amber-500/20 mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
+        <i data-lucide="log-in" class="w-4 h-4"></i>
+        <span>Sign In to Account</span>
+      </button>
+    </form>
+
+    <div class="mt-6 pt-6 border-t border-zinc-800/80 text-center text-xs text-zinc-400">
+      Don't have an account yet? 
+      <a href="{% url 'accounts-register' %}{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" class="text-amber-400 font-semibold hover:underline">Join JustBaddo</a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Password toggle
+    const toggleBtn = document.getElementById('jb-toggle-password');
+    const pwdInput = document.getElementById('jb-login-password');
+    if (toggleBtn && pwdInput) {
+      toggleBtn.addEventListener('click', () => {
+        const isPwd = pwdInput.type === 'password';
+        pwdInput.type = isPwd ? 'text' : 'password';
+        toggleBtn.innerHTML = isPwd ? '<i data-lucide="eye-off" class="w-4 h-4"></i>' : '<i data-lucide="eye" class="w-4 h-4"></i>';
+        lucide.createIcons();
+      });
+    }
+
+    // Client-side quick feedback & loading state
+    const form = document.getElementById('jb-login-form');
+    const submitBtn = document.getElementById('jb-login-submit');
+    if (form && submitBtn) {
+      form.addEventListener('submit', () => {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin h-4 w-4 text-black" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <span>Authenticating...</span>
+        `;
+      });
+    }
+  });
+</script>
+{% endblock %}

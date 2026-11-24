@@ -80,6 +80,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            BASE_DIR / 'templates',
             BASE_DIR / 'frontend',
             BASE_DIR / 'frontend' / 'pages',
             BASE_DIR / 'frontend' / 'components',
@@ -224,10 +225,16 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
-# Email settings
+# Authentication URL redirects
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Email settings (Django 6 modern MAILERS configuration)
+DEFAULT_FROM_EMAIL = 'JustBaddo <no-reply@justbaddo.com>'
 MAILERS = {
     'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+        'BACKEND': os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend'),
     },
 }
 

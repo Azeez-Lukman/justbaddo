@@ -1,0 +1,119 @@
+<!-- ================= GUEST TOP NAVIGATION ================= -->
+<div class="flex items-center gap-8">
+  <a href="/" class="flex items-center gap-2 group">
+    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50 group-hover:scale-125 transition-transform"></span>
+    <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+  </a>
+
+  <!-- Desktop Links -->
+  <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+    <a href="/" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Home</a>
+    <a href="/pages/music.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Music</a>
+    <a href="/members/" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Members</a>
+    <a href="/pages/community.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Community</a>
+    <a href="/pages/fan-arena.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Fan Arena</a>
+    <a href="/pages/stories.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Stories</a>
+    <a href="/pages/timeline.html" class="jb-nav-link text-zinc-400 hover:text-zinc-100 transition-colors">Timeline</a>
+  </nav>
+</div>
+
+<!-- Right Actions -->
+<div class="flex items-center gap-3 sm:gap-4">
+  <!-- Search -->
+  <form class="jb-search-form hidden lg:flex items-center relative" action="/pages/search.html" method="GET">
+    <i data-lucide="search" class="w-4 h-4 text-zinc-400 absolute left-3 pointer-events-none"></i>
+    <input type="search" name="q" placeholder="Search albums, tracks, lyrics..." class="jb-global-search-input w-56 xl:w-72 bg-zinc-900 border border-zinc-800 focus:border-amber-500/80 rounded-xl pl-9 pr-8 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none transition-all">
+    <span class="absolute right-2.5 px-1.5 py-0.5 rounded border border-zinc-700 bg-zinc-800 text-[10px] font-mono text-zinc-400 pointer-events-none">/</span>
+  </form>
+
+  <a href="/pages/search.html" class="lg:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Search">
+    <i data-lucide="search" class="w-5 h-5"></i>
+  </a>
+
+  <!-- Guest Sign In / Join Shortcuts (Desktop) -->
+  <div class="hidden sm:flex items-center gap-2">
+    <a href="/accounts/login/{% if request.get_full_path != '/' %}?next={{ request.get_full_path|urlencode }}{% endif %}" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+      Sign In
+    </a>
+    <a href="/accounts/register/{% if request.get_full_path != '/' %}?next={{ request.get_full_path|urlencode }}{% endif %}" class="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
+      Join JustBaddo
+    </a>
+  </div>
+
+  <!-- Guest Dropdown Menu -->
+  <div class="relative shrink-0 sm:hidden">
+    <button class="flex items-center gap-2 p-1 rounded-full border border-zinc-800 hover:border-amber-500/50 transition-colors shrink-0" data-dropdown-toggle="jb-user-menu" aria-label="Guest menu">
+      <img src="/static/images/defaults/default-avatar.svg" alt="Guest" class="w-7 h-7 rounded-full object-cover shrink-0">
+    </button>
+    <div id="jb-user-menu" class="jb-dropdown-menu hidden absolute right-0 mt-2 w-56 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl p-2 z-50 animate-fadeIn">
+      <div class="px-3 py-2.5 border-b border-zinc-800 mb-2">
+        <h5 class="text-xs font-bold text-zinc-100">Guest Visitor</h5>
+        <p class="text-[11px] text-zinc-400 mt-0.5">Explore freely or sign in to participate in the community.</p>
+      </div>
+      <div class="p-1 space-y-2">
+        <a href="/accounts/login/{% if request.get_full_path != '/' %}?next={{ request.get_full_path|urlencode }}{% endif %}" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Sign In</span>
+        </a>
+        <a href="/accounts/register/{% if request.get_full_path != '/' %}?next={{ request.get_full_path|urlencode }}{% endif %}" class="flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors border border-zinc-700">
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+          <span>Join JustBaddo</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button id="jb-mobile-menu-btn" class="md:hidden p-2 text-zinc-400 hover:text-white rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Open mobile navigation">
+    <i data-lucide="menu" class="w-5 h-5"></i>
+  </button>
+</div>
+
+<!-- ================= MOBILE NAVIGATION DRAWER ================= -->
+<div id="jb-mobile-drawer" class="jb-modal hidden fixed inset-0 z-50">
+  <div class="jb-modal-backdrop fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+  <div class="fixed inset-y-0 left-0 w-4/5 max-w-sm bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col justify-between z-10 animate-fadeIn">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
+        <a href="/" class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm shadow-amber-500/50"></span>
+          <span class="font-display font-black text-xl tracking-wider text-white">JUST<span class="text-amber-500">BADDO</span></span>
+        </a>
+        <button id="jb-mobile-drawer-close" class="text-zinc-400 hover:text-white p-2 rounded-xl hover:bg-zinc-800 transition-colors" aria-label="Close navigation">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <nav class="space-y-1.5 text-sm font-medium">
+        <a href="/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="home" class="w-4 h-4"></i><span>Home</span>
+        </a>
+        <a href="/pages/music.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="disc" class="w-4 h-4"></i><span>Music Catalogue</span>
+        </a>
+        <a href="/members/" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="users" class="w-4 h-4"></i><span>Members Directory</span>
+        </a>
+        <a href="/pages/community.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="message-square" class="w-4 h-4"></i><span>Community Feed</span>
+        </a>
+        <a href="/pages/fan-arena.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="swords" class="w-4 h-4"></i><span>Fan Arena</span>
+        </a>
+        <a href="/pages/stories.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="book-open" class="w-4 h-4"></i><span>Fan Stories</span>
+        </a>
+        <a href="/pages/timeline.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-zinc-300 hover:text-amber-400 hover:bg-zinc-900 transition-colors">
+          <i data-lucide="calendar" class="w-4 h-4"></i><span>Career Timeline</span>
+        </a>
+      </nav>
+    </div>
+    <div class="pt-6 border-t border-zinc-800 space-y-2.5">
+      <a href="/accounts/login/{% if request.get_full_path != '/' %}?next={{ request.get_full_path|urlencode }}{% endif %}" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-semibold transition-colors border border-zinc-800">
+        <i data-lucide="log-in" class="w-4 h-4"></i><span>Sign In</span>
+      </a>
+      <a href="/accounts/register/{% if request.get_full_path != '/' %}?next={{ request.get_full_path|urlencode }}{% endif %}" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors shadow-sm shadow-amber-500/20">
+        <i data-lucide="user-plus" class="w-4 h-4"></i><span>Join JustBaddo</span>
+      </a>
+    </div>
+  </div>
+</div>

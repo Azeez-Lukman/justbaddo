@@ -54,8 +54,8 @@ class AccountService:
         )
         AccountSettings.objects.get_or_create(user=user)
 
-        # Generate email verification token
-        verification_token = cls.generate_verification_token(user)
+        # Generate and dispatch email verification instructions
+        verification_token = cls.send_verification_email(user)
 
         formatted = cls._format_profile(profile, include_private=True)
         formatted['verification'] = verification_token
@@ -87,6 +87,43 @@ class AccountService:
         return {'uid': uid, 'token': token}
 
     @classmethod
+    def send_verification_email(cls, user):
+        token_data = cls.generate_verification_token(user)
+        uid = token_data['uid']
+        token = token_data['token']
+        verify_link = f"/accounts/verify-email/?uid={uid}&token={token}"
+        try:
+            send_mail(
+                subject="Verify Your JustBaddo Member Account",
+                message=(
+                    f"Hello {user.username},\n\n"
+                    f"Thank you for joining JustBaddo. Please verify your member account using the link below:\n"
+                    f"{verify_link}\n\n"
+                    f"If you did not create this account, please ignore this email."
+                ),
+                from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'JustBaddo <no-reply@justbaddo.com>'),
+                recipient_list=[user.email],
+                fail_silently=True
+            )
+        except Exception:
+            pass
+        return token_data
+
+    @classmethod
+    def resend_verification_email(cls, email):
+        clean_email = email.strip().lower()
+        user = User.objects.filter(email__iexact=clean_email).first()
+        if user and user.is_active:
+            profile = getattr(user, 'profile', None)
+            if profile and not profile.is_verified:
+                cls.send_verification_email(user)
+                return True, "Verification email has been dispatched."
+            elif profile and profile.is_verified:
+                return True, "This account is already verified."
+        # Generic confirmation response for enumeration defense
+        return True, "If an unverified account exists with this email, verification instructions have been dispatched."
+
+    @classmethod
     def verify_email_token(cls, uidb64, token):
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
@@ -110,11 +147,16 @@ class AccountService:
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
             try:
-                reset_link = f"/pages/reset-password.html?uid={uid}&token={token}"
+                reset_link = f"/accounts/reset-password/?uid={uid}&token={token}"
                 send_mail(
                     subject="JustBaddo Password Reset Request",
-                    message=f"Hello {user.username},\n\nPlease reset your password using the following link:\n{reset_link}\n\nIf you did not request this, please ignore this email.",
-                    from_email="no-reply@justbaddo.com",
+                    message=(
+                        f"Hello {user.username},\n\n"
+                        f"Please reset your password using the following link:\n"
+                        f"{reset_link}\n\n"
+                        f"If you did not request this, please ignore this email."
+                    ),
+                    from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', 'JustBaddo <no-reply@justbaddo.com>'),
                     recipient_list=[user.email],
                     fail_silently=True
                 )
